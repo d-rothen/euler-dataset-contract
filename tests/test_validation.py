@@ -4,14 +4,39 @@ import pytest
 
 from euler_dataset_contract import (
     DATASET_CONTRACT_VERSION,
+    DATASET_HEAD_KIND,
     DatasetHeadContract,
     build_default_meta,
     build_meta_schema,
-    normalize_euler_train,
-    normalize_meta_dict,
     parse_dataset_head,
+    register_addon_validator,
     validate_dataset_head,
 )
+
+
+def _sample_head() -> dict:
+    return {
+        "contract": {
+            "kind": DATASET_HEAD_KIND,
+            "version": DATASET_CONTRACT_VERSION,
+        },
+        "dataset": {
+            "id": "demo_rgb",
+            "name": "Demo RGB",
+            "attributes": {"gt": False},
+        },
+        "modality": {
+            "key": "rgb",
+            "meta": {"range": [0, 255]},
+        },
+        "addons": {
+            "euler_train": {
+                "version": "1.0",
+                "used_as": "input",
+                "slot": "demo.input.rgb",
+            },
+        },
+    }
 
 
 def test_build_default_meta_depth() -> None:
@@ -22,85 +47,41 @@ def test_build_default_meta_depth() -> None:
     }
 
 
-def test_normalize_meta_dict_accepts_file_types_alias() -> None:
-    meta = normalize_meta_dict(
-        {"range": [0, 255], "fileTypes": [".PNG", "jpg"]},
-        "rgb",
-        "meta",
-    )
-
-    assert meta == {
-        "range": [0, 255],
-        "file_types": ["jpg", "png"],
-    }
-
-
-def test_normalize_euler_train_fills_condition_defaults() -> None:
-    normalized = normalize_euler_train(
-        {"used_as": "condition", "modality_type": "metadata"},
-        dataset_name="Weather",
-        inferred_hierarchy_scope="scene_camera_frame",
-        context="euler_train",
-    )
-
-    assert normalized == {
-        "used_as": "condition",
-        "slot": "weather.condition.metadata",
-        "modality_type": "metadata",
-        "hierarchy_scope": "scene_camera_frame",
-        "applies_to": ["*"],
-    }
-
-
-def test_validate_dataset_head_accepts_contract_version() -> None:
-    validate_dataset_head({
-        "dataset_contract_version": DATASET_CONTRACT_VERSION,
-        "euler_train": {"used_as": "input", "modality_type": "rgb"},
-        "meta": {"range": [0, 255]},
-    })
-
-
-def test_validate_dataset_head_requires_meta_for_known_modality() -> None:
-    with pytest.raises(ValueError, match=r"dataset\.meta is required"):
+def test_validate_dataset_head_requires_core_sections() -> None:
+    with pytest.raises(ValueError, match=r"dataset_head\.modality"):
         validate_dataset_head({
-            "euler_train": {"used_as": "input", "modality_type": "rgb"},
+            "contract": {"kind": DATASET_HEAD_KIND, "version": "1.0"},
+            "dataset": {"id": "demo", "name": "Demo"},
         })
 
 
-def test_dataset_head_contract_reads_namespaces_and_extras() -> None:
-    contract = DatasetHeadContract.from_mapping({
-        "dataset_contract_version": DATASET_CONTRACT_VERSION,
-        "name": "rgb_train",
-        "type": "rgb",
-        "properties": {
-            "meta": {"range": [0, 255]},
-            "euler_train": {"used_as": "input", "modality_type": "rgb"},
-            "license": "MIT",
-        },
-        "euler_loading": {"loader": "images"},
-    })
+def test_dataset_head_contract_reads_addons_and_attributes() -> None:
+    contract = DatasetHeadContract.from_mapping(_sample_head())
 
-    assert contract.name == "rgb_train"
+    assert contract.dataset_id == "demo_rgb"
+    assert contract.name == "Demo RGB"
     assert contract.type == "rgb"
-    assert contract.get_namespace("euler_train") == {
+    assert contract.attributes == {"gt": False}
+    assert contract.get_addon("euler_train") == {
+        "version": "1.0",
         "used_as": "input",
-        "modality_type": "rgb",
+        "slot": "demo.input.rgb",
     }
-    assert contract.get_addon_contract("euler_loading") == {"loader": "images"}
-    assert contract.extras == {"license": "MIT"}
     assert contract.to_properties_dict()["meta"]["range"] == [0, 255]
 
 
-def test_parse_dataset_head_can_require_namespace() -> None:
-    with pytest.raises(ValueError, match=r"dataset\.euler_loading is required"):
-        parse_dataset_head(
-            {
-                "type": "rgb",
-                "meta": {"range": [0, 255]},
-                "euler_train": {"used_as": "input", "modality_type": "rgb"},
-            },
-            required_namespaces=("euler_loading",),
-        )
+def test_parse_dataset_head_can_require_addon() -> None:
+    with pytest.raises(ValueError, match=r"dataset_head\.addons\.euler_loading is required"):
+        parse_dataset_head(_sample_head(), required_addons=("euler_loading",))
+
+
+def test_registered_addon_validator_is_applied() -> None:
+    def _validator(value, context):
+        if value.get("slot") != "demo.input.rgb":
+            raise ValueError(f"{context}.slot mismatch")
+
+    register_addon_validator("euler_train", _validator, overwrite=True)
+    validate_dataset_head(_sample_head())
 
 
 def test_build_meta_schema_contains_shared_file_types() -> None:
