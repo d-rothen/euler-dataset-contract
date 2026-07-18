@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 
-Validator = Callable[[Any], str | None]
+# This alias is evaluated at import time even with postponed annotations.
+# Optional keeps the package importable on the declared Python 3.9 minimum.
+Validator = Callable[[Any], Optional[str]]
 _MISSING = object()
 
 DATASET_HEAD_KIND = "dataset_head"
