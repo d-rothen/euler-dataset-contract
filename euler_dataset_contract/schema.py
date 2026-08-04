@@ -14,7 +14,7 @@ from .registry import (
 
 _TYPE_MAP: dict[type, str] = {
     bool: "boolean",
-    int: "number",
+    int: "integer",
     float: "number",
     str: "string",
     list: "array",
@@ -24,13 +24,19 @@ _TYPE_MAP: dict[type, str] = {
 
 def _json_schema_type(accepted: type | tuple[type, ...]) -> dict[str, Any]:
     if isinstance(accepted, tuple):
-        types = sorted({_TYPE_MAP[t] for t in accepted})
+        types = {_TYPE_MAP[t] for t in accepted}
     else:
-        types = [_TYPE_MAP[accepted]]
+        types = {_TYPE_MAP[accepted]}
 
-    if len(types) == 1:
-        return {"type": types[0]}
-    return {"type": types}
+    # JSON Schema's ``number`` type already includes integers.
+    if "number" in types:
+        types.discard("integer")
+
+    sorted_types = sorted(types)
+
+    if len(sorted_types) == 1:
+        return {"type": sorted_types[0]}
+    return {"type": sorted_types}
 
 
 def build_meta_schema() -> dict[str, Any]:
@@ -89,7 +95,8 @@ def build_meta_schema() -> dict[str, Any]:
 
 def build_dataset_head_schema() -> dict[str, Any]:
     meta_schema = build_meta_schema()
-    return {
+    modality_meta_schemas = deepcopy(meta_schema["properties"])
+    schema: dict[str, Any] = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "title": "Euler dataset head schema",
         "description": "Common cross-package dataset head contract.",
@@ -106,6 +113,7 @@ def build_dataset_head_schema() -> dict[str, Any]:
                     },
                     "version": {
                         "type": "string",
+                        "pattern": r"^\d+\.\d+(?:\.\d+)?$",
                         "default": DATASET_CONTRACT_VERSION,
                     },
                 },
@@ -115,8 +123,15 @@ def build_dataset_head_schema() -> dict[str, Any]:
                 "type": "object",
                 "required": ["id", "name"],
                 "properties": {
-                    "id": {"type": "string"},
-                    "name": {"type": "string"},
+                    "id": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                    },
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": r"\S",
+                    },
                     "attributes": {
                         "type": "object",
                         "additionalProperties": True,
@@ -128,8 +143,14 @@ def build_dataset_head_schema() -> dict[str, Any]:
                 "type": "object",
                 "required": ["key"],
                 "properties": {
-                    "key": {"type": "string"},
-                    "meta": meta_schema,
+                    "key": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                    },
+                    "meta": {
+                        "type": "object",
+                        "additionalProperties": True,
+                    },
                 },
                 "additionalProperties": False,
             },
@@ -142,11 +163,48 @@ def build_dataset_head_schema() -> dict[str, Any]:
                     "type": "object",
                     "required": ["version"],
                     "properties": {
-                        "version": {"type": "string"},
+                        "version": {
+                            "type": "string",
+                            "pattern": r"^\d+\.\d+(?:\.\d+)?$",
+                        },
                     },
                     "additionalProperties": True,
                 },
             },
         },
         "additionalProperties": False,
+        "$defs": {
+            "modalityMeta": modality_meta_schemas,
+        },
     }
+
+    # ``modality.meta`` is selected by the sibling ``modality.key``.  The
+    # standalone meta schema is a catalog keyed by modality and therefore
+    # cannot be embedded directly as the value of ``meta``.
+    schema["allOf"] = [
+        {
+            "if": {
+                "properties": {
+                    "modality": {
+                        "properties": {"key": {"const": modality_key}},
+                        "required": ["key"],
+                    }
+                },
+                "required": ["modality"],
+            },
+            "then": {
+                "properties": {
+                    "modality": {
+                        "properties": {
+                            "meta": {
+                                "$ref": f"#/$defs/modalityMeta/{modality_key}"
+                            }
+                        },
+                        "required": ["meta"],
+                    }
+                }
+            },
+        }
+        for modality_key in sorted(modality_meta_schemas)
+    ]
+    return schema

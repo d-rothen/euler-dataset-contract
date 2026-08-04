@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from copy import deepcopy
-from typing import Any, Callable
+from typing import TYPE_CHECKING, Any, Callable
 
 from .registry import (
     DATASET_CONTRACT_VERSION,
@@ -12,6 +12,9 @@ from .registry import (
     SHARED_META_FIELD_DEFINITIONS,
     get_modality_meta_fields,
 )
+
+if TYPE_CHECKING:
+    from .contract import DatasetHeadContract
 
 
 AddonValidator = Callable[[Any, str], None]
@@ -28,7 +31,7 @@ def validate_contract_version(
 ) -> None:
     if not isinstance(value, str) or not value:
         raise ValueError(f"{context} must be a non-empty string")
-    if not _CONTRACT_VERSION_PATTERN.match(value):
+    if not _CONTRACT_VERSION_PATTERN.fullmatch(value):
         raise ValueError(
             f"{context} must look like 'major.minor' or 'major.minor.patch'"
         )
@@ -37,7 +40,7 @@ def validate_contract_version(
 def validate_token(value: Any, context: str) -> None:
     if not isinstance(value, str) or not value:
         raise ValueError(f"{context} must be a non-empty string")
-    if not _TOKEN_PATTERN.match(value):
+    if not _TOKEN_PATTERN.fullmatch(value):
         raise ValueError(
             f"{context} must contain only letters, digits, or underscores "
             "and may not start with a digit"
@@ -47,7 +50,7 @@ def validate_token(value: Any, context: str) -> None:
 def validate_slot(value: Any, context: str) -> None:
     if not isinstance(value, str) or not value:
         raise ValueError(f"{context} must be a non-empty string")
-    if not _SLOT_PATTERN.match(value):
+    if not _SLOT_PATTERN.fullmatch(value):
         raise ValueError(
             f"{context} must match 'segment.segment' or deeper "
             "(alphanumeric/underscore only)"
@@ -135,6 +138,18 @@ def validate_meta_dict(value: Any, modality_key: str, context: str) -> None:
     normalize_meta_dict(value, modality_key, context)
 
 
+def _matches_accepted_type(
+    value: Any,
+    accepted_type: type | tuple[type, ...],
+) -> bool:
+    if isinstance(value, bool):
+        accepted_types = (
+            accepted_type if isinstance(accepted_type, tuple) else (accepted_type,)
+        )
+        return bool in accepted_types
+    return isinstance(value, accepted_type)
+
+
 def normalize_meta_dict(
     value: Any,
     modality_key: str,
@@ -180,7 +195,7 @@ def normalize_meta_dict(
                 err = definition.validator(item)
                 if err is not None:
                     raise ValueError(f"{context}.{key} must be {err}")
-            elif not isinstance(item, definition.accepted_type):
+            elif not _matches_accepted_type(item, definition.accepted_type):
                 raise ValueError(f"{context}.{key} must be {definition.type_label}")
 
     return normalized

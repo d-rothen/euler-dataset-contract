@@ -23,9 +23,20 @@ def _require_mapping(value: Any, context: str) -> dict[str, Any]:
 
 
 def _require_non_empty_string(value: Any, context: str) -> str:
-    if not isinstance(value, str) or not value:
+    if not isinstance(value, str) or not value.strip():
         raise ValueError(f"{context} must be a non-empty string")
     return value
+
+
+def _reject_unknown_keys(
+    value: dict[str, Any],
+    allowed: set[str],
+    context: str,
+) -> None:
+    unknown = sorted(set(value) - allowed, key=str)
+    if unknown:
+        joined = ", ".join(str(key) for key in unknown)
+        raise ValueError(f"Unknown {context} key(s): {joined}")
 
 
 @dataclass(frozen=True)
@@ -124,13 +135,29 @@ class DatasetHeadContract:
         if not isinstance(data, dict):
             raise ValueError(f"{context} must be an object")
 
+        _reject_unknown_keys(
+            data,
+            {"contract", "dataset", "modality", "addons"},
+            context,
+        )
+
         contract = _require_mapping(data.get("contract"), f"{context}.contract")
+        _reject_unknown_keys(
+            contract,
+            {"kind", "version"},
+            f"{context}.contract",
+        )
         kind = contract.get("kind")
         validate_contract_kind(kind, f"{context}.contract.kind")
-        version = contract.get("version", DATASET_CONTRACT_VERSION)
+        version = contract.get("version")
         validate_contract_version(version, f"{context}.contract.version")
 
         dataset = _require_mapping(data.get("dataset"), f"{context}.dataset")
+        _reject_unknown_keys(
+            dataset,
+            {"id", "name", "attributes"},
+            f"{context}.dataset",
+        )
         dataset_id = _require_non_empty_string(dataset.get("id"), f"{context}.dataset.id")
         validate_token(dataset_id, f"{context}.dataset.id")
         dataset_name = _require_non_empty_string(
@@ -146,6 +173,11 @@ class DatasetHeadContract:
         )
 
         modality = _require_mapping(data.get("modality"), f"{context}.modality")
+        _reject_unknown_keys(
+            modality,
+            {"key", "meta"},
+            f"{context}.modality",
+        )
         modality_key = _require_non_empty_string(
             modality.get("key"),
             f"{context}.modality.key",

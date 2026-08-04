@@ -2,15 +2,16 @@
 
 from __future__ import annotations
 
+import re
 from copy import deepcopy
 from dataclasses import dataclass
 from typing import Any, Callable, Optional
-
 
 # This alias is evaluated at import time even with postponed annotations.
 # Optional keeps the package importable on the declared Python 3.9 minimum.
 Validator = Callable[[Any], Optional[str]]
 _MISSING = object()
+_TOKEN_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 DATASET_HEAD_KIND = "dataset_head"
 DATASET_CONTRACT_VERSION = "1.0"
@@ -34,7 +35,10 @@ def _validate_rgb_array(value: Any) -> str | None:
     if (
         not isinstance(value, list)
         or len(value) != 3
-        or not all(isinstance(v, int) and 0 <= v <= 255 for v in value)
+        or not all(
+            not isinstance(v, bool) and isinstance(v, int) and 0 <= v <= 255
+            for v in value
+        )
     ):
         return "an array of 3 integers (0-255)"
     return None
@@ -44,7 +48,9 @@ def _validate_numeric_range(value: Any) -> str | None:
     if (
         not isinstance(value, list)
         or len(value) != 2
-        or not all(isinstance(v, (int, float)) for v in value)
+        or not all(
+            not isinstance(v, bool) and isinstance(v, (int, float)) for v in value
+        )
     ):
         return "an array of 2 numbers [min, max]"
     if value[0] > value[1]:
@@ -252,12 +258,30 @@ def register_modality_meta_fields(
     *,
     overwrite: bool = False,
 ) -> None:
+    if not isinstance(modality_key, str) or not _TOKEN_PATTERN.fullmatch(modality_key):
+        raise ValueError(
+            "modality_key must contain only letters, digits, or underscores "
+            "and may not start with a digit"
+        )
+    if not isinstance(fields, dict):
+        raise TypeError("fields must be a dict of MetaFieldDefinition values")
+    for field_name, definition in fields.items():
+        if not isinstance(field_name, str) or not _TOKEN_PATTERN.fullmatch(field_name):
+            raise ValueError(
+                "meta field names must contain only letters, digits, or "
+                "underscores and may not start with a digit"
+            )
+        if not isinstance(definition, MetaFieldDefinition):
+            raise TypeError(
+                f"fields[{field_name!r}] must be a MetaFieldDefinition"
+            )
     if modality_key in _MODALITY_META_FIELD_DEFINITIONS and not overwrite:
         raise ValueError(
             f"Modality {modality_key!r} is already registered; "
             "pass overwrite=True to replace it"
         )
     _MODALITY_META_FIELD_DEFINITIONS[modality_key] = deepcopy(fields)
+    _refresh_legacy_modality_meta_schemas()
 
 
 def build_default_meta(modality_key: str) -> dict[str, Any] | None:
@@ -298,3 +322,10 @@ def legacy_modality_meta_schemas() -> dict[str, dict[str, tuple]]:
 
 
 MODALITY_META_SCHEMAS = legacy_modality_meta_schemas()
+
+
+def _refresh_legacy_modality_meta_schemas() -> None:
+    """Keep the exported compatibility mapping in sync with registrations."""
+
+    MODALITY_META_SCHEMAS.clear()
+    MODALITY_META_SCHEMAS.update(legacy_modality_meta_schemas())

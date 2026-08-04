@@ -1,0 +1,29 @@
+name: Bug report
+description: Report parsing, validation, schema, or packaging behavior
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the expected result and the full exception.
+    validations:
+      required: true
+
+  - type: textarea
+    id: head
+    attributes:
+      label: Minimal dataset head
+      description: Remove private paths, dataset contents, and sensitive metadata.
+      render: json
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: euler-dataset-contract and Python versions.
+      placeholder: euler-dataset-contract==0.3.0, Python 3.11
+    validations:
+      required: true

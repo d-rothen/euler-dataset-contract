@@ -2,29 +2,55 @@ name: Publish to PyPI
 
 on:
   push:
-    tags:
-      - "v*" # This triggers the workflow only when you push a tag starting with 'v'
+    tags: ["v*"]
+
+permissions:
+  contents: read
 
 jobs:
   build-and-publish:
-    name: Build and Publish
+    name: Verify, build, and publish
     runs-on: ubuntu-latest
-    environment: pypi # This matches the environment we set up in Step 2
-
+    environment:
+      name: pypi
+      url: https://pypi.org/p/euler-dataset-contract
     permissions:
-      id-token: write # CRITICAL: This is what allows OIDC (passwordless) auth to PyPI
-      contents: read # Required to check out the code
+      contents: read
+      id-token: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Check out the repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5 # The official Astral action
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          python-version: "3.14"
+          enable-cache: true
 
-      - name: Build package
-        run: uv build
+      - name: Install development dependencies
+        run: uv sync --extra dev --locked
 
-      - name: Publish to PyPI
-        # uv publish automatically detects it is in GitHub Actions and uses OIDC
+      - name: Verify tag matches project version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(uv run python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')"
+          if [ "$tag" != "$version" ]; then
+            echo "::error::Tag v$tag does not match pyproject.toml version $version"
+            exit 1
+          fi
+
+      - name: Verify the release
+        run: |
+          uv run ruff check .
+          uv run pytest
+          uv run python scripts/generate_schemas.py --check
+
+      - name: Build and inspect distributions
+        run: |
+          uv build
+          uv run python scripts/verify_distribution.py dist/*
+          uvx twine check dist/*
+
+      - name: Publish distributions
         run: uv publish

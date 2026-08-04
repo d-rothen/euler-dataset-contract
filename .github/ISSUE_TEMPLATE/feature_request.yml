@@ -1,0 +1,26 @@
+name: Contract proposal
+description: Propose a modality, metadata field, addon primitive, or API change
+labels: [enhancement]
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: Describe the producer and consumers that need this capability.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_gap
+    attributes:
+      label: Current gap
+      description: Explain what is ambiguous or impossible with contract 1.0.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed representation
+      description: Optional example, compatibility plan, or migration sketch.
+      render: json
