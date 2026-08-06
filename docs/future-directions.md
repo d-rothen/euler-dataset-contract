@@ -5,6 +5,11 @@ every item. It records gaps observed across `euler-dataset-contract`,
 `ds-crawler`, `euler-loading`, and `euler-eval`, then proposes an order that can
 improve interoperability without invalidating existing dataset heads.
 
+> The concrete, evidence-backed realization of this direction — including the
+> modality identity grammar, the extension mechanism, and a staged rollout with
+> per-package changes — is in
+> [Ecosystem streamlining plan](ecosystem-streamlining-plan.md).
+
 ## Where the boundary sits today
 
 The current division of responsibility is useful and should remain:

@@ -154,7 +154,9 @@ rules and downstream packages normalize its outputs.
 
 The observed gaps and a staged, backwards-compatible route toward canonical
 modality names and enforceable decoded-output contracts are documented in
-[Future contract directions](docs/future-directions.md).
+[Future contract directions](docs/future-directions.md). The
+[Ecosystem streamlining plan](docs/ecosystem-streamlining-plan.md) turns that
+direction into a concrete design and rollout.
 
 ## Development
 
