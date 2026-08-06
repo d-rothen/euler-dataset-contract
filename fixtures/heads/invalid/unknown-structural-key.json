@@ -1,0 +1,25 @@
+{
+  "description": "Core sections are closed: an unrecognized key is a producer bug, not an extension point. Package-specific data belongs in addons.",
+  "expected_exception": "ValueError",
+  "expected_error": "Unknown dataset_head.modality key(s): loader",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      },
+      "loader": "generic"
+    }
+  }
+}

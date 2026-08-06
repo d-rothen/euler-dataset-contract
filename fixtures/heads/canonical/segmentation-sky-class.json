@@ -1,0 +1,23 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "demo_segmentation",
+    "name": "Demo Segmentation"
+  },
+  "modality": {
+    "key": "segmentation",
+    "meta": {
+      "skyclass": [
+        90,
+        200,
+        255
+      ],
+      "file_types": [
+        "png"
+      ]
+    }
+  }
+}

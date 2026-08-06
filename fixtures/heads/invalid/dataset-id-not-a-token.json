@@ -1,0 +1,24 @@
+{
+  "description": "dataset.id is a token, so a hyphen is rejected.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.dataset.id must contain only letters, digits, or underscores",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo-rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      }
+    }
+  }
+}

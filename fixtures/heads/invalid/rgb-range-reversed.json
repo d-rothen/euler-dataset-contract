@@ -1,0 +1,24 @@
+{
+  "description": "A value range must be ordered [min, max].",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.range must be an array of 2 numbers [min, max] where min <= max",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          2,
+          1
+        ]
+      }
+    }
+  }
+}

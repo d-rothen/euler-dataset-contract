@@ -1,0 +1,13 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "demo_sh_coeffs",
+    "name": "Demo Spherical Harmonics"
+  },
+  "modality": {
+    "key": "sh_coeffs"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "description": "The head declares a kind this contract does not define.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.contract.kind must be 'dataset_head'",
+  "head": {
+    "contract": {
+      "kind": "dataset_headx",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      }
+    }
+  }
+}

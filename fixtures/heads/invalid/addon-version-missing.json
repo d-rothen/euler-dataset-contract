@@ -1,0 +1,29 @@
+{
+  "description": "Every addon payload carries its own version, so consumers can negotiate.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.addons.euler_train.version must be a non-empty string",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      }
+    },
+    "addons": {
+      "euler_train": {
+        "used_as": "input"
+      }
+    }
+  }
+}

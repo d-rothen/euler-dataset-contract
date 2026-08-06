@@ -1,0 +1,23 @@
+{
+  "description": "A serialized head must state its contract version; it is never defaulted.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.contract.version must be a non-empty string",
+  "head": {
+    "contract": {
+      "kind": "dataset_head"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      }
+    }
+  }
+}

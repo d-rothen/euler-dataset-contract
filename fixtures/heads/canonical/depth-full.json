@@ -1,0 +1,44 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "foggy_depth",
+    "name": "Foggy Drive Depth",
+    "attributes": {
+      "split_origin": "capture_2026",
+      "gt": true
+    }
+  },
+  "modality": {
+    "key": "depth",
+    "meta": {
+      "radial_depth": false,
+      "scale_to_meters": 0.001,
+      "range": [
+        0,
+        80
+      ],
+      "dimensions": {
+        "height": 375,
+        "width": 1242
+      },
+      "file_types": [
+        "png"
+      ]
+    }
+  },
+  "addons": {
+    "euler_loading": {
+      "version": "1.0",
+      "loader": "generic_dense_depth",
+      "function": "depth"
+    },
+    "euler_train": {
+      "version": "1.0",
+      "used_as": "target",
+      "slot": "foggy.target.depth"
+    }
+  }
+}

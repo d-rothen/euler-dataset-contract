@@ -46,11 +46,18 @@ When changing a core field or built-in modality definition:
 
 1. state whether existing heads remain valid;
 2. add runtime validation tests and Draft 2020-12 schema tests;
-3. run `uv run python scripts/generate_schemas.py` and commit the generated
+3. add or update the case in [`fixtures/`](fixtures/) that demonstrates the new
+   behavior, in the same commit as the code;
+4. run `uv run python scripts/generate_schemas.py` and commit the generated
    schema changes;
-4. check the producer path in `ds-crawler` and the consumer paths in
-   `euler-loading` and `euler-eval`;
-5. document deprecation and migration behavior for any changed meaning.
+5. check the producer path in `ds-crawler` and the consumer paths in
+   `euler-loading` and `euler-eval`, running their suites against the changed
+   fixtures;
+6. document deprecation and migration behavior for any changed meaning.
+
+Adding a fixture case is additive. Changing or removing one asserts that a
+consuming repository's current behavior is wrong, so land the consumer changes
+with it. See [Conformance fixtures](docs/conformance-fixtures.md).
 
 New package-specific fields normally belong in a versioned addon validator.
 New modality metadata should remain JSON-serializable and should not encode a

@@ -6,6 +6,7 @@ import stat
 import sys
 import tarfile
 import zipfile
+from configparser import ConfigParser
 from email.parser import BytesParser
 from pathlib import Path, PurePosixPath
 
@@ -22,11 +23,33 @@ SDIST_FILES = {
 SDIST_DIRECTORIES = {
     "docs",
     "euler_dataset_contract",
+    "fixtures",
     "schemas",
     "scripts",
     "tests",
 }
 WHEEL_PACKAGE = "euler_dataset_contract"
+MODALITY_INVENTORY = "data/modality-inventory-1.0.json"
+
+# Shipped data, as opposed to shipped code. A consumer that resolves modality
+# identity or asserts against the conformance corpus fails at import time when
+# any of these is missing, so a build that drops one must not reach PyPI.
+SDIST_DATA_PATHS = {
+    f"{WHEEL_PACKAGE}/{MODALITY_INVENTORY}",
+    "fixtures/index.json",
+    "fixtures/README.md",
+    "fixtures/inventory/euler-loading-modality-types.json",
+}
+WHEEL_DATA_PATHS = {
+    f"{WHEEL_PACKAGE}/{MODALITY_INVENTORY}",
+    f"{WHEEL_PACKAGE}/_fixtures/index.json",
+    f"{WHEEL_PACKAGE}/_fixtures/README.md",
+    f"{WHEEL_PACKAGE}/_fixtures/inventory/euler-loading-modality-types.json",
+    f"{WHEEL_PACKAGE}/testing/__init__.py",
+    f"{WHEEL_PACKAGE}/testing/corpus.py",
+    f"{WHEEL_PACKAGE}/testing/plugin.py",
+}
+PYTEST_ENTRY_POINT = "euler_dataset_contract.testing.plugin"
 
 
 def _safe_parts(name: str) -> tuple[str, ...]:
@@ -44,6 +67,7 @@ def _verify_sdist(path: Path) -> None:
             raise ValueError(f"Expected one source root in {path}, found {roots}")
 
         present: set[str] = set()
+        paths: set[str] = set()
         for member in members:
             if member.issym() or member.islnk():
                 raise ValueError(f"Links are not allowed in {path}: {member.name}")
@@ -52,6 +76,7 @@ def _verify_sdist(path: Path) -> None:
                 continue
             relative = parts[1:]
             present.add(relative[0])
+            paths.add("/".join(relative))
             if relative[0] in SDIST_DIRECTORIES:
                 continue
             if len(relative) == 1 and relative[0] in SDIST_FILES:
@@ -61,6 +86,13 @@ def _verify_sdist(path: Path) -> None:
         missing = sorted(SDIST_FILES - present)
         if missing:
             raise ValueError(f"Source distribution is missing: {', '.join(missing)}")
+
+        missing_data = sorted(SDIST_DATA_PATHS - paths)
+        if missing_data:
+            raise ValueError(
+                f"Source distribution is missing shipped data: "
+                f"{', '.join(missing_data)}"
+            )
 
 
 def _verify_wheel(path: Path) -> None:
@@ -92,11 +124,22 @@ def _verify_wheel(path: Path) -> None:
             f"{dist_info}/METADATA",
             f"{dist_info}/RECORD",
             f"{dist_info}/WHEEL",
+            f"{dist_info}/entry_points.txt",
             f"{dist_info}/licenses/LICENSE",
-        }
+        } | WHEEL_DATA_PATHS
         missing = sorted(required - names)
         if missing:
             raise ValueError(f"Wheel is missing: {', '.join(missing)}")
+
+        entry_points = archive.read(f"{dist_info}/entry_points.txt").decode("utf-8")
+        parser = ConfigParser()
+        parser.read_string(entry_points)
+        registered = dict(parser.items("pytest11")) if parser.has_section("pytest11") else {}
+        if PYTEST_ENTRY_POINT not in registered.values():
+            raise ValueError(
+                f"Wheel does not register {PYTEST_ENTRY_POINT!r} in the "
+                f"pytest11 entry point group: {registered!r}"
+            )
 
         metadata = BytesParser().parsebytes(archive.read(f"{dist_info}/METADATA"))
         if metadata["Name"] != "euler-dataset-contract":

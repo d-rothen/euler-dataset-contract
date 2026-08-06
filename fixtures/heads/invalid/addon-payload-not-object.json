@@ -1,0 +1,27 @@
+{
+  "description": "An addon payload is an object, never a scalar.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.addons.euler_train must be an object",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      }
+    },
+    "addons": {
+      "euler_train": "1.0"
+    }
+  }
+}

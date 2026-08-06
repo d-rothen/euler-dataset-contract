@@ -552,6 +552,11 @@ inside `euler-dataset-contract` and are exported as a pytest plugin
 contract change cannot pass in one repo while breaking loading or evaluation.
 This closes the gap `future-directions.md` §5 identified but did not staff.
 
+The head corpus, the plugin, and the rule that a contract change is proven
+against them in every repo before it ships exist as of Phase 0 and are
+documented in [Conformance fixtures](conformance-fixtures.md). Decoded-sample
+descriptors wait for Phase 2, when a decoded profile is a real object.
+
 **9.2 Runtime conformance, opt-in and tiered.** Checking every sample is
 expensive, so cost is explicit:
 

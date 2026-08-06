@@ -1,0 +1,20 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "demo_scattering",
+    "name": "Demo Scattering Coefficient"
+  },
+  "modality": {
+    "key": "scattering_coefficient",
+    "meta": {
+      "unit": "per_meter",
+      "dimensions": {
+        "height": 375,
+        "width": 1242
+      }
+    }
+  }
+}

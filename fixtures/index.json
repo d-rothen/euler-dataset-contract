@@ -1,0 +1,111 @@
+{
+  "contract": {
+    "kind": "conformance_fixture_index",
+    "version": "1.0"
+  },
+  "description": "Manifest of the cross-repository conformance corpus for euler-dataset-contract. Every path is relative to the directory holding this file. Enumerate the corpus from this manifest rather than by scanning directories, so that a consumer that cannot see a new fixture fails loudly instead of silently testing less.",
+  "dataset_head_contract_version": "1.0",
+  "covers_vocabulary": {
+    "modality_key:<key>": "The head uses this modality.key.",
+    "modality_key:unregistered": "The head uses a modality.key with no registered meta fields.",
+    "shared_meta:<field>": "The head exercises this shared meta field.",
+    "normalization:<rule>": "Parsing rewrites the authored value; the canonical file records the result.",
+    "section:<name>": "The head populates this optional structural section.",
+    "meta:absent": "The head omits modality.meta entirely."
+  },
+  "valid_heads": [
+    {
+      "name": "rgb-minimal",
+      "head": "heads/valid/rgb-minimal.json",
+      "canonical": "heads/canonical/rgb-minimal.json",
+      "description": "The smallest valid head: required sections only, one registered modality, no addons.",
+      "covers": ["modality_key:rgb"]
+    },
+    {
+      "name": "rgb-file-types-camel-case",
+      "head": "heads/valid/rgb-file-types-camel-case.json",
+      "canonical": "heads/canonical/rgb-file-types-camel-case.json",
+      "description": "A legacy producer writing fileTypes with mixed case, padding, and a leading dot. Parsing renames the field to file_types and normalizes each entry to a sorted lowercase extension.",
+      "covers": [
+        "modality_key:rgb",
+        "shared_meta:dimensions",
+        "shared_meta:file_types",
+        "normalization:file_types_camel_case",
+        "normalization:file_types_lowercase",
+        "normalization:file_types_sorted"
+      ]
+    },
+    {
+      "name": "depth-full",
+      "head": "heads/valid/depth-full.json",
+      "canonical": "heads/canonical/depth-full.json",
+      "description": "Every depth meta field, both shared meta fields, dataset attributes, and two addon payloads.",
+      "covers": [
+        "modality_key:depth",
+        "shared_meta:dimensions",
+        "shared_meta:file_types",
+        "section:dataset_attributes",
+        "section:addons"
+      ]
+    },
+    {
+      "name": "segmentation-sky-class",
+      "head": "heads/valid/segmentation-sky-class.json",
+      "canonical": "heads/canonical/segmentation-sky-class.json",
+      "description": "The segmentation modality with a non-default skyclass value.",
+      "covers": ["modality_key:segmentation", "shared_meta:file_types"]
+    },
+    {
+      "name": "semantic-segmentation-shared-meta",
+      "head": "heads/valid/semantic-segmentation-shared-meta.json",
+      "canonical": "heads/canonical/semantic-segmentation-shared-meta.json",
+      "description": "The semantic_segmentation modality carrying both shared meta fields and an addon.",
+      "covers": [
+        "modality_key:semantic_segmentation",
+        "shared_meta:dimensions",
+        "shared_meta:file_types",
+        "section:addons"
+      ]
+    },
+    {
+      "name": "custom-modality-open-meta",
+      "head": "heads/valid/custom-modality-open-meta.json",
+      "canonical": "heads/canonical/custom-modality-open-meta.json",
+      "description": "An unregistered modality key with free-form meta. The ecosystem may add modalities before this package releases support for them.",
+      "covers": ["modality_key:unregistered", "shared_meta:dimensions"]
+    },
+    {
+      "name": "custom-modality-without-meta",
+      "head": "heads/valid/custom-modality-without-meta.json",
+      "canonical": "heads/canonical/custom-modality-without-meta.json",
+      "description": "An unregistered modality key with no meta at all. The canonical form omits modality.meta rather than emitting an empty object.",
+      "covers": ["modality_key:unregistered", "meta:absent"]
+    }
+  ],
+  "invalid_heads": [
+    {"name": "contract-kind-wrong", "case": "heads/invalid/contract-kind-wrong.json"},
+    {"name": "contract-version-missing", "case": "heads/invalid/contract-version-missing.json"},
+    {"name": "contract-version-malformed", "case": "heads/invalid/contract-version-malformed.json"},
+    {"name": "dataset-id-not-a-token", "case": "heads/invalid/dataset-id-not-a-token.json"},
+    {"name": "dataset-name-blank", "case": "heads/invalid/dataset-name-blank.json"},
+    {"name": "unknown-structural-key", "case": "heads/invalid/unknown-structural-key.json"},
+    {"name": "modality-key-dotted", "case": "heads/invalid/modality-key-dotted.json"},
+    {"name": "depth-meta-missing", "case": "heads/invalid/depth-meta-missing.json"},
+    {"name": "depth-scale-to-meters-missing", "case": "heads/invalid/depth-scale-to-meters-missing.json"},
+    {"name": "depth-scale-to-meters-boolean", "case": "heads/invalid/depth-scale-to-meters-boolean.json"},
+    {"name": "rgb-range-reversed", "case": "heads/invalid/rgb-range-reversed.json"},
+    {"name": "segmentation-skyclass-missing", "case": "heads/invalid/segmentation-skyclass-missing.json"},
+    {"name": "file-types-both-spellings", "case": "heads/invalid/file-types-both-spellings.json"},
+    {"name": "file-types-duplicate", "case": "heads/invalid/file-types-duplicate.json"},
+    {"name": "dimensions-zero-size", "case": "heads/invalid/dimensions-zero-size.json"},
+    {"name": "addon-version-missing", "case": "heads/invalid/addon-version-missing.json"},
+    {"name": "addon-payload-not-object", "case": "heads/invalid/addon-payload-not-object.json"}
+  ],
+  "inventory": [
+    {
+      "name": "euler-loading-modality-types",
+      "path": "inventory/euler-loading-modality-types.json",
+      "description": "Vendored copy of the modality vocabulary euler-loading emits, used to detect drift against the shipped modality inventory."
+    }
+  ]
+}

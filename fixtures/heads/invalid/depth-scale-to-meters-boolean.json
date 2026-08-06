@@ -1,0 +1,26 @@
+{
+  "description": "A boolean is not accepted where a number is required.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.scale_to_meters must be a number",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_depth",
+      "name": "Demo Depth"
+    },
+    "modality": {
+      "key": "depth",
+      "meta": {
+        "radial_depth": false,
+        "scale_to_meters": true,
+        "range": [
+          0,
+          80
+        ]
+      }
+    }
+  }
+}

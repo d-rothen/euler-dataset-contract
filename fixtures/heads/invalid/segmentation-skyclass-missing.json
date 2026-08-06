@@ -1,0 +1,23 @@
+{
+  "description": "segmentation requires skyclass today. Plan section 2.2 records that no consumer reads it; until that is resolved the requirement stands.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.skyclass is required for modality.key='segmentation'",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_segmentation",
+      "name": "Demo Segmentation"
+    },
+    "modality": {
+      "key": "segmentation",
+      "meta": {
+        "file_types": [
+          "png"
+        ]
+      }
+    }
+  }
+}

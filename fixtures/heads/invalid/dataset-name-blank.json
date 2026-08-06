@@ -1,0 +1,24 @@
+{
+  "description": "A whitespace-only display name is not a name.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.dataset.name must be a non-empty string",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "   "
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "description": "Required modality meta fields are never silently defaulted during parsing.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.scale_to_meters is required for modality.key='depth'",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_depth",
+      "name": "Demo Depth"
+    },
+    "modality": {
+      "key": "depth",
+      "meta": {
+        "radial_depth": false,
+        "range": [
+          0,
+          80
+        ]
+      }
+    }
+  }
+}

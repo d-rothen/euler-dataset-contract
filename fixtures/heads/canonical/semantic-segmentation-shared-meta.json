@@ -1,0 +1,35 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "demo_semantic_segmentation",
+    "name": "Demo Semantic Segmentation"
+  },
+  "modality": {
+    "key": "semantic_segmentation",
+    "meta": {
+      "skyclass": [
+        0,
+        0,
+        0
+      ],
+      "dimensions": {
+        "height": 1080,
+        "width": 1920
+      },
+      "file_types": [
+        "npy",
+        "png"
+      ]
+    }
+  },
+  "addons": {
+    "euler_train": {
+      "version": "1.0",
+      "used_as": "target",
+      "slot": "demo.target.labels"
+    }
+  }
+}

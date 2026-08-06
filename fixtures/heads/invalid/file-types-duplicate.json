@@ -1,0 +1,28 @@
+{
+  "description": "File types are compared after normalization, so 'png' and '.PNG' collide.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.file_types must be a non-empty array of unique file type strings",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ],
+        "file_types": [
+          "png",
+          ".PNG"
+        ]
+      }
+    }
+  }
+}

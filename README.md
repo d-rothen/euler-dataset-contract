@@ -145,6 +145,32 @@ parsing never silently fills missing required fields. Producer tooling such as
 See [the contract reference](docs/contract-reference.md) for field semantics,
 normalization, versioning, and the public API.
 
+## Conformance fixtures
+
+The [`fixtures/`](fixtures/) directory holds the corpus every repository in the
+ecosystem asserts against: valid dataset heads with their canonical parsed
+form, and invalid heads with the error each must produce. They are JSON, so
+non-Python consumers read them directly.
+
+Python consumers install the `testing` extra and get them as pytest fixtures
+through an entry point, with no `conftest.py`:
+
+```bash
+pip install "euler-dataset-contract[testing]"
+```
+
+```python
+def test_contract_heads_parse(golden_head, assert_head_roundtrip):
+    assert_head_roundtrip(golden_head.head)
+```
+
+That single function runs once per head in the corpus. The extra carries only
+`pytest`; the core install stays dependency-free and never imports it.
+
+See [Conformance fixtures](docs/conformance-fixtures.md) for the full fixture
+list, the shipped modality inventory, and the rule that a contract change is
+proven against the corpus in every repository before it ships.
+
 ## Ecosystem boundary
 
 The current 1.0 contract describes persisted dataset metadata. It does not yet

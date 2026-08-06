@@ -1,0 +1,24 @@
+{
+  "description": "Contract versions are numeric major.minor or major.minor.patch.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.contract.version must look like",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "v1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      }
+    }
+  }
+}

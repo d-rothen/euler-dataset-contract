@@ -1,0 +1,24 @@
+{
+  "description": "Contract 1.0 modality keys are tokens, so a dotted canonical id is rejected. Phase 1 introduces modality.id as a separate optional field rather than relaxing this rule; this fixture must keep failing.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.key must contain only letters, digits, or underscores",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "appearance.camera.color",
+      "meta": {
+        "range": [
+          0,
+          255
+        ]
+      }
+    }
+  }
+}

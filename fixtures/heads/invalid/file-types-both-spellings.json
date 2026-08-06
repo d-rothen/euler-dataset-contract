@@ -1,0 +1,30 @@
+{
+  "description": "The camelCase and snake_case spellings may not both be present, because the normalized result would be ambiguous.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.fileTypes cannot be used together with",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ],
+        "file_types": [
+          "png"
+        ],
+        "fileTypes": [
+          "png"
+        ]
+      }
+    }
+  }
+}

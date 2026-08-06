@@ -1,0 +1,28 @@
+{
+  "description": "Nominal axis sizes are positive integers.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.dimensions['height'] must be a positive integer",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "demo_rgb",
+      "name": "Demo RGB"
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ],
+        "dimensions": {
+          "height": 0,
+          "width": 1242
+        }
+      }
+    }
+  }
+}

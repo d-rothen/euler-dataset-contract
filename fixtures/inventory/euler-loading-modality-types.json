@@ -1,0 +1,144 @@
+{
+  "contract": {
+    "kind": "vendored_modality_types",
+    "version": "1.0"
+  },
+  "provenance": {
+    "repository": "euler-loading",
+    "path": "euler_loading/loaders/generate/loaders.json",
+    "sha256": "c97d4f2a18f3fc8d4303a39034543f50a00a70fc9ae216b1488854976e130a77",
+    "description": "Vendored copy of the modality vocabulary euler-loading emits, so that euler-dataset-contract can assert against it without taking a dependency on euler-loading. Refresh this file when loaders.json changes: the drift test in tests/test_modality_inventory.py fails when a type recorded here has no inventory entry.",
+    "notes": [
+      "modality_types holds the distinct values of the type field, each with the loader.function pairs that emit it.",
+      "loader_function_names holds every loader function name. Not all of them are modality names: read_intrinsics and read_extrinsics are accessors, and reference_rgb is a role rather than an identity (plan section 2.4). Only class_segmentation and lidar_point_cloud appear in the inventory alias map, because the plan's section 5.3 names them."
+    ]
+  },
+  "loaders": [
+    "generic",
+    "generic_dense_depth",
+    "muses",
+    "princeton_dense",
+    "real_drive_sim",
+    "vkitti2"
+  ],
+  "modality_types": {
+    "all_intrinsics": [
+      "real_drive_sim.all_intrinsics"
+    ],
+    "atmospheric_light": [
+      "generic.atmospheric_light"
+    ],
+    "calibration": [
+      "real_drive_sim.calibration"
+    ],
+    "camera_extrinsics": [
+      "muses.read_extrinsics",
+      "princeton_dense.read_extrinsics",
+      "real_drive_sim.read_extrinsics"
+    ],
+    "depth": [
+      "generic_dense_depth.depth",
+      "real_drive_sim.depth",
+      "vkitti2.depth"
+    ],
+    "extrinsics": [
+      "vkitti2.read_extrinsics"
+    ],
+    "instance_segmentation": [
+      "generic.instance_segmentation",
+      "vkitti2.instance_segmentation"
+    ],
+    "intrinsics": [
+      "generic.intrinsics",
+      "generic_dense_depth.read_intrinsics",
+      "muses.read_intrinsics",
+      "princeton_dense.read_intrinsics",
+      "real_drive_sim.read_intrinsics",
+      "vkitti2.read_intrinsics"
+    ],
+    "map_2d": [
+      "generic.map_2d"
+    ],
+    "map_3d": [
+      "generic.map_3d"
+    ],
+    "panoptic_segmentation": [
+      "muses.panoptic_segmentation"
+    ],
+    "point_cloud": [
+      "muses.lidar_point_cloud"
+    ],
+    "points_3d": [
+      "generic.points_3d"
+    ],
+    "rccb": [
+      "princeton_dense.rccb"
+    ],
+    "rgb": [
+      "generic_dense_depth.rgb",
+      "muses.reference_rgb",
+      "muses.rgb",
+      "princeton_dense.rgb",
+      "real_drive_sim.rgb",
+      "vkitti2.rgb"
+    ],
+    "scattering_coefficient": [
+      "generic.scattering_coefficient"
+    ],
+    "scene_flow": [
+      "vkitti2.scene_flow"
+    ],
+    "semantic_segmentation": [
+      "generic.semantic_segmentation",
+      "muses.semantic_segmentation",
+      "real_drive_sim.class_segmentation",
+      "vkitti2.class_segmentation"
+    ],
+    "semantic_segmentation_color": [
+      "muses.semantic_segmentation_color"
+    ],
+    "sh_coeffs": [
+      "generic.sh_coeffs"
+    ],
+    "sky_mask": [
+      "generic_dense_depth.sky_mask",
+      "muses.sky_mask",
+      "real_drive_sim.sky_mask",
+      "vkitti2.sky_mask"
+    ],
+    "sparse_depth": [
+      "muses.sparse_depth",
+      "princeton_dense.sparse_depth"
+    ],
+    "spherical_map": [
+      "generic.spherical_map"
+    ]
+  },
+  "loader_function_names": [
+    "all_intrinsics",
+    "atmospheric_light",
+    "calibration",
+    "class_segmentation",
+    "depth",
+    "instance_segmentation",
+    "intrinsics",
+    "lidar_point_cloud",
+    "map_2d",
+    "map_3d",
+    "panoptic_segmentation",
+    "points_3d",
+    "rccb",
+    "read_extrinsics",
+    "read_intrinsics",
+    "reference_rgb",
+    "rgb",
+    "scattering_coefficient",
+    "scene_flow",
+    "semantic_segmentation",
+    "semantic_segmentation_color",
+    "sh_coeffs",
+    "sky_mask",
+    "sparse_depth",
+    "spherical_map"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "legacy_rgb",
+    "name": "Legacy RGB Producer"
+  },
+  "modality": {
+    "key": "rgb",
+    "meta": {
+      "range": [
+        0,
+        1
+      ],
+      "dimensions": {
+        "height": 375,
+        "width": 1242,
+        "channels": 3
+      },
+      "file_types": [
+        "jpg",
+        "png"
+      ]
+    }
+  }
+}
