@@ -111,6 +111,16 @@ these validators in `_dataset_contract` in every process and initializes them
 again when binding/resolving plans. Registration is idempotent and refuses a
 conflicting registration rather than overwriting someone else's validator.
 
+Opting in also checks a representation against its containing head: known legacy
+keys must agree with the canonical identity and applicable alias conditions.
+The declared decoded `kind` supplies the profile's `form` for these conditions.
+For example, an `rgb` head cannot declare depth identity, and `points_3d` cannot
+declare a point cloud. Unknown aliases remain local declarations; successful
+validation never rewrites their persisted keys. Standalone addon schemas/models
+cannot check the containing head; the shared `head-representation-conflict`
+fixture demonstrates this distinction. Modality IDs have exactly three lowercase
+segments, and descriptor tokens/IDs reject trailing characters including newlines.
+
 Addon, recipe, and operation versions are **exact strings**: only `1.0` is
 supported here, with no automatic minor/patch fallback. Thus `1.1` and `1.0.1`
 are unsupported, even if syntactically valid core addon envelopes. Numerical
@@ -247,6 +257,12 @@ the dataset; export individual bound plans for that case. Standalone preprocesso
 export trusts the caller's input boundary declarations. Opaque upstream effects
 must be supplied and are rejected, never treated as identity.
 
+Dataset export compares the actual callable with the supported built-in module's
+decoder object. Matching `__module__`/`__qualname__` or copied decorator metadata
+alone is insufficient: `functools.wraps` can preserve those names while changing
+values. Unknown wrappers remain usable by ordinary loading and cannot be exported
+as the original decoder.
+
 ## First executor's numerical policies
 
 Both backends are CPU-only, pinned to exact NumPy and Torch/Pillow versions.
@@ -255,6 +271,8 @@ Torch is installed. Unsupported versions, CUDA/autograd tensors, integer
 geometric arrays, int32/int64 values through float32 interpolation, symbolic
 dimensions, non-pinhole K, ray regeneration, and other policy combinations
 are rejected before execution. Legacy callables retain their old dispatch.
+Crop-only chains and identity resizes preserve int32/int64 labels exactly; the
+integer precision refusal applies when the resolved chain actually resizes.
 
 | Policy | `torch_cpu` | `pillow_cpu` |
 |---|---|---|
@@ -267,7 +285,8 @@ are rejected before execution. Legacy callables retain their old dispatch.
 
 Tolerance describes numerical comparison on the tested operation profile;
 it promises neither backend equivalence nor byte-identical encoded artifacts.
-Masks/class values use nearest. Boolean output applies `value > mask_threshold`.
+Masks/class values use nearest. Boolean output applies `value > mask_threshold`
+to the floating interpolation result before conversion to boolean, on both backends.
 Bilinear kernels extend edge values; no padding, clipping, or value-unit change
 is performed. Crop uses integer bounds, exclusive bottom/right, and floor
 division for odd center offsets. Same-size resize is an identity, including for

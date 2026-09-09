@@ -21,7 +21,7 @@
     "modality_id": {
       "type": "string",
       "minLength": 1,
-      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*){2,}$"
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*){2}(?![\\s\\S])"
     },
     "decoded": {
       "type": "object",
@@ -62,7 +62,7 @@
               {
                 "type": "string",
                 "minLength": 1,
-                "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
               }
             ]
           },
@@ -107,7 +107,7 @@
         "image_plane": {
           "type": "string",
           "minLength": 1,
-          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
         },
         "frame": {
           "type": "string",
@@ -582,7 +582,7 @@
                   {
                     "type": "string",
                     "minLength": 1,
-                    "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
                   }
                 ]
               },
@@ -627,7 +627,7 @@
             "image_plane": {
               "type": "string",
               "minLength": 1,
-              "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
             },
             "frame": {
               "type": "string",

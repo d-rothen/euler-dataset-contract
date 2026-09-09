@@ -21,14 +21,14 @@
     "reference_field": {
       "type": "string",
       "minLength": 1,
-      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
     },
     "image_planes": {
       "type": "object",
       "propertyNames": {
         "type": "string",
         "minLength": 1,
-        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
       },
       "additionalProperties": {
         "type": "object",
@@ -68,7 +68,7 @@
       "propertyNames": {
         "type": "string",
         "minLength": 1,
-        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
       },
       "additionalProperties": {
         "type": "object",
@@ -76,7 +76,7 @@
           "source": {
             "type": "string",
             "minLength": 1,
-            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
           },
           "profile": {
             "type": "object",
@@ -117,7 +117,7 @@
                     {
                       "type": "string",
                       "minLength": 1,
-                      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                      "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
                     }
                   ]
                 },
@@ -162,7 +162,7 @@
               "image_plane": {
                 "type": "string",
                 "minLength": 1,
-                "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
               },
               "frame": {
                 "type": "string",
@@ -636,17 +636,17 @@
               "full_id": {
                 "type": "string",
                 "minLength": 1,
-                "pattern": "^/(?!\\.{1,2}(?:/|$))[^/]+(?:/(?!\\.{1,2}(?:/|$))[^/]+)*$"
+                "pattern": "^/(?!\\.{1,2}(?:/|$))[^/]+(?:/(?!\\.{1,2}(?:/|$))[^/]+)*(?![\\s\\S])"
               },
               "revision": {
                 "type": "string",
                 "minLength": 1,
-                "pattern": "^sha256:[0-9a-f]{64}$"
+                "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
               },
               "image_plane": {
                 "type": "string",
                 "minLength": 1,
-                "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
               },
               "frame": {
                 "type": "string",
@@ -664,7 +664,7 @@
                 "items": {
                   "type": "string",
                   "minLength": 1,
-                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
                 },
                 "minItems": 1,
                 "uniqueItems": true
@@ -913,7 +913,7 @@
               "id": {
                 "type": "string",
                 "minLength": 1,
-                "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
               },
               "op": {
                 "enum": [
@@ -964,7 +964,7 @@
               "id": {
                 "type": "string",
                 "minLength": 1,
-                "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
               },
               "op": {
                 "enum": [

@@ -39,7 +39,7 @@
           {
             "type": "string",
             "minLength": 1,
-            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
           }
         ]
       },
@@ -84,7 +84,7 @@
     "image_plane": {
       "type": "string",
       "minLength": 1,
-      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
     },
     "frame": {
       "type": "string",

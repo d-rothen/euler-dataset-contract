@@ -382,6 +382,11 @@
   ],
   "descriptors": [
     {
+      "name": "head-representation-conflict",
+      "path": "descriptors/head-representation-conflict.json",
+      "description": "Standalone addon coherence does not establish agreement with the containing head."
+    },
+    {
       "name": "five-field",
       "path": "descriptors/five-field.json",
       "description": "Phase 1 planned five-field descriptor and bound identity."

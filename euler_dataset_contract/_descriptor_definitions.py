@@ -41,12 +41,15 @@ def mapping(items: dict) -> dict:
 
 
 TEXT = {"type": "string", "minLength": 1}
-TOKEN = {**TEXT, "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"}
-ID = {**TEXT, "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*){2,}$"}
-DIGEST = {**TEXT, "pattern": "^sha256:[0-9a-f]{64}$"}
+# Unlike $, this end assertion cannot match before a final newline. It works
+# in both Python and the ECMA-262 regex dialect used by JSON Schema readers.
+END = r"(?![\s\S])"
+TOKEN = {**TEXT, "pattern": rf"^[A-Za-z_][A-Za-z0-9_]*{END}"}
+ID = {**TEXT, "pattern": r"^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*){2}" + END}
+DIGEST = {**TEXT, "pattern": r"^sha256:[0-9a-f]{64}" + END}
 FULL_ID = {
     **TEXT,
-    "pattern": r"^/(?!\.{1,2}(?:/|$))[^/]+(?:/(?!\.{1,2}(?:/|$))[^/]+)*$",
+    "pattern": r"^/(?!\.{1,2}(?:/|$))[^/]+(?:/(?!\.{1,2}(?:/|$))[^/]+)*" + END,
 }
 INTEGER = {"type": "integer", "minimum": 1}
 NUMBER = {"type": "number"}

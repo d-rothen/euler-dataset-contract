@@ -12,6 +12,12 @@ unchanged. These changes have not been published.
 
 ### Phase 1 additions
 
+- Correct the five Phase 0/1 review findings: opt-in checks against the containing
+  head, exact three-segment descriptor IDs, actual built-in decoder verification,
+  boolean thresholding before conversion, and exact integer crop/identity plans.
+- Add optional containing-head callbacks to addon registration while preserving
+  existing payload-validator signatures and readers that have not opted in.
+
 - Detached modality/alias lookups and conditional, provisional, unused,
   non-modality, unknown, and conflict diagnostics without rewriting keys.
 - Immutable representation, source, field, calibration, execution, and ordered

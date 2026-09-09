@@ -39,6 +39,7 @@ from .registry import (
 )
 from .schema import build_dataset_head_schema, build_meta_schema
 from .validation import (
+    get_registered_addon_head_validators,
     get_registered_addon_validators,
     get_registered_namespace_validators,
     normalize_meta_dict,
@@ -90,6 +91,7 @@ __all__ = [
     "build_meta_schema",
     "get_modality_meta_fields",
     "get_registered_addon_validators",
+    "get_registered_addon_head_validators",
     "get_registered_namespace_validators",
     "iter_modality_meta_fields",
     "normalize_meta_dict",

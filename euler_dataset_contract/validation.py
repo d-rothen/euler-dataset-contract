@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from copy import deepcopy
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Callable
 
 from .registry import (
@@ -18,11 +19,19 @@ if TYPE_CHECKING:
 
 
 AddonValidator = Callable[[Any, str], None]
+AddonHeadValidator = Callable[["DatasetHeadContract", str], None]
+
+
+@dataclass(frozen=True)
+class _AddonValidators:
+    payload: AddonValidator
+    head: AddonHeadValidator | None = None
+
 
 _CONTRACT_VERSION_PATTERN = re.compile(r"^\d+\.\d+(?:\.\d+)?$")
 _TOKEN_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 _SLOT_PATTERN = re.compile(r"^[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+){1,}$")
-_REGISTERED_ADDON_VALIDATORS: dict[str, AddonValidator] = {}
+_REGISTERED_ADDON_VALIDATORS: dict[str, _AddonValidators] = {}
 
 
 def validate_contract_version(
@@ -210,18 +219,38 @@ def register_addon_validator(
     validator: AddonValidator,
     *,
     overwrite: bool = False,
+    head_validator: AddonHeadValidator | None = None,
 ) -> None:
+    """Register payload validation and an optional containing-head check.
+
+    Head callbacks run after normal head parsing, only when their addon is
+    present. Overwriting a registration replaces both callbacks together.
+    """
     validate_token(name, "addon")
     if name in _REGISTERED_ADDON_VALIDATORS and not overwrite:
         raise ValueError(
             f"Addon validator for {name!r} already exists; "
             "pass overwrite=True to replace it"
         )
-    _REGISTERED_ADDON_VALIDATORS[name] = validator
+    _REGISTERED_ADDON_VALIDATORS[name] = _AddonValidators(validator, head_validator)
 
 
 def get_registered_addon_validators() -> dict[str, AddonValidator]:
-    return dict(_REGISTERED_ADDON_VALIDATORS)
+    return {name: entry.payload for name, entry in _REGISTERED_ADDON_VALIDATORS.items()}
+
+
+def get_registered_addon_head_validators() -> dict[str, AddonHeadValidator]:
+    return {
+        name: entry.head
+        for name, entry in _REGISTERED_ADDON_VALIDATORS.items()
+        if entry.head is not None
+    }
+
+
+def _validate_addon_heads(head: "DatasetHeadContract", context: str) -> None:
+    for name, validator in get_registered_addon_head_validators().items():
+        if head.has_addon(name):
+            validator(head, context)
 
 
 def validate_addons(value: Any, context: str = "addons") -> dict[str, dict[str, Any]]:
@@ -286,8 +315,11 @@ def register_namespace_validator(
     validator: AddonValidator,
     *,
     overwrite: bool = False,
+    head_validator: AddonHeadValidator | None = None,
 ) -> None:
-    register_addon_validator(name, validator, overwrite=overwrite)
+    register_addon_validator(
+        name, validator, overwrite=overwrite, head_validator=head_validator
+    )
 
 
 def get_registered_namespace_validators() -> dict[str, AddonValidator]:
@@ -298,6 +330,7 @@ __all__ = [
     "DATASET_CONTRACT_VERSION",
     "DATASET_HEAD_KIND",
     "get_registered_addon_validators",
+    "get_registered_addon_head_validators",
     "get_registered_namespace_validators",
     "normalize_meta_dict",
     "parse_dataset_head",

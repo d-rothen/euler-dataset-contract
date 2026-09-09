@@ -10,10 +10,14 @@ import json
 from collections.abc import Iterator, Mapping
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Any, ClassVar, TypeVar
+from typing import TYPE_CHECKING, Any, ClassVar, TypeVar
 
 from ._descriptor_definitions import DEFINITIONS, FULL_ID, check, normalize
 from .canonical import canonical_digest, canonical_json, parse_json
+from .modalities import resolve_modality
+
+if TYPE_CHECKING:
+    from .contract import DatasetHeadContract
 
 SUPPORTED_FEATURES = frozenset(
     {"spatial.resize_crop", "bindings.qualified", "profiles.decoded"}
@@ -385,17 +389,50 @@ def validate_transforms_addon(value: Any, context: str = "euler_transforms") -> 
         raise ValueError(f"{context}: {exc}") from exc
 
 
+def _validate_representation_head(head: DatasetHeadContract, context: str) -> None:
+    representation = head.require_addon("euler_representation")
+    resolution = resolve_modality(
+        head.modality_key,
+        declared_id=representation["modality_id"],
+        representation={"form": representation["decoded"]["kind"]},
+    )
+    if resolution.status in {"conflict", "conditional"}:
+        raise ValueError(
+            f"{context}.addons.euler_representation: "
+            + "; ".join(resolution.diagnostics)
+        )
+
+
 def register_descriptor_validators() -> None:
     """Explicit, idempotent process initialization; refuse conflicting validators."""
-    from .validation import get_registered_addon_validators, register_addon_validator
+    from .validation import (
+        get_registered_addon_head_validators,
+        get_registered_addon_validators,
+        register_addon_validator,
+    )
 
     existing = get_registered_addon_validators()
-    for name, validator in (
-        ("euler_representation", validate_representation_addon),
-        ("euler_transforms", validate_transforms_addon),
-    ):
+    existing_heads = get_registered_addon_head_validators()
+    registrations = (
+        (
+            "euler_representation",
+            validate_representation_addon,
+            _validate_representation_head,
+        ),
+        ("euler_transforms", validate_transforms_addon, None),
+    )
+    # Check the whole registration before mutating process state.
+    for name, validator, head_validator in registrations:
         if name in existing:
             if existing[name] is not validator:
                 raise ValueError(f"Conflicting addon validator for {name}")
-        else:
-            register_addon_validator(name, validator)
+            if name in existing_heads and existing_heads[name] is not head_validator:
+                raise ValueError(f"Conflicting addon head validator for {name}")
+    for name, validator, head_validator in registrations:
+        if name not in existing or existing_heads.get(name) is not head_validator:
+            register_addon_validator(
+                name,
+                validator,
+                head_validator=head_validator,
+                overwrite=name in existing,
+            )

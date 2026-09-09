@@ -8,6 +8,7 @@ from typing import Any, Iterable
 
 from .registry import DATASET_CONTRACT_VERSION, DATASET_HEAD_KIND
 from .validation import (
+    _validate_addon_heads,
     normalize_meta_dict,
     validate_addons,
     validate_contract_kind,
@@ -194,7 +195,7 @@ class DatasetHeadContract:
             if addon not in addons:
                 raise ValueError(f"{context}.addons.{addon} is required")
 
-        return cls(
+        result = cls(
             contract_version=version,
             dataset_id=dataset_id,
             dataset_name=dataset_name,
@@ -203,3 +204,5 @@ class DatasetHeadContract:
             modality_meta=modality_meta,
             addons=addons,
         )
+        _validate_addon_heads(result, context)
+        return result

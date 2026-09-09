@@ -279,3 +279,38 @@ def test_dataset_head_schema_allows_custom_modality_metadata() -> None:
     }
 
     Draft202012Validator(schema).validate(head)
+
+
+def test_addon_head_callbacks_follow_parsing_and_are_replaced_together(monkeypatch):
+    from euler_dataset_contract import (
+        get_registered_addon_head_validators,
+        validation,
+    )
+
+    monkeypatch.setattr(validation, "_REGISTERED_ADDON_VALIDATORS", {})
+    calls = []
+
+    def payload_validator(value, context):
+        calls.append(("payload", context))
+
+    def head_validator(head, context):
+        calls.append(("head", context))
+        # The callback receives the normalized containing head.
+        assert head.modality_meta["file_types"] == ["png"]
+        if head.get_addon("bound_source")["dataset_id"] != head.dataset_id:
+            raise ValueError(f"{context}.addons.bound_source: dataset identity mismatch")
+
+    register_addon_validator(
+        "bound_source", payload_validator, head_validator=head_validator
+    )
+    head = _sample_head()
+    parse_dataset_head(head)
+    assert calls == []  # Absent addons do not run their callbacks.
+    head["modality"]["meta"]["fileTypes"] = [".PNG"]
+    head["addons"]["bound_source"] = {"version": "1.0", "dataset_id": "other"}
+    with pytest.raises(ValueError, match="dataset identity mismatch"):
+        parse_dataset_head(head, context="source")
+    assert calls == [("payload", "source.addons.bound_source"), ("head", "source")]
+    register_addon_validator("bound_source", payload_validator, overwrite=True)
+    assert get_registered_addon_head_validators() == {}
+    assert parse_dataset_head(head).dataset_id == "demo_rgb"

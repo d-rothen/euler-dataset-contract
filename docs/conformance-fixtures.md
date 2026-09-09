@@ -8,6 +8,12 @@ They supplement the Phase 0 evidence; [Phase 1](phase1.md) explains schema-only,
 graph, and executor support distinctions. Regenerate deterministic examples with
 `python scripts/generate_phase1_fixture.py`; use `--check` in validation.
 
+`descriptors/head-representation-conflict.json` is a deliberately contradictory
+head whose core envelope and standalone addon are valid. It must be rejected
+after descriptor validators are registered. It is separate from the core invalid
+heads so older readers keep their preservation behavior. The descriptor rejection
+corpus also covers trailing-newline identifiers.
+
 `euler-dataset-contract` sits under every other package in the ecosystem, so a
 change to it can pass here and break `euler-loading`, `euler-eval`, or
 `ds-crawler` a release later. The conformance corpus closes that gap: one set of

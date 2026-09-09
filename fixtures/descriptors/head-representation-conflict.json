@@ -1,0 +1,28 @@
+{
+  "description": "A coherent depth addon contradicts the surrounding RGB head. Envelope-only readers preserve it; descriptor-aware readers must reject it.",
+  "core_schema_valid": true,
+  "envelope_reader_valid": true,
+  "descriptor_reader_valid": false,
+  "head": {
+    "contract": {"kind": "dataset_head", "version": "1.0"},
+    "dataset": {"id": "synthetic_rgb", "name": "Synthetic conflicting representation"},
+    "modality": {"key": "rgb", "meta": {"range": [0, 1]}},
+    "addons": {
+      "euler_representation": {
+        "version": "1.0",
+        "modality_id": "geometry.camera.depth",
+        "decoded": {
+          "kind": "depth",
+          "layout": "HW",
+          "shape": [2, 2],
+          "dtype": "float32",
+          "unit": "meter",
+          "invalid": {"non_finite": false, "sentinel": 0},
+          "image_plane": "camera_0",
+          "frame": "camera_0_optical",
+          "depth_kind": "planar_z"
+        }
+      }
+    }
+  }
+}

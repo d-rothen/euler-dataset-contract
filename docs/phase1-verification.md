@@ -3,6 +3,11 @@
 The contract 0.4.0 and loading 2.23.0 source changes implement the revised
 [Phase 1 scope](phase1.md). This records local verification, not publication.
 
+The subsequent [Phase 0/1 review and amendments](phase0-1-review.md) correct five
+issues and record the latest run: 309 contract tests, 545 loading tests, and
+128 compatibility tests passed, with the same four legacy expected failures.
+The original Phase 1 verification record follows for comparison.
+
 The contract worktree started exactly at Phase 0 commit `c6c8cd4`. The isolated
 loading worktree started at `f3db6ff`. Crawler `340c228`, preprocess `7d79ec2`,
 eval `7e445fb`, and the shared loading checkout remained unchanged. Both changed

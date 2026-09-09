@@ -82,6 +82,14 @@ with a syntactically valid `version`. The core package preserves unknown addon
 payload fields. If a validator has been registered for that addon name, it is
 run against a deep copy of the payload.
 
+`register_addon_validator` also accepts an optional
+`head_validator(head, context)` callback. It runs after parsing and normalization,
+only when that addon is present, and receives the containing `DatasetHeadContract`.
+This lets an addon check references to core fields without changing the existing
+two-argument payload validator. Overwriting a registration replaces both callbacks;
+omitting `head_validator` removes any earlier head callback for that registration.
+`get_registered_addon_head_validators()` returns the registered head callbacks.
+
 ## Shared metadata
 
 `dimensions`

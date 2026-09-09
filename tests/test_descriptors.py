@@ -448,3 +448,140 @@ def test_validator_registration_is_idempotent_and_conflicts_fail(monkeypatch):
     )
     with pytest.raises(ValueError, match="Conflicting addon"):
         register_descriptor_validators()
+
+
+@pytest.mark.parametrize("reader_name", ["parse_dataset_head", "from_mapping"])
+def test_head_representation_conflicts_are_rejected_only_after_opt_in(
+    monkeypatch, reader_name
+):
+    from euler_dataset_contract import (
+        DatasetHeadContract,
+        build_dataset_head_schema,
+        parse_dataset_head,
+        register_descriptor_validators,
+        validation,
+    )
+
+    monkeypatch.setattr(validation, "_REGISTERED_ADDON_VALIDATORS", {})
+    case = descriptor_fixture("head-representation-conflict")
+    head = case["head"]
+    assert Draft202012Validator(build_dataset_head_schema()).is_valid(head)
+    RepresentationAddon(head["addons"]["euler_representation"])
+    reader = (
+        parse_dataset_head
+        if reader_name == "parse_dataset_head"
+        else DatasetHeadContract.from_mapping
+    )
+    assert reader(head).modality_key == "rgb"
+    register_descriptor_validators()
+    with pytest.raises(ValueError, match=r"euler_representation.*conflicts.*rgb"):
+        reader(head)
+
+
+def test_descriptor_registration_adds_missing_head_hook_and_refuses_conflicts(
+    monkeypatch,
+):
+    from euler_dataset_contract import (
+        get_registered_addon_head_validators,
+        register_addon_validator,
+        register_descriptor_validators,
+        validate_representation_addon,
+        validation,
+    )
+
+    monkeypatch.setattr(validation, "_REGISTERED_ADDON_VALIDATORS", {})
+    register_addon_validator("euler_representation", validate_representation_addon)
+    register_descriptor_validators()
+    assert "euler_representation" in get_registered_addon_head_validators()
+    register_addon_validator(
+        "euler_representation",
+        validate_representation_addon,
+        head_validator=lambda head, context: None,
+        overwrite=True,
+    )
+    with pytest.raises(ValueError, match="Conflicting addon head validator"):
+        register_descriptor_validators()
+
+
+@pytest.mark.parametrize(
+    "key,kind,identity,valid",
+    [
+        ("points_3d", "point_map", "geometry.scene.points", True),
+        ("points_3d", "point_cloud", "geometry.scene.points", False),
+        ("sparse_depth", "point_cloud", "geometry.scene.points", True),
+        ("sparse_depth", "point_map", "geometry.scene.points", False),
+        ("spherical_map", "ray_map", "geometry.camera.ray_direction", True),
+        ("spherical_map", "point_map", "geometry.scene.points", False),
+        ("map_3d", "generic", "signal.grid.array", True),
+        ("atmospheric_light", "generic", "radiometry.scene.atmospheric_light", True),
+        ("athmospheric_light", "generic", "radiometry.scene.atmospheric_light", True),
+        ("custom_quantity", "generic", "example.camera.quantity", True),
+    ],
+)
+def test_strict_head_uses_alias_conditions_without_rewriting_keys(
+    monkeypatch, key, kind, identity, valid
+):
+    from euler_dataset_contract import (
+        parse_dataset_head,
+        register_descriptor_validators,
+        validation,
+    )
+
+    monkeypatch.setattr(validation, "_REGISTERED_ADDON_VALIDATORS", {})
+    register_descriptor_validators()
+    profile = {
+        "kind": kind,
+        "layout": "NC" if kind == "point_cloud" else "HWC",
+        "shape": [2, 3] if kind == "point_cloud" else [2, 2, 3],
+        "dtype": "float32",
+        "unit": "dimensionless",
+        "invalid": {"non_finite": False, "sentinel": None},
+        "image_plane": "camera_0",
+    }
+    if kind in {"point_cloud", "point_map", "ray_map"}:
+        profile.update(components=["x", "y", "z"], frame="camera_0_optical")
+    if kind == "ray_map":
+        profile["normalization"] = "homogeneous"
+    head = {
+        "contract": {"kind": "dataset_head", "version": "1.0"},
+        "dataset": {"id": "example", "name": "Example"},
+        "modality": {"key": key},
+        "addons": {
+            "euler_representation": {
+                "version": "1.0",
+                "modality_id": identity,
+                "decoded": profile,
+            }
+        },
+    }
+    # Each addon is coherent on its own; only the containing head can conflict.
+    RepresentationAddon(head["addons"]["euler_representation"])
+    if valid:
+        assert parse_dataset_head(head).to_mapping() == head
+    else:
+        with pytest.raises(ValueError, match="euler_representation"):
+            parse_dataset_head(head)
+
+
+@pytest.mark.parametrize(
+    "name,path,replacement",
+    [
+        ("euler_representation", ["modality_id"], "geometry.camera.pinhole.intrinsics"),
+        ("euler_representation", ["modality_id"], "geometry.camera"),
+        ("euler_representation", ["modality_id"], "geometry.camera.depth\n"),
+        ("euler_transforms", ["sources", "source_rgb", "dataset_id"], "rgb\n"),
+        ("euler_transforms", ["sources", "source_rgb", "modality_key"], "rgb\n"),
+        ("euler_transforms", ["recipe", "reference_field"], "rgb\n"),
+        ("euler_transforms", ["recipe_digest"], "sha256:" + "0" * 64 + "\n"),
+    ],
+)
+def test_descriptor_identifier_grammar_matches_schema(data, name, path, replacement):
+    value = data["representation" if name == "euler_representation" else "addon"]
+    parent = value
+    for key in path[:-1]:
+        parent = parent[key]
+    parent[path[-1]] = replacement
+    with pytest.raises(ValidationError):
+        Draft202012Validator(build_descriptor_schema(name)).validate(value)
+    with pytest.raises(ValueError):
+        validate_descriptor_shape(name, value)

@@ -2,6 +2,20 @@
   "base": "five-field",
   "cases": [
     {
+      "name": "source-dataset-id-trailing-newline",
+      "path": ["sources", "source_rgb", "dataset_id"],
+      "value": "rgb\n",
+      "schema_valid": false,
+      "error": "must match"
+    },
+    {
+      "name": "source-modality-key-trailing-newline",
+      "path": ["sources", "source_rgb", "modality_key"],
+      "value": "rgb\n",
+      "schema_valid": false,
+      "error": "must match"
+    },
+    {
       "name": "addon-version",
       "path": [
         "version"
