@@ -4,10 +4,12 @@ This document answers a concrete question: **should modality handling be
 streamlined into a new `euler-registry` package, or by extending
 `euler-dataset-contract`?** It then specifies the design and a staged rollout.
 
-It is the executable successor to [Future contract directions](future-directions.md),
-which established the direction. This document establishes *what to build*, in
-what order, and what evidence justifies each step. Where it disagrees with the
-earlier document, the disagreement is called out explicitly.
+It expands the registry/profile portion of
+[Future contract directions](future-directions.md). That document now includes
+a subsequent review and the deterministic-transformation design, including
+writer propagation and GT replay. Its compatibility decisions and revised
+rollout take precedence over the original phase ordering retained here.
+Proposed APIs and schemas in both documents are not current package features.
 
 ---
 
@@ -46,16 +48,15 @@ Three refinements to the brief, argued in full below:
 | # | The brief said | This plan proposes | Why |
 |---|---|---|---|
 | 1 | Key is `<domain>.<subject>.<representation>.<quantity>` | Key is `<domain>.<subject>.<quantity>`; representation is a **separate typed field** | Putting representation in the identity forks identity on every encoding change: a fisheye camera would need a new modality, and `semantic_segmentation` would need one id per encoding. §5 |
-| 2 | Output format either via a primitives library or user transforms | **Neither by hand.** Declare decoded profiles; a *planner* derives the adapter chain from the delta, or fails with a precise reason | Hand-written converters are O(n²) and unverifiable; user transforms stay, but run after normalization. §7 |
-| 3 | Extensions propagate by "defining custom modalities on startup" | **Data, not code**: packaging entry points, an env path, and an inline definition carried in the head itself | Startup registration cannot propagate into a `DataLoader` worker, a CLI subprocess, or someone else's machine. §6 |
+| 2 | Output format either via a primitives library or user transforms | Declare decoded profiles; a bounded planner selects registered adapters under an explicit consumer policy, or fails with a precise reason | Profiles make preconditions checkable; preserve existing callable ordering and require lineage for spatial alignment. §7 |
+| 3 | Extensions propagate by "defining custom modalities on startup" | Shared definition discovery through installed entry points, an env path, or inline data in a head | Parent-process registration alone does not cover independent CLIs or all worker start methods. §6 |
 
 The single highest-leverage change is small and mostly already written:
 `euler-loading` annotates **every** loader function with `@modality_meta(...)`
-describing dtype, shape, unit and range — and then throws it away into a
-build-time JSON file that nothing reads at runtime. Promoting that declaration
-to a validated, contract-owned, runtime-queryable object is what makes "given
-arbitrary datasets, normalize to a common representation" mechanically true
-rather than aspirational.
+describing dtype, shape, unit and range. Loading already uses the annotated
+modality type in some paths, but the full declaration is not an enforced
+runtime profile. Promoting it to a validated, contract-owned object is the
+basis for planning normalization with explicit preconditions.
 
 ---
 
@@ -164,12 +165,12 @@ Opposite defaults for a geometry-critical flag, on either side of the seam.
 only because `meta` is open. This is the contract being extended *by
 convention*, in exactly the place the plan should formalize.
 
-### 2.8 Third-party loaders are impossible
+### 2.8 Automatic third-party loader discovery is missing
 
 `euler-loading` resolves loaders from a hardcoded dict of seven entries
-(`_resolution.py:21`). There is no registration path. A researcher adding a
-dataset must patch `euler-loading` — the exact "major patch throughout the
-repositories" the brief wants to eliminate.
+(`_resolution.py:21`). There is no registration path for head-driven discovery.
+An explicit `Modality(loader=callable)` already works, but distributing a head
+that resolves a new loader automatically requires a registry integration.
 
 ### 2.9 The generated schema is vendored and already stale
 
@@ -205,10 +206,10 @@ Two consequences follow directly, and they shape the whole plan:
    implemented generically until *decoded* is machine-readable at runtime. This
    is why promoting `@modality_meta` is the first real step and not a
    nice-to-have.
-2. **The decoded profile is falsifiable.** Unlike storage metadata, it can be
-   checked by decoding one sample and comparing. That is the mechanism that
-   turns "robust" into "verifiable", and it catches §2.1, §2.3 and §2.4
-   automatically.
+2. **The decoded profile is partly testable from samples.** Decode a sample to
+   check shape, dtype, and observable constraints. Establish units, label
+   meaning, and frames with known-value decoder/projection fixtures as well;
+   metadata and plausible numeric ranges alone cannot prove those semantics.
 
 ---
 
@@ -244,7 +245,7 @@ behaviour into it.
 |---|---|---|
 | `euler-dataset-contract` | modality registry, identity grammar, alias map, representation vocabulary, profile model, conformance fixtures, `euler-contract` CLI | NumPy, torch, file I/O, array conversion |
 | `euler-loading` | loader **registration**, runtime profile exposure, the adapter planner and its ops, `want=` on `Modality` | modality identity or vocabulary ownership |
-| `ds-crawler` | authoring against the registry; alias normalization on write | decoded-side concerns |
+| `ds-crawler` | authoring against the registry; explicit alias migration; preservation of derivation heads and referenced records | decoded-side execution |
 | `euler-eval` | declares accepted profiles; deletes `to_numpy_*` heuristics | its own meta vocabulary (§2.7 migrates in) |
 | `euler-inference`, `euler-preprocess` | request profiles instead of assuming layouts | — |
 | `euler-metric-naming` | modality validation against real ids | — |
@@ -299,8 +300,9 @@ The brief proposed `<domain>.<subject>.<representation>.<quantity>`, e.g.
    datasets hold the same quantity?" becomes a prefix-match with an open tail,
    rather than an equality test.
 
-Representation belongs in a sibling field, where it is typed, queryable, and
-free to vary without touching identity:
+Representation is typed, queryable, and free to vary without touching identity.
+This conceptual core-shape sketch would need a new format version; §5.4
+describes the addon route compatible with unchanged 1.0 readers:
 
 ```json
 {
@@ -333,7 +335,7 @@ rewritten.
 | `calibration` | *(composite — a binding, not a modality)* | — |
 | `points_3d` | `geometry.scene.points` | `form: point_map`, `axes` |
 | `point_cloud`, `lidar_point_cloud` | `geometry.scene.points` | `form: point_cloud`, `columns` |
-| `sparse_depth` | `geometry.scene.points` | `form: point_cloud`, `columns` |
+| `sparse_depth` | `geometry.scene.points` **when the declared value is a cloud**; `geometry.camera.depth` for a sparse depth raster | explicit `form`, `columns` or raster validity/units; ambiguous uses remain unresolved |
 | `scene_flow` | `geometry.scene.flow` | `axes`, `unit` |
 | `segmentation`, `semantic_segmentation`, `class_segmentation`, `semantic_segmentation_color` | `semantics.camera.class_labels` | `encoding: class_id\|rgb_palette`, `palette`, `label_space` |
 | `instance_segmentation` | `semantics.camera.instance_labels` | `encoding` |
@@ -348,9 +350,9 @@ rewritten.
 
 Three things this table settles that the current names cannot:
 
-- `sparse_depth` and `lidar_point_cloud` are the **same quantity**; "sparse
-  depth" describes a *use* (`euler-eval` projects it into the prediction
-  plane), not an identity. The registry forces that admission.
+- The reviewed `euler-eval` sparse-depth path projects a point cloud into the
+  prediction plane. This supports a conditional mapping for that path, not a
+  universal alias for every dataset named `sparse_depth`.
 - `all_intrinsics` and `calibration` are **not modalities**. They are
   cardinality and bundling, handled by binding (§8).
 - `sky_mask` generalizes to `semantics.camera.mask` with a class parameter, so
@@ -360,33 +362,37 @@ Two entries deliberately need an owner decision rather than a guess:
 `spherical_map`'s projection vocabulary, and whether `signal.*` should use
 subject-as-index-space at all (§12).
 
-### 5.4 Migrating the key without a 2.0 contract
+### 5.4 Introducing identity without changing the 1.0 core shape
 
 Contract 1.0's `modality.key` is a token; dots are rejected by `_TOKEN_PATTERN`
-and a test asserts it (`tests/test_registry.py:35`). Rather than break that:
+and a test asserts it (`tests/test_registry.py:35`). The `modality` object is
+also closed and `key` is required. Adding `modality.id`, even alongside `key`,
+breaks unchanged readers and the published 1.0 schema.
 
-- Add optional `modality.id` carrying the dotted identity. Existing heads are
-  untouched and stay valid.
-- A head supplies `key`, `id`, or both. The parser derives the missing one
-  through the alias map, and errors if both are present and disagree.
-- `DatasetHeadContract` exposes both `modality_key` (legacy) and `modality_id`
-  (canonical). Consumers migrate to `modality_id` at their own pace.
-- Only once every producer emits `id` does a 2.0 contract consider removing
-  `key`. Possibly never.
+- Keep `modality.key` and introduce richer identity in a versioned
+  `addons.euler_representation` payload, as sketched in
+  [Future contract directions](future-directions.md#1-establish-a-canonical-modality-vocabulary).
+- Resolve only unambiguous aliases, and report conflicts between the legacy
+  key, identity, and representation. Never invent a reverse alias for a new id.
+- Offer canonical identity through a lookup/accessor without silently rewriting
+  persisted heads. New readers can continue accepting old heads.
+- Direct structural fields such as the §5.2 sketch require an explicitly
+  versioned core format and reader migration if eventually adopted.
 
 ---
 
 ## 6. Extensibility without plumbing
 
 The brief's open question — "I am not sure how to propagate this definition
-through the packages" — is the crux. Startup registration alone cannot: a
-`DataLoader` worker process, a `euler-eval` CLI invocation, and a colleague's
-machine never run your startup code.
+through the packages" — is the crux. In-memory registration in the parent is
+insufficient across all worker start methods and independent CLI processes.
+An application can register definitions in each process; a shared discovery
+protocol makes that initialization repeatable across consumers.
 
-The answer is that **definitions must be data, discovered by the contract
-package itself**. Because every package already imports
-`euler-dataset-contract`, a single lazy load at first registry access
-propagates everywhere with no per-package change.
+Use **definitions as data**, discovered by the contract package. Each process
+loads the same installed or configured definitions at registry initialization;
+workers must also register the addon validators they need. Installed entry
+points can import trusted package code; inline head definitions cannot.
 
 Four sources, in precedence order (later wins, conflicts are an error unless
 explicitly overriding):
@@ -412,25 +418,27 @@ local work and for injecting definitions into a job without editing code.
 
 ```json
 {
-  "modality": {
-    "id": "geometry.camera.depth_uncertainty",
-    "definition": {
+  "modality": {"key": "depth_uncertainty", "meta": {"unit": "meter"}},
+  "addons": {
+    "euler_representation": {
       "version": "1.0",
-      "description": "Per-pixel depth standard deviation.",
-      "meta_fields": {"unit": {"type": "string", "required": true}},
-      "decoded": {"axes": ["height", "width"], "dtype": "float32"}
-    },
-    "meta": {"unit": "meter"}
+      "modality_id": "geometry.camera.depth_uncertainty",
+      "definition": {
+        "version": "1.0",
+        "description": "Per-pixel depth standard deviation.",
+        "meta_fields": {"unit": {"type": "string", "required": true}},
+        "decoded": {"axes": ["height", "width"], "dtype": "float32"}
+      }
+    }
   }
 }
 ```
 
-This is the piece worth emphasizing: **a dataset using a novel modality
-becomes self-describing and works with zero installs.** Someone hands over a
-directory and it validates, loads and normalizes on a machine that has never
-heard of the modality. Inline definitions are scoped to that head, may not
-override a registered id, and are reported as unregistered by tooling that
-cares — they are a working default, not a way to shadow the vocabulary.
+An inline definition makes a novel modality describable and checkable by a
+reader supporting that schema. Loading and normalization still require
+compatible installed decoders and adapters; data alone supplies no executable
+implementation. Definitions are scoped to that head, may not override a
+registered id, and are reported as unregistered by tooling that cares.
 
 Python `register_modality(...)` remains for genuinely dynamic cases, and the
 existing `register_modality_meta_fields` keeps working as a thin shim.
@@ -466,13 +474,18 @@ and library-independent.
 ### 7.2 The planner, not a converter library
 
 The brief asked whether conversion should be a primitives library in
-`euler-loading` or left to user transform functions. **Neither, as the primary
-mechanism.** Hand-written converters are O(n²) in profiles and cannot be
-verified; user transforms cannot be introspected or checked at all.
+`euler-loading` or left to user transform functions. Reuse tested primitives
+in a bounded planner so consumers can inspect a checked plan instead of
+rebuilding common adapter chains. Arbitrary callables still need explicit
+descriptors for their effects; they can be tested, but cannot be inferred from
+the function's presence in a transform list.
 
-Instead: given a declared `decoded` profile and a `requested` profile,
-`plan_adaptation(decoded, requested)` returns an ordered list of named
-operations, or raises with the exact field that could not be satisfied.
+Instead: given a declared `decoded` profile, a `requested` profile, and the
+consumer's permitted effects, `plan_adaptation` returns an ordered list of
+registered operations, or raises with the exact field that could not be
+satisfied. Spatial crop/resize additionally requires correspondence and
+executed lineage; a profile delta cannot establish the correct image plane.
+See [the transformation design](future-directions.md#7-persist-deterministic-transformations-from-generation-to-evaluation).
 
 ```python
 plan_adaptation(vkitti2_depth_profile, {"axes": ["height", "width"],
@@ -499,10 +512,11 @@ Properties that matter:
   rescale, or invert transforms when the input is ambiguous".
 - **The plan is inspectable before any array is touched** — printable, and
   assertable in tests.
-- **Ops are individually testable**, so correctness is O(n) not O(n²).
-- **User transforms stay.** `Modality(..., transform=fn)` is unchanged; it now
-  runs *after* normalization, on a value with known layout, which is what makes
-  a user transform safe to write in the first place.
+- **Ops and compositions are testable.** Verify individual pre/postconditions
+  and representative chains, including order-dependent and lossy behavior.
+- **User transforms stay.** Preserve the ordering of existing callable paths.
+  New normalization stages are explicit; an opaque callable cannot promise a
+  post-transform profile or replayable history without a checked descriptor.
 
 ### 7.3 The call site
 
@@ -520,7 +534,10 @@ lab can name its house convention once.
 
 Beyond identity, the unresolved cases are §2.4's `all_intrinsics` and
 `calibration`, plus hierarchical calibration inheritance. These are **binding**
-concerns, and they belong in the `euler_loading` addon rather than in identity:
+concerns. Shared geometric meaning belongs in typed representation/derivation
+descriptors; loading-specific resolution remains in its versioned addon. The
+current `euler_loading` validator rejects new keys, so these are proposed
+concepts rather than fields that can be inserted into its 1.0 payload:
 
 | Field | Meaning |
 |---|---|
@@ -562,16 +579,16 @@ expensive, so cost is explicit:
 
 | Level | Cost | Checks |
 |---|---|---|
-| `metadata` (default) | free | head parses; declared profiles are coherent |
+| `metadata` (default) | bounded parsing, no array decode | head parses; declared profiles are coherent |
 | `sample` | one decode | the decoded value matches the loader's declared profile |
 | `scan` | full pass | invariants hold across the dataset |
 
-**9.3 The CLI.** `euler-contract check <dataset> [--level sample]` validates the
-head, resolves the loader, decodes one sample, and compares reality to the
-declaration. This is what catches §2.1 (declared `scale_to_meters` versus
-hardcoded `/100.0`), §2.3 (declared `class_id` versus actual palette), and
-§2.4 (`Nx1` where `4x4` was promised) — automatically, in CI, for every dataset
-and every loader.
+**9.3 The CLI.** A proposed `euler-contract check <dataset> --level metadata`
+validates descriptors without array dependencies. Sample/scan checks require
+an explicitly installed loading integration, or a loading-owned command.
+Decoded checks can detect shape/dtype and observable profile violations;
+known-value depth, palette, and projection fixtures are required to establish
+correct scaling and geometry. A plausible range alone cannot detect §2.1.
 
 **9.4 Publish the schema.** Generated JSON Schema is published as a release
 artifact rather than vendored, so `euler-view` and other non-Python consumers
@@ -581,8 +598,12 @@ stop drifting (§2.9).
 
 ## 10. Rollout
 
-Each phase is independently shippable and leaves the ecosystem working. No
-phase requires a synchronized multi-repo release.
+The original registry work breakdown follows. The revised delivery order is
+in [Future contract directions](future-directions.md#suggested-rollout): geometry,
+bindings, and deterministic writer/evaluator integration precede general
+spatial normalization. Packages may ship opt-in support independently, but
+producers must not enable a workflow until the required readers pass shared
+conformance with them.
 
 ### Phase 0 — Inventory and fixtures *(no behaviour change)*
 
@@ -603,11 +624,12 @@ Ships: nothing user-visible. Buys: a safety net for everything after.
 - Modality registry: id grammar, alias map, `register_modality`, lookup and
   deprecation diagnostics.
 - Discovery: entry points, `EULER_MODALITY_PATH`, inline definitions.
-- `modality.id` accepted alongside `modality.key`; parser derives either.
+- Canonical identity lookup and an opt-in representation addon, retaining the
+  required `modality.key`; no new structural fields under contract 1.0.
 - `euler-contract` CLI at `--level metadata`.
 - Fix §2.6: reconcile the `radial_depth` default and pin it in a fixture.
 
-Ships: heads may use canonical ids; nothing is required to.
+Ships: heads may carry canonical ids in the addon; existing keys stay readable.
 
 ### Phase 2 — Decoded profiles become real *(the load-bearing phase)*
 
@@ -728,11 +750,13 @@ Unchanged from `future-directions.md`, now with a mechanism behind it:
 
 Concretely, at the end of Phase 3, all of the following hold and are tested:
 
-- A depth dataset declaring `scale_to_meters: 0.001` decodes to millimetres
-  correctly, or fails loudly — §2.1 cannot recur.
+- A depth dataset storing millimeters and declaring `scale_to_meters: 0.001`
+  decodes to meters correctly, demonstrated by known-value fixtures, or fails
+  loudly — §2.1 cannot recur.
 - `semantics.camera.class_labels` from VKITTI2 and from MUSES normalize to the
   same requested profile, or refuse with a named missing field — §2.3.
-- Adding a modality requires publishing one entry point, or shipping one dataset
-  with an inline definition. No euler package changes — §2.8.
+- Adding a modality definition requires an entry point or inline data; novel
+  executable behavior additionally requires an installed registered loader or
+  adapter, with no edits to built-in dispatch tables — §2.8.
 - No consumer infers meaning from a path, a config name, or an array shape —
   §2.5.
