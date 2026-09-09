@@ -1,7 +1,7 @@
 """Assertions about the shipped modality inventory.
 
-The inventory is data, not behaviour: nothing in the package reads it in phase
-0. These tests encode the evidence in the ecosystem streamlining plan's section
+The inventory remains data; Phase 1 exposes evidence-based lookups. These tests
+encode the evidence in the ecosystem streamlining plan's section
 2 as statements about that data, so the defects they describe cannot quietly
 drift further apart while the later phases are built.
 """
@@ -27,7 +27,7 @@ def test_inventory_declares_its_contract(modality_inventory) -> None:
         "kind": "modality_inventory",
         "version": "1.0",
     }
-    assert modality_inventory["provenance"]["consumed_by_runtime"] is False
+    assert modality_inventory["provenance"]["consumed_by_runtime"] is True
 
 
 def test_every_id_matches_the_three_segment_grammar(modality_inventory) -> None:

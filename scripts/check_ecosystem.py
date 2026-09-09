@@ -81,6 +81,10 @@ def main() -> int:
         help="Python with pytest and consumer dependencies installed",
     )
     parser.add_argument(
+        "--repository", action="append", default=[], metavar="NAME=PATH",
+        help="Override a named source checkout (repeat for isolated worktrees)",
+    )
+    parser.add_argument(
         "--target",
         choices=tuple(TARGETS),
         action="append",
@@ -91,6 +95,12 @@ def main() -> int:
     targets = list(dict.fromkeys(args.target or TARGETS))
     names = sorted({name for target in targets for name in TARGETS[target]})
     roots = {name: (args.repositories / name).resolve() for name in names}
+    for override in args.repository:
+        name, separator, path = override.partition("=")
+        if not separator or name not in {item for target in TARGETS.values() for item in target}:
+            parser.error("--repository requires a supported repository NAME=PATH")
+        if name in roots:
+            roots[name] = Path(path).resolve()
     for name, path in roots.items():
         if not (path / name.replace("-", "_") / "__init__.py").is_file():
             parser.error(f"Missing {name} source checkout: {path}")
@@ -152,9 +162,8 @@ print(json.dumps({'python': platform.python_version(), 'platform': platform.syst
     report = {
         "scope": "Synthetic Phase 0 checks; Torch runs on CPU; no CUDA parity claim",
         "environment": json.loads(result.stdout),
-        "sources": {
-            name: source_state(Path(path)) for name, path in checked_roots.items()
-        },
+        "sources": {name: {"path": path, **source_state(Path(path))}
+                    for name, path in checked_roots.items()},
         "checks": {},
     }
     print(

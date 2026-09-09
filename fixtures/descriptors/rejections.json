@@ -1,0 +1,130 @@
+{
+  "base": "five-field",
+  "cases": [
+    {
+      "name": "addon-version",
+      "path": [
+        "version"
+      ],
+      "value": "1.1",
+      "schema_valid": false,
+      "error": "expected one"
+    },
+    {
+      "name": "operation-version",
+      "path": [
+        "recipe",
+        "operations",
+        0,
+        "version"
+      ],
+      "value": "1.0.1",
+      "schema_valid": false,
+      "error": "variant"
+    },
+    {
+      "name": "unknown-operation",
+      "path": [
+        "recipe",
+        "operations",
+        0,
+        "op"
+      ],
+      "value": "example.unknown",
+      "schema_valid": false,
+      "error": "variant"
+    },
+    {
+      "name": "feature",
+      "path": [
+        "required_features"
+      ],
+      "value": [
+        "future.feature"
+      ],
+      "schema_valid": true,
+      "error": "Unsupported required features"
+    },
+    {
+      "name": "unknown-source",
+      "path": [
+        "recipe",
+        "fields",
+        "rgb",
+        "source"
+      ],
+      "value": "missing",
+      "schema_valid": true,
+      "error": "field source"
+    },
+    {
+      "name": "different-plane",
+      "path": [
+        "recipe",
+        "fields",
+        "depth",
+        "profile",
+        "image_plane"
+      ],
+      "value": "camera_1",
+      "schema_valid": true,
+      "error": "image plane mismatch"
+    },
+    {
+      "name": "wrong-shape",
+      "path": [
+        "recipe",
+        "fields",
+        "depth",
+        "profile",
+        "shape"
+      ],
+      "value": [
+        479,
+        960
+      ],
+      "schema_valid": true,
+      "error": "shape disagrees"
+    },
+    {
+      "name": "wrong-applicability",
+      "path": [
+        "recipe",
+        "fields",
+        "intrinsics",
+        "calibration",
+        "applies_to"
+      ],
+      "value": [
+        "missing"
+      ],
+      "schema_valid": true,
+      "error": "applicability"
+    },
+    {
+      "name": "invalid-size",
+      "path": [
+        "recipe",
+        "operations",
+        0,
+        "parameters",
+        "size"
+      ],
+      "value": [
+        -1,
+        2
+      ],
+      "schema_valid": false,
+      "error": "variant"
+    },
+    {
+      "name": "wrong-digest",
+      "path": [
+        "recipe_digest"
+      ],
+      "value": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "schema_valid": true,
+      "error": "recipe_digest mismatch"
+    }
+  ]
+}

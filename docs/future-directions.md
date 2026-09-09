@@ -10,8 +10,10 @@ The [Ecosystem streamlining plan](ecosystem-streamlining-plan.md) expands the
 registry and decoded-profile work. This review amends that direction and adds
 the missing producer-to-evaluator transformation contract in section 7. Where
 the plans differ, the compatibility, execution, and rollout decisions here
-take precedence. All new addon fields and APIs below are **proposals**, not
-features supported by the current packages.
+take precedence. Phase 1 is now implemented in the contract/loading source
+changes; [Phase 1 wire format and APIs](phase1.md) is the normative specification.
+The broader adapters, materialized writing, receipts, and GT replay below remain
+**proposals** unless explicitly marked implemented.
 
 ## Assessment of the direction
 
@@ -123,9 +125,9 @@ A hierarchical vocabulary can make relationships obvious. The companion
 plan's three-part ids, such as `geometry.camera.intrinsics`, are a reasonable
 registry convention; camera model, depth kind, and storage encoding remain
 separate typed requirements. Dots are not allowed by the 1.0 token grammar,
-and `modality` is closed. Prototype a richer identity in a representation
-addon, retaining the required legacy key. For example, this is a **proposed
-head fragment**, not an extension of the `modality` object:
+and `modality` is closed. Phase 1 introduces richer identity in a representation
+addon, retaining the required legacy key. This valid addon fragment describes
+a declared pinhole matrix; the core `modality` object is unchanged:
 
 ```json
 {
@@ -133,7 +135,14 @@ head fragment**, not an extension of the `modality` object:
   "addons": {
     "euler_representation": {
       "version": "1.0",
-      "modality_id": "geometry.camera.intrinsics"
+      "modality_id": "geometry.camera.intrinsics",
+      "decoded": {
+        "kind": "intrinsics", "layout": "matrix", "shape": [3, 3],
+        "dtype": "float32", "unit": "pixel",
+        "invalid": {"non_finite": false, "sentinel": null},
+        "image_plane": "camera_0", "frame": "camera_0_optical",
+        "camera_model": "pinhole"
+      }
     }
   }
 }
@@ -161,29 +170,27 @@ and a consumer can require a CHW tensor. Those are three distinct contracts:
 stored artifact --decoder/profile--> decoded sample --adapter--> consumer view
 ```
 
-A future representation block should describe both sides explicitly. A sketch,
-deliberately not final syntax:
+Phase 1 describes both sides explicitly. Its layout strings and ordered shapes
+replace the earlier axes/shape-map sketch. For example, the decoded profile is:
 
 ```json
 {
-  "storage": {
-    "encoding": "png.uint16",
-    "axes": ["height", "width"],
-    "value_domain": {"unit": "millimeter", "min": 0, "max": 65535}
-  },
-  "decoded": {
-    "container": "dense_array",
-    "axes": ["channel", "height", "width"],
-    "shape": {"channel": 1, "height": "H", "width": "W"},
-    "dtype": "float32",
-    "value_domain": {"unit": "meter", "min": 0, "max": 80},
-    "invalid": {"non_finite": false, "sentinel": 0},
-    "semantics": {"depth_kind": "planar_z"}
-  }
+  "kind": "depth", "layout": "CHW", "shape": [1, "H", "W"],
+  "dtype": "float32", "unit": "meter",
+  "invalid": {"non_finite": false, "sentinel": 0},
+  "depth_kind": "planar_z", "frame": "camera_0_optical",
+  "image_plane": "camera_0"
 }
 ```
 
-Important rules for that design:
+A representation addon carries this under `decoded`. Optional `storage` has
+`encoding` and a separate `profile`; it never changes how old core metadata is
+interpreted. Metadata descriptors permit symbols, while the Phase 1 executor
+requires concrete dimensions. General value-domain constraints, consumer
+requirements, and automatic adapters remain future work.
+
+Broader design goals, beyond the bounded Phase 1 implementation:
+
 
 - axes are named, so HWC and CHW are unambiguous;
 - symbolic dimensions allow variable resolution and cross-field constraints;
@@ -391,72 +398,21 @@ binding and reject ambiguity. Missing required fields, mismatched source
 planes, and silently skipped operations cannot yield a complete replay claim.
 Record conditional absence only if the operation contract explicitly allows it.
 
-### 7.3 Proposed persisted shape and sample correspondence
+### 7.3 Persisted Phase 1 shape and future sample correspondence
 
-This head sketch shows an RGB output and its calibration dependency. A full
-five-field recipe uses the same structure for the other source bindings.
-Digest strings in angle brackets are explanatory placeholders, not valid
-digests; field names are proposed. The current 1.0 parser can preserve the
-addon envelope, but does not validate or execute this new payload.
+The exact implemented example is the [planned five-field head](../fixtures/heads/valid/phase1-planned-five-field.json),
+with [descriptor records and computed digests](../fixtures/descriptors/five-field.json).
+It preserves `modality.key`, carries `euler_representation` 1.0, and carries
+`euler_transforms` 1.0 with `state: "planned"`, sources, a normalized recipe, and
+its digest. Every field has a profile, source binding, and explicit policy.
+Calibration has a qualified identity distinct from its dictionary lookup key.
+[Phase 1](phase1.md) defines exact version handling and canonical hashing.
 
-```json
-{
-  "contract": {"kind": "dataset_head", "version": "1.0"},
-  "dataset": {"id": "cropped_rgb", "name": "Resized and cropped RGB"},
-  "modality": {
-    "key": "rgb",
-    "meta": {
-      "range": [0, 255],
-      "dimensions": {"height": 320, "width": 640, "channels": 3},
-      "file_types": ["png"]
-    }
-  },
-  "addons": {
-    "euler_loading": {"version": "1.0", "loader": "generic_dense_depth", "function": "rgb"},
-    "euler_transforms": {
-      "version": "1.0",
-      "state": "materialized",
-      "sources": {
-        "source_rgb": {
-          "dataset_id": "original_rgb", "modality_key": "rgb", "metadata_scope": "rgb",
-          "head_digest": "sha256:<rgb-head>",
-          "index_digest": "sha256:<rgb-index>",
-          "content_digest": "sha256:<rgb-content-manifest>"
-        },
-        "source_camera": {
-          "dataset_id": "original_intrinsics", "modality_key": "intrinsics", "metadata_scope": "intrinsics",
-          "head_digest": "sha256:<camera-head>",
-          "index_digest": "sha256:<camera-index>",
-          "content_digest": "sha256:<camera-content-manifest>"
-        }
-      },
-      "recipe": {
-        "version": "1.0",
-        "reference_field": "rgb",
-        "fields": {
-          "rgb": {"source": "source_rgb", "kind": "image", "layout": "CHW", "interpolation": "bilinear"},
-          "intrinsics": {"source": "source_camera", "kind": "intrinsics", "applies_to": ["rgb"], "model": "pinhole"}
-        },
-        "operations": [
-          {"id": "resize_1", "op": "euler_loading.resize", "version": "1.0", "parameters": {"size": [384, 768], "pixel_centers": "half_pixel", "antialias": false}},
-          {"id": "crop_1", "op": "euler_loading.crop", "version": "1.0", "parameters": {"size": [320, 640], "anchor": "center"}}
-        ]
-      },
-      "recipe_digest": "sha256:<normalized-recipe>",
-      "sample_mapping": {"kind": "identity", "source": "source_rgb", "key": "full_id"},
-      "output": {"field": "rgb", "image_plane": "cropped_camera", "size": [320, 640]},
-      "receipts": {"storage": "file_attributes", "key": "euler_transforms"}
-    }
-  }
-}
-```
-
-The operation version supplies normative defaults omitted in this sketch;
-canonical export expands them, including numeric policies and decoder/profile
-bindings. The recipe digest covers the recipe; source and execution identities
-are separately included in the derivation digest used for caching (section
-7.4). Output storage metadata is authoritative for decoding the saved PNG;
-the historical recipe's layout describes its input values, not the PNG layout.
+The earlier materialized-head sketch is superseded. Phase 1 does not accept
+`state: "materialized"`, sample mappings, output encoding declarations, or
+receipts. The rest of this section specifies **Phase 2 proposals**. Those
+extensions require a separately negotiated addon version; adding them to 1.0
+must fail capable readers rather than falsely claiming implementation.
 
 Keep invariant recipes in the head while small. Larger recipes and receipts
 may use content-addressed, versioned JSON records referenced by relative path
@@ -483,7 +439,7 @@ Small per-sample receipts fit the existing index entry's
   "variant_id": "crop_a",
   "operations": [
     {"id": "resize_1", "status": "executed", "input_size": [480, 960], "output_size": [384, 768]},
-    {"id": "crop_1", "status": "executed", "offset": [32, 64], "output_size": [320, 640]}
+    {"id": "crop_2", "status": "executed", "offset": [32, 64], "output_size": [320, 640]}
   ]
 }
 ```
@@ -616,21 +572,22 @@ require a valid output binding rather than leaving a stale source binding.
 
 ### 7.6 The writing pathway
 
-Add an opt-in serializable-transform protocol to loading: export a normalized
-descriptor, validate/bind inputs, execute while returning a receipt, and
-resolve a descriptor through an installed operation registry. Preserve the
-existing callable interface. Loading captures the entire effective chain,
+Phase 1 adds an opt-in serializable-transform protocol to loading: export a
+normalized descriptor, validate/bind inputs, resolve resize/crop, and execute
+through a pinned backend. The existing callable interface is preserved.
+**Phase 2** adds receipts to execution and writing. Loading captures the entire effective chain,
 including per-modality transforms and representation adapters before
 `SamplePreprocessor`; a hidden earlier transform invalidates replayability.
 The executor carries receipts with the sample through workers, not in mutable
 dataset-global state or a log that the writer must reconstruct.
 
-Proposed API flow, using new arguments and methods rather than claiming they
-exist today:
+Proposed Phase 2 API flow. Only `export_transform_plan` with explicit source,
+field, image-plane, and execution bindings exists in Phase 1; the writer and
+receipt arguments below remain proposals:
 
 ```python
 # dataset already contains the configured SamplePreprocessor in transforms.
-plan = dataset.export_transform_plan()
+plan = dataset.export_transform_plan(**declared_bindings)
 writer = dataset.create_output_writer(
     "rgb", "/out/cropped_rgb",
     dataset_id="cropped_rgb", derivation=plan,
@@ -809,7 +766,9 @@ Schema. Rejection-case disagreements must be identified explicitly. Phase 0
 found two pre-existing differences (reversed range and dual file-type spelling);
 their fixtures pin both results pending a deliberate compatibility decision.
 
-### Phase 1 — descriptors, bindings, and compatibility
+### Phase 1 — descriptors, bindings, and compatibility (implemented)
+
+See [the finalized wire format, APIs, and limits](phase1.md). The completed scope is:
 
 - In `euler-dataset-contract`, publish registry lookups and conditional alias
   diagnostics without rewriting keys. Define the opt-in representation and

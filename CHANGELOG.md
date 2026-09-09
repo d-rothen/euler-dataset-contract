@@ -5,10 +5,31 @@ semantic versioning independently of the serialized dataset contract version.
 
 ## [Unreleased]
 
-Phase 0 of the [ecosystem streamlining plan](docs/ecosystem-streamlining-plan.md):
-inventory and fixtures. Nothing user-visible changes. No default, validation
-rule, or generated schema is different, and every existing dataset head parses,
-validates, and serializes exactly as before.
+Phase 1 of the revised rollout is implemented across contract 0.4.0 and loading
+2.23.0 source changes. See [the finalized wire format and APIs](docs/phase1.md).
+Core Contract 1.0 schemas, required modality keys, and legacy parsing remain
+unchanged. These changes have not been published.
+
+### Phase 1 additions
+
+- Detached modality/alias lookups and conditional, provisional, unused,
+  non-modality, unknown, and conflict diagnostics without rewriting keys.
+- Immutable representation, source, field, calibration, execution, and ordered
+  operation models; opt-in `euler_representation` and planned `euler_transforms`
+  1.0 validators with generated schemas from shared dependency-free definitions.
+- Exact version/feature negotiation, reference and geometry integrity checks,
+  canonical JSON encoding, recipe/bound-computation hashes, and shared vectors.
+- Five-field descriptor, shared rejection cases, and a compatible complete head;
+  schemas and the expanded fixture corpus ship in both distributions.
+- Loading export/resolution protocols, explicit Torch/Pillow CPU execution,
+  validity-aware depth as an opt-in policy, corrected pinhole skew in the new
+  executor, output profile/virtual calibration inference, and worker registration.
+- Explicit per-repository overrides in the compatibility driver for worktrees.
+
+Receipts, materialized writer metadata, producer wiring, and GT replay remain
+Phase 2/3. The Phase 0 strict expected failures and legacy behavior remain tested.
+
+The following Phase 0 additions established that preserved baseline.
 
 ### Added
 
@@ -16,7 +37,8 @@ validates, and serializes exactly as before.
   (`euler_dataset_contract/data/modality-inventory-1.0.json`), recording the
   canonical identity behind every modality name the ecosystem emits, the two
   names that are not modalities, and which entries an open question still
-  blocks. It is data only; no code path reads it in this release.
+  blocks. Phase 1 now reads this data through opt-in lookup APIs; it does not
+  alter core metadata registration or decoder dispatch.
 - A conformance fixture corpus under `fixtures/`: valid dataset heads with
   their canonical parsed form, invalid heads with the error each must produce,
   and a manifest. It is the cross-repository source of truth and is readable
@@ -27,8 +49,8 @@ validates, and serializes exactly as before.
   `pytest`; the core install stays dependency-free and does not import it.
 - Regression tests asserting that every modality type `euler-loading` emits
   resolves to exactly one canonical identity, that the alias map is flat and
-  acyclic, and that the `radial_depth` default stays `False` until Phase 1
-  reconciles it with `euler-eval`.
+  acyclic, and that the `radial_depth` default stays `False`. The unchecked
+  evaluator fallback remains a documented legacy caveat in Phase 1.
 - [Conformance fixtures](docs/conformance-fixtures.md), documenting the corpus,
   how a repository wires the plugin in, and the rule that a contract change is
   proven against the corpus in every repository before it ships.

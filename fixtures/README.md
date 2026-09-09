@@ -1,5 +1,10 @@
 # Conformance fixture corpus
 
+The `descriptors` manifest section carries Phase 1 planned addon examples,
+canonical encoding/hash vectors, and graph/structural rejection edits. A full
+planned head is included in the ordinary valid/canonical suites so old producer
+readers must preserve it. See [Phase 1](../docs/phase1.md) for their interpretation.
+
 This directory is the cross-repository source of truth for what a valid
 `dataset-head.json` is, what an invalid one fails with, and which modality
 identity each legacy modality name resolves to.

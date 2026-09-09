@@ -32,17 +32,25 @@ SDIST_DIRECTORIES = {
 }
 WHEEL_PACKAGE = "euler_dataset_contract"
 MODALITY_INVENTORY = "data/modality-inventory-1.0.json"
+DESCRIPTOR_SCHEMAS = {f"{name}-1.0.schema.json" for name in (
+    "euler-representation", "euler-transforms", "recipe", "profile",
+)}
 
 # Shipped data, as opposed to shipped code. A consumer that resolves modality
 # identity or asserts against the conformance corpus fails at import time when
 # any of these is missing, so a build that drops one must not reach PyPI.
 SDIST_DATA_PATHS = {
+    *(f"schemas/{name}" for name in DESCRIPTOR_SCHEMAS),
     f"{WHEEL_PACKAGE}/{MODALITY_INVENTORY}",
     "fixtures/index.json",
     "fixtures/README.md",
     "fixtures/inventory/euler-loading-modality-types.json",
 }
 WHEEL_DATA_PATHS = {
+    *(f"{WHEEL_PACKAGE}/_schemas/{name}" for name in DESCRIPTOR_SCHEMAS),
+    *(f"{WHEEL_PACKAGE}/{name}.py" for name in (
+        "canonical", "modalities", "descriptors", "_descriptor_definitions",
+    )),
     f"{WHEEL_PACKAGE}/{MODALITY_INVENTORY}",
     f"{WHEEL_PACKAGE}/_fixtures/index.json",
     f"{WHEEL_PACKAGE}/_fixtures/README.md",
@@ -74,8 +82,8 @@ def _verify_corpus(paths: set[str], prefix: str, read: Callable[[str], bytes]) -
     for entry in manifest["valid_heads"]:
         referenced.extend((entry["head"], entry["canonical"]))
     referenced.extend(entry["case"] for entry in manifest["invalid_heads"])
-    for section in ("inventory", "evidence"):
-        referenced.extend(entry["path"] for entry in manifest[section])
+    for section in ("inventory", "evidence", "descriptors"):
+        referenced.extend(entry["path"] for entry in manifest.get(section, []))
     for relative in referenced:
         _safe_parts(relative)
         path = f"{prefix}/{relative}"

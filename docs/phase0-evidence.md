@@ -4,7 +4,9 @@ Phase 0 is implemented for the reviewed source checkouts and synthetic corpus.
 It adds shared data, numerical reference answers, executable consumer checks,
 and repeatable inventory capture. Contract 1.0 parsing, defaults, schemas,
 decoders, and transformation behavior are unchanged. Transformation descriptors,
-receipts, automatic metadata updates, and GT replay remain later phases.
+receipts, automatic metadata updates, and GT replay were future work at this
+baseline. [Phase 1](phase1.md) now implements opt-in descriptors and resolution;
+this document retains the original numerical and compatibility evidence.
 
 ## Sources and scope
 
@@ -131,8 +133,8 @@ uv run pytest
 uv run python scripts/refresh_loader_observations.py /path/to/euler-loading --check
 
 # Use a Python environment with the consumer packages' dependencies and pytest.
-# Source checkouts must be siblings named ds-crawler, euler-loading,
-# euler-preprocess, and euler-eval.
+# Source checkouts default to sibling repository names; use repeatable
+# --repository NAME=PATH overrides for isolated worktrees.
 uv run python scripts/check_ecosystem.py \
   --repositories /path/to/checkouts \
   --python /path/to/consumer-venv/bin/python \

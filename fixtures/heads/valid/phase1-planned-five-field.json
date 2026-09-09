@@ -1,0 +1,338 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "synthetic_rgb",
+    "name": "Synthetic planned five-field input"
+  },
+  "modality": {
+    "key": "rgb",
+    "meta": {
+      "range": [
+        0,
+        1
+      ],
+      "dimensions": {
+        "height": 480,
+        "width": 960,
+        "channels": 3
+      }
+    }
+  },
+  "addons": {
+    "euler_representation": {
+      "version": "1.0",
+      "modality_id": "appearance.camera.color",
+      "decoded": {
+        "dtype": "float32",
+        "image_plane": "camera_0",
+        "invalid": {
+          "non_finite": false,
+          "sentinel": null
+        },
+        "kind": "image",
+        "layout": "HWC",
+        "shape": [
+          480,
+          960,
+          3
+        ],
+        "unit": "dimensionless"
+      }
+    },
+    "euler_transforms": {
+      "recipe": {
+        "execution": {
+          "antialias": false,
+          "backend": "torch_cpu",
+          "boundary": "edge",
+          "device": "cpu",
+          "integer_rounding": "ties_to_even",
+          "nearest": "floor",
+          "numeric_tolerance": {
+            "atol": 1e-05,
+            "rtol": 1e-05
+          },
+          "output_dtype": "preserve",
+          "vector_epsilon": 1e-12,
+          "versions": {
+            "numpy": "2.4.6",
+            "torch": "2.12.1+cu130"
+          },
+          "work_dtype": "float32"
+        },
+        "fields": {
+          "depth": {
+            "policy": {
+              "interpolation": "bilinear",
+              "invalid_depth": "legacy_blend",
+              "mask_threshold": 0.5,
+              "rays": "preserve"
+            },
+            "profile": {
+              "depth_kind": "planar_z",
+              "dtype": "float32",
+              "frame": "camera_0_optical",
+              "image_plane": "camera_0",
+              "invalid": {
+                "non_finite": false,
+                "sentinel": 0
+              },
+              "kind": "depth",
+              "layout": "HW",
+              "shape": [
+                480,
+                960
+              ],
+              "unit": "meter"
+            },
+            "source": "source_depth"
+          },
+          "intrinsics": {
+            "calibration": {
+              "applies_to": [
+                "rgb",
+                "depth",
+                "valid_mask",
+                "ray_map"
+              ],
+              "camera_model": "pinhole",
+              "frame": "camera_0_optical",
+              "full_id": "/scene_01/camera_0/calibration",
+              "image_plane": "camera_0",
+              "revision": "sha256:854936b6b1576a72b14a17febc2d0879bfbb4aeff94034f44cfe14fa2dd1a280"
+            },
+            "policy": {
+              "interpolation": "bilinear",
+              "invalid_depth": "legacy_blend",
+              "mask_threshold": 0.5,
+              "rays": "preserve"
+            },
+            "profile": {
+              "camera_model": "pinhole",
+              "dtype": "float32",
+              "frame": "camera_0_optical",
+              "image_plane": "camera_0",
+              "invalid": {
+                "non_finite": false,
+                "sentinel": null
+              },
+              "kind": "intrinsics",
+              "layout": "matrix",
+              "shape": [
+                3,
+                3
+              ],
+              "unit": "pixel"
+            },
+            "selection": "camera_0",
+            "source": "source_intrinsics"
+          },
+          "ray_map": {
+            "policy": {
+              "interpolation": "bilinear",
+              "invalid_depth": "legacy_blend",
+              "mask_threshold": 0.5,
+              "rays": "resample_normalize"
+            },
+            "profile": {
+              "components": [
+                "x",
+                "y",
+                "z"
+              ],
+              "dtype": "float32",
+              "frame": "camera_0_optical",
+              "image_plane": "camera_0",
+              "invalid": {
+                "non_finite": false,
+                "sentinel": null
+              },
+              "kind": "ray_map",
+              "layout": "HWC",
+              "normalization": "homogeneous",
+              "shape": [
+                480,
+                960,
+                3
+              ],
+              "unit": "dimensionless"
+            },
+            "source": "source_ray_map"
+          },
+          "rgb": {
+            "policy": {
+              "interpolation": "bilinear",
+              "invalid_depth": "legacy_blend",
+              "mask_threshold": 0.5,
+              "rays": "preserve"
+            },
+            "profile": {
+              "dtype": "float32",
+              "image_plane": "camera_0",
+              "invalid": {
+                "non_finite": false,
+                "sentinel": null
+              },
+              "kind": "image",
+              "layout": "HWC",
+              "shape": [
+                480,
+                960,
+                3
+              ],
+              "unit": "dimensionless"
+            },
+            "source": "source_rgb"
+          },
+          "valid_mask": {
+            "policy": {
+              "interpolation": "nearest",
+              "invalid_depth": "legacy_blend",
+              "mask_threshold": 0.5,
+              "rays": "preserve"
+            },
+            "profile": {
+              "dtype": "bool",
+              "image_plane": "camera_0",
+              "invalid": {
+                "non_finite": false,
+                "sentinel": null
+              },
+              "kind": "mask",
+              "layout": "HW",
+              "meaning": "true denotes valid source depth",
+              "shape": [
+                480,
+                960
+              ],
+              "unit": "dimensionless"
+            },
+            "source": "source_valid_mask"
+          }
+        },
+        "image_planes": {
+          "camera_0": {
+            "camera_model": "pinhole",
+            "frame": "camera_0_optical",
+            "size": [
+              480,
+              960
+            ]
+          }
+        },
+        "operations": [
+          {
+            "id": "resize_1",
+            "op": "euler_loading.resize",
+            "parameters": {
+              "pixel_centers": "half_pixel",
+              "size": [
+                384,
+                768
+              ]
+            },
+            "version": "1.0"
+          },
+          {
+            "id": "crop_2",
+            "op": "euler_loading.crop",
+            "parameters": {
+              "anchor": "center",
+              "size": [
+                320,
+                640
+              ]
+            },
+            "version": "1.0"
+          }
+        ],
+        "reference_field": "rgb",
+        "required_features": [
+          "spatial.resize_crop",
+          "bindings.qualified",
+          "profiles.decoded"
+        ],
+        "version": "1.0"
+      },
+      "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+      "required_features": [],
+      "sources": {
+        "source_depth": {
+          "dataset_id": "synthetic_depth",
+          "decoder": {
+            "id": "synthetic.affine_fixture",
+            "profile_digest": "sha256:e26a1d79ff5711752f04e86778ba0fe03bd71e515df0966908abb8f5a03cd5c3",
+            "version": "1.0"
+          },
+          "head_digest": "sha256:67dcf47e5ab99f1ff536e2cb87585b549b4172a796a7cbe0923ab3f236f6896d",
+          "index_digest": "sha256:90b0383a42ad96bd8ec72d2b139763fca8cd828932cf8a3df0251e77310e4170",
+          "metadata_scope": "depth",
+          "modality_key": "depth",
+          "revision": "sha256:4d3c34f1fea2f5480e98256a4e7c14d5524e2a2bc5b3ad906fc77d70dc36a596",
+          "verification": "metadata"
+        },
+        "source_intrinsics": {
+          "dataset_id": "synthetic_intrinsics",
+          "decoder": {
+            "id": "synthetic.affine_fixture",
+            "profile_digest": "sha256:2d1a3304c9efe0d05e64eb4319c189ee5a118f8ff2805d0e74752ca521dae974",
+            "version": "1.0"
+          },
+          "head_digest": "sha256:f04cfc4694761e7588d7c03740149544942df2a6af5f5afe5455d3010d225cf5",
+          "index_digest": "sha256:4dc4a0cc7178b4b4d647a560923261833fc13924bd61dd69ae51c3155bdb6a6e",
+          "metadata_scope": "intrinsics",
+          "modality_key": "intrinsics",
+          "revision": "sha256:854936b6b1576a72b14a17febc2d0879bfbb4aeff94034f44cfe14fa2dd1a280",
+          "verification": "metadata"
+        },
+        "source_ray_map": {
+          "dataset_id": "synthetic_ray_map",
+          "decoder": {
+            "id": "synthetic.affine_fixture",
+            "profile_digest": "sha256:3d01d2e5f37f7b6d6af50cf7b9e5ab36e1bfc323c9f1386ec424eb92ed3e8659",
+            "version": "1.0"
+          },
+          "head_digest": "sha256:ea461f600e9a703a0ee97b68915f9cde465bfbb9d4c358835f3aa34e9862c1db",
+          "index_digest": "sha256:4083a9acdc636e834367967faa11bf163d6a6571f6f66c88aa44a95c3693bd2b",
+          "metadata_scope": "ray_map",
+          "modality_key": "spherical_map",
+          "revision": "sha256:5ee24cab98a7af0c14b6715256298a403b63cbf2c6a901647000c1413e7e0461",
+          "verification": "metadata"
+        },
+        "source_rgb": {
+          "dataset_id": "synthetic_rgb",
+          "decoder": {
+            "id": "synthetic.affine_fixture",
+            "profile_digest": "sha256:4f30f45d0aabb2012a189b2b3f9763f7374971fdbe87e1279314c0bd6e0cab37",
+            "version": "1.0"
+          },
+          "head_digest": "sha256:42c9b956be3d4ae4341526c2a10106197dfb460453bdbf9159eda84513d577fc",
+          "index_digest": "sha256:c8fad81236eaf00068557f709d2afa6cf8cb5d64192924363fc56af1a7dfc71b",
+          "metadata_scope": "rgb",
+          "modality_key": "rgb",
+          "revision": "sha256:87f83f506368951f50502b224d2f3e91d220a1ce9a7ffd75d037b8d9565cc2c4",
+          "verification": "metadata"
+        },
+        "source_valid_mask": {
+          "dataset_id": "synthetic_valid_mask",
+          "decoder": {
+            "id": "synthetic.affine_fixture",
+            "profile_digest": "sha256:f1c2f649717552edac04b11f05ed442564cd78e5c3ec2b97e46c7c761bca5382",
+            "version": "1.0"
+          },
+          "head_digest": "sha256:0edf54e26940a06d69ef7ceca20fbda1a9daa774d3423508c5d211a5192f2481",
+          "index_digest": "sha256:4b3fffcc46cb78856ecf7a1b36ac9e8055b014603d3def8fd83b183d6b0baca4",
+          "metadata_scope": "valid_mask",
+          "modality_key": "valid_mask",
+          "revision": "sha256:9da3be1833a97587d25892becdb9bcacf814a336d31ed3a472e75a9a0dbf787d",
+          "verification": "metadata"
+        }
+      },
+      "state": "planned",
+      "version": "1.0"
+    }
+  }
+}

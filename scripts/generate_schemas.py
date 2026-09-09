@@ -6,7 +6,11 @@ import argparse
 import json
 from pathlib import Path
 
-from euler_dataset_contract import build_dataset_head_schema, build_meta_schema
+from euler_dataset_contract import (
+    build_dataset_head_schema,
+    build_descriptor_schema,
+    build_meta_schema,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_DIR = ROOT / "schemas"
@@ -38,6 +42,8 @@ def _schemas() -> dict[str, dict]:
     return {
         "dataset-head-1.0.schema.json": dataset_head,
         "modality-meta-1.0.schema.json": modality_meta,
+        **{f"{name.replace('_', '-')}-1.0.schema.json": build_descriptor_schema(name)
+           for name in ("euler_representation", "euler_transforms", "recipe", "profile")},
     }
 
 

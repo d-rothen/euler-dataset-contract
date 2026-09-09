@@ -7,8 +7,8 @@
     "document": "docs/future-directions.md",
     "section": "Suggested rollout / Phase 0",
     "phase": "0",
-    "consumed_by_runtime": false,
-    "description": "Data-only Phase 0 inventory, amended from the operator dataset list, clarification, and source observations. Conditional aliases require their stated evidence; no runtime parser, normalization, or schema reads this file."
+    "consumed_by_runtime": true,
+    "description": "Phase 0 evidence inventory, now read by opt-in Phase 1 identity lookups. Conditional aliases require their stated evidence; lookup does not register metadata rules, select decoders, or rewrite persisted keys."
   },
   "vocabularies": {
     "status": {

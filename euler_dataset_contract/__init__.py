@@ -1,6 +1,31 @@
 """Shared dataset contract processing for Euler packages."""
 
 from .contract import DatasetHeadContract
+from .descriptors import (
+    CalibrationBinding,
+    ExecutionProfile,
+    FieldBinding,
+    ImagePlane,
+    OperationDescriptor,
+    RepresentationAddon,
+    RepresentationProfile,
+    SourceBinding,
+    TransformRecipe,
+    TransformsAddon,
+    bound_derivation_digest,
+    build_descriptor_schema,
+    recipe_digest,
+    register_descriptor_validators,
+    validate_descriptor_shape,
+    validate_representation_addon,
+    validate_transforms_addon,
+)
+from .modalities import (
+    ModalityResolution,
+    lookup_alias,
+    lookup_modality,
+    resolve_modality,
+)
 from .registry import (
     DATASET_CONTRACT_VERSION,
     DATASET_HEAD_KIND,
@@ -33,6 +58,27 @@ from .validation import (
 )
 
 __all__ = [
+    "CalibrationBinding",
+    "ExecutionProfile",
+    "FieldBinding",
+    "ImagePlane",
+    "ModalityResolution",
+    "OperationDescriptor",
+    "RepresentationAddon",
+    "RepresentationProfile",
+    "SourceBinding",
+    "TransformRecipe",
+    "TransformsAddon",
+    "bound_derivation_digest",
+    "build_descriptor_schema",
+    "lookup_alias",
+    "lookup_modality",
+    "recipe_digest",
+    "register_descriptor_validators",
+    "resolve_modality",
+    "validate_descriptor_shape",
+    "validate_representation_addon",
+    "validate_transforms_addon",
     "DATASET_CONTRACT_VERSION",
     "DATASET_HEAD_KIND",
     "DatasetHeadContract",

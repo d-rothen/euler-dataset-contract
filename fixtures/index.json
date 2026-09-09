@@ -213,6 +213,16 @@
         "section:dataset_attributes",
         "shared_meta:dimensions"
       ]
+    },
+    {
+      "name": "phase1-planned-five-field",
+      "head": "heads/valid/phase1-planned-five-field.json",
+      "canonical": "heads/canonical/phase1-planned-five-field.json",
+      "description": "A planned descriptor and representation profile are preserved by unchanged core and producer readers. No materialization claim.",
+      "covers": [
+        "section:addons",
+        "modality_key:rgb"
+      ]
     }
   ],
   "invalid_heads": [
@@ -368,6 +378,23 @@
       "kind": "persistence",
       "path": "persistence/source-backed.json",
       "description": "Opaque heads and file attributes survive present writer APIs; a resized output currently inherits stale source dimensions."
+    }
+  ],
+  "descriptors": [
+    {
+      "name": "five-field",
+      "path": "descriptors/five-field.json",
+      "description": "Phase 1 planned five-field descriptor and bound identity."
+    },
+    {
+      "name": "canonical-vectors",
+      "path": "descriptors/canonical-vectors.json",
+      "description": "Euler canonical JSON 1 encoding and SHA-256 vectors."
+    },
+    {
+      "name": "rejections",
+      "path": "descriptors/rejections.json",
+      "description": "Shared structural and graph rejection edits against five-field addon, with schema/runtime distinctions."
     }
   ]
 }

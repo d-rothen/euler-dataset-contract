@@ -1,5 +1,13 @@
 # Conformance fixtures
 
+Phase 1 extends the corpus with `descriptors/five-field.json`, canonical hash
+vectors, shared structural/graph rejection cases, and a full planned head.
+Read them through `descriptor_fixture(name)` from
+`euler_dataset_contract.testing`, or their paths in `fixtures/index.json`.
+They supplement the Phase 0 evidence; [Phase 1](phase1.md) explains schema-only,
+graph, and executor support distinctions. Regenerate deterministic examples with
+`python scripts/generate_phase1_fixture.py`; use `--check` in validation.
+
 `euler-dataset-contract` sits under every other package in the ecosystem, so a
 change to it can pass here and break `euler-loading`, `euler-eval`, or
 `ds-crawler` a release later. The conformance corpus closes that gap: one set of

@@ -1,0 +1,53 @@
+{
+  "encoding": "euler-json-1",
+  "vectors": [
+    {
+      "value": null,
+      "canonical": "null",
+      "digest": "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "value": {},
+      "canonical": "{}",
+      "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "value": {
+        "b": 1.0,
+        "a": -0.0
+      },
+      "canonical": "{\"a\":0,\"b\":1}",
+      "digest": "sha256:f4c1d8bd90d7ccd720aa5a69a67185fb9caf4f35926a4eacf53a86d0e70bdf88"
+    },
+    {
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "canonical": "[1,2,3]",
+      "digest": "sha256:a615eeaee21de5179de080de8c3052c8da901138406ba71c38c032845f7d54f4"
+    },
+    {
+      "value": 0.1,
+      "canonical": "0.1000000000000000055511151231257827021181583404541015625",
+      "digest": "sha256:96db2f78fe4cd6af75a1ad444060e0f5bc0c712c17e8356f0355e09980b10716"
+    },
+    {
+      "value": {
+        "unicode": "é/雪",
+        "control": "\n\t\u0001"
+      },
+      "canonical": "{\"control\":\"\\n\\t\\u0001\",\"unicode\":\"é/雪\"}",
+      "digest": "sha256:9f421be7e168a49033424317c87a4637c8ada1046545576ee451e59ffc29e0d0"
+    },
+    {
+      "value": {
+        "é": 1,
+        "é": 2
+      },
+      "canonical": "{\"é\":1,\"é\":2}",
+      "digest": "sha256:c2635d7e15e25b90abc8b3543d92f0ffcee0644372d8b662a0775f88d43278e5"
+    }
+  ]
+}

@@ -37,6 +37,12 @@ PyTorch. Its core install has no runtime dependencies.
 
 ## Install
 
+Phase 1 adds opt-in modality lookups, representation/source/calibration models,
+planned resize/crop descriptors, generated addon schemas, and canonical hashes.
+See [the wire format, public APIs, and compatibility rules](docs/phase1.md).
+Core Contract 1.0 still requires `modality.key`; the package has no runtime
+dependencies. Loading's paired implementation requires these source changes.
+
 ```bash
 pip install euler-dataset-contract
 ```

@@ -9,7 +9,9 @@ It expands the registry/profile portion of
 a subsequent review and the deterministic-transformation design, including
 writer propagation and GT replay. Its compatibility decisions and revised
 rollout take precedence over the original phase ordering retained here.
-Proposed APIs and schemas in both documents are not current package features.
+The revised Phase 1 is now implemented; [Phase 1 wire format and APIs](phase1.md)
+supersedes the older sketches and phase numbering below. Discovery, generic
+adaptation, materialized writing, and GT replay remain proposals.
 
 ---
 
@@ -574,8 +576,8 @@ This closes the gap `future-directions.md` §5 identified but did not staff.
 
 The head corpus, the plugin, and the rule that a contract change is proven
 against them in every repo before it ships exist as of Phase 0 and are
-documented in [Conformance fixtures](conformance-fixtures.md). Decoded-sample
-descriptors wait for Phase 2, when a decoded profile is a real object.
+documented in [Conformance fixtures](conformance-fixtures.md). Decoded profiles and descriptor fixtures now ship in the revised Phase 1;
+automatic loader profile publication and materialized writing remain later work.
 
 **9.2 Runtime conformance, opt-in and tiered.** Checking every sample is
 expensive, so cost is explicit:
@@ -620,7 +622,12 @@ conformance with them.
 
 Ships: nothing user-visible. Buys: a safety net for everything after.
 
-### Phase 1 — Registry and identity *(contract only; additive)*
+### Original Phase 1 — Registry and identity *(superseded)*
+
+The implemented Phase 1 spans contract and loading, including profiles,
+bindings, canonical hashes, and resize/crop resolution. See [its finalized
+scope](phase1.md). The following original outline is retained as planning
+history; its discovery and CLI items are not claims of implementation.
 
 *Touches:* `euler-dataset-contract` only.
 

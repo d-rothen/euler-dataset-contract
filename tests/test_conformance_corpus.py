@@ -35,6 +35,7 @@ def test_every_corpus_file_is_listed_in_the_index(fixture_index) -> None:
     listed |= {root / entry["case"] for entry in fixture_index["invalid_heads"]}
     listed |= {root / entry["path"] for entry in fixture_index["inventory"]}
     listed |= {root / entry["path"] for entry in fixture_index["evidence"]}
+    listed |= {root / entry["path"] for entry in fixture_index["descriptors"]}
 
     on_disk = {path for path in root.rglob("*.json") if path != root / "index.json"}
 

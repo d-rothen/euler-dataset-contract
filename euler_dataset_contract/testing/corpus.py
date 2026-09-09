@@ -24,6 +24,7 @@ __all__ = [
     "assert_head_roundtrip",
     "data_root",
     "dataset_modality_types",
+    "descriptor_fixture",
     "evidence_cases",
     "fixture_index",
     "fixtures_root",
@@ -215,6 +216,14 @@ def fixture_index() -> dict[str, Any]:
     """The corpus manifest as a detached mapping."""
 
     return deepcopy(_cached_index())
+
+
+def descriptor_fixture(name: str) -> dict[str, Any]:
+    """Read one detached Phase 1 descriptor/vector fixture by manifest name."""
+    for entry in _cached_index()["descriptors"]:
+        if entry["name"] == name:
+            return _read_json(fixtures_root() / entry["path"])
+    raise KeyError(f"Unknown descriptor fixture: {name}")
 
 
 def modality_inventory() -> dict[str, Any]:
