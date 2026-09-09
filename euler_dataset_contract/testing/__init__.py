@@ -24,32 +24,43 @@ from typing import Any
 
 from .corpus import (
     MODALITY_INVENTORY_FILENAME,
+    EvidenceCase,
     GoldenHead,
     InvalidHead,
     assert_head_roundtrip,
     data_root,
+    dataset_modality_types,
+    evidence_cases,
     fixture_index,
     fixtures_root,
     golden_heads,
     invalid_heads,
+    loader_observations,
     modality_inventory,
     vendored_modality_types,
 )
 
-_PLUGIN_EXPORTS = frozenset({"golden_head_params", "invalid_head_params"})
+_PLUGIN_EXPORTS = frozenset(
+    {"golden_head_params", "invalid_head_params", "evidence_case_params"}
+)
 
 __all__ = [
     "MODALITY_INVENTORY_FILENAME",
+    "EvidenceCase",
     "GoldenHead",
     "InvalidHead",
     "assert_head_roundtrip",
     "data_root",
+    "dataset_modality_types",
+    "evidence_case_params",
+    "evidence_cases",
     "fixture_index",
     "fixtures_root",
     "golden_head_params",
     "golden_heads",
     "invalid_head_params",
     "invalid_heads",
+    "loader_observations",
     "modality_inventory",
     "vendored_modality_types",
 ]

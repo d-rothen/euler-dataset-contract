@@ -147,8 +147,8 @@ normalization, versioning, and the public API.
 
 ## Conformance fixtures
 
-The [`fixtures/`](fixtures/) directory holds the corpus every repository in the
-ecosystem asserts against: valid dataset heads with their canonical parsed
+The [`fixtures/`](fixtures/) directory holds the shared ecosystem corpus:
+valid dataset heads with their canonical parsed
 form, and invalid heads with the error each must produce. They are JSON, so
 non-Python consumers read them directly.
 
@@ -170,6 +170,12 @@ That single function runs once per head in the corpus. The extra carries only
 See [Conformance fixtures](docs/conformance-fixtures.md) for the full fixture
 list, the shipped modality inventory, and the rule that a contract change is
 proven against the corpus in every repository before it ships.
+
+[Phase 0 evidence](docs/phase0-evidence.md) adds the current dataset vocabulary,
+90 loader declarations, shared resize/crop and projection examples, and opt-in
+checks against ds-crawler, loading, preprocess, and eval. The report separates
+reference results from reproduced legacy failures and includes a local test
+driver. Contract 1.0 runtime behavior is unchanged.
 
 ## Ecosystem boundary
 

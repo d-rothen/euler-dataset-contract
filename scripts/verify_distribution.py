@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import json
 import stat
 import sys
 import tarfile
 import zipfile
+from collections.abc import Callable
 from configparser import ConfigParser
 from email.parser import BytesParser
 from pathlib import Path, PurePosixPath
@@ -48,6 +50,12 @@ WHEEL_DATA_PATHS = {
     f"{WHEEL_PACKAGE}/testing/__init__.py",
     f"{WHEEL_PACKAGE}/testing/corpus.py",
     f"{WHEEL_PACKAGE}/testing/plugin.py",
+    f"{WHEEL_PACKAGE}/testing/checks/__init__.py",
+    f"{WHEEL_PACKAGE}/testing/checks/_support.py",
+    *(
+        f"{WHEEL_PACKAGE}/testing/checks/test_{name}.py"
+        for name in ("crawler", "loading", "preprocess", "eval")
+    ),
 }
 PYTEST_ENTRY_POINT = "euler_dataset_contract.testing.plugin"
 
@@ -57,6 +65,23 @@ def _safe_parts(name: str) -> tuple[str, ...]:
     if path.is_absolute() or ".." in path.parts:
         raise ValueError(f"Unsafe archive path: {name!r}")
     return tuple(part for part in path.parts if part not in {"", "."})
+
+
+def _verify_corpus(paths: set[str], prefix: str, read: Callable[[str], bytes]) -> None:
+    """Every manifest entry must survive packaging, including future cases."""
+    manifest = json.loads(read(f"{prefix}/index.json"))
+    referenced = []
+    for entry in manifest["valid_heads"]:
+        referenced.extend((entry["head"], entry["canonical"]))
+    referenced.extend(entry["case"] for entry in manifest["invalid_heads"])
+    for section in ("inventory", "evidence"):
+        referenced.extend(entry["path"] for entry in manifest[section])
+    for relative in referenced:
+        _safe_parts(relative)
+        path = f"{prefix}/{relative}"
+        if path not in paths:
+            raise ValueError(f"Distribution is missing manifest fixture: {path}")
+        json.loads(read(path))
 
 
 def _verify_sdist(path: Path) -> None:
@@ -93,6 +118,10 @@ def _verify_sdist(path: Path) -> None:
                 f"Source distribution is missing shipped data: "
                 f"{', '.join(missing_data)}"
             )
+        root = next(iter(roots))
+        _verify_corpus(
+            paths, "fixtures", lambda name: archive.extractfile(f"{root}/{name}").read()
+        )
 
 
 def _verify_wheel(path: Path) -> None:
@@ -130,11 +159,14 @@ def _verify_wheel(path: Path) -> None:
         missing = sorted(required - names)
         if missing:
             raise ValueError(f"Wheel is missing: {', '.join(missing)}")
+        _verify_corpus(names, f"{WHEEL_PACKAGE}/_fixtures", archive.read)
 
         entry_points = archive.read(f"{dist_info}/entry_points.txt").decode("utf-8")
         parser = ConfigParser()
         parser.read_string(entry_points)
-        registered = dict(parser.items("pytest11")) if parser.has_section("pytest11") else {}
+        registered = (
+            dict(parser.items("pytest11")) if parser.has_section("pytest11") else {}
+        )
         if PYTEST_ENTRY_POINT not in registered.values():
             raise ValueError(
                 f"Wheel does not register {PYTEST_ENTRY_POINT!r} in the "

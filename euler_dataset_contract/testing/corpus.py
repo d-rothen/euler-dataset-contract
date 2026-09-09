@@ -17,15 +17,19 @@ from pathlib import Path
 from typing import Any
 
 __all__ = [
+    "EvidenceCase",
     "GoldenHead",
     "InvalidHead",
     "MODALITY_INVENTORY_FILENAME",
     "assert_head_roundtrip",
     "data_root",
+    "dataset_modality_types",
+    "evidence_cases",
     "fixture_index",
     "fixtures_root",
     "golden_heads",
     "invalid_heads",
+    "loader_observations",
     "modality_inventory",
     "vendored_modality_types",
 ]
@@ -60,6 +64,27 @@ class InvalidHead:
     expected_exception: str
     expected_error: str
     head: dict[str, Any]
+    path: Path
+    schema_valid: bool = False
+    schema_note: str = ""
+
+    def __str__(self) -> str:  # pragma: no cover - display only
+        return self.name
+
+
+@dataclass(frozen=True)
+class EvidenceCase:
+    """Phase 0 test data, not an executable dataset-head extension.
+
+    ``kind`` selects a family such as preprocessing, decoding, or persistence.
+    Reference answers and observed legacy behavior are labeled in the payload.
+    Consumers execute their own implementations against these detached values.
+    """
+
+    name: str
+    kind: str
+    description: str
+    payload: dict[str, Any]
     path: Path
 
     def __str__(self) -> str:  # pragma: no cover - display only
@@ -114,13 +139,33 @@ def _cached_modality_inventory() -> dict[str, Any]:
 
 @lru_cache(maxsize=None)
 def _cached_vendored_modality_types() -> dict[str, Any]:
-    root = fixtures_root()
-    for entry in _cached_index().get("inventory", []):
-        if entry.get("name") == "euler-loading-modality-types":
-            return _read_json(root / entry["path"])
-    raise KeyError(
-        "The fixture index has no 'euler-loading-modality-types' inventory entry"
-    )
+    return _cached_inventory("euler-loading-modality-types")
+
+
+@lru_cache(maxsize=None)
+def _cached_inventory(name: str) -> dict[str, Any]:
+    for entry in _cached_index()["inventory"]:
+        if entry["name"] == name:
+            return _read_json(fixtures_root() / entry["path"])
+    raise KeyError(f"The fixture index has no {name!r} inventory entry")
+
+
+@lru_cache(maxsize=None)
+def _cached_evidence_cases() -> tuple[EvidenceCase, ...]:
+    cases = []
+    # A missing section is an incomplete installation, not an empty corpus.
+    for entry in _cached_index()["evidence"]:
+        path = fixtures_root() / entry["path"]
+        cases.append(
+            EvidenceCase(
+                name=entry["name"],
+                kind=entry["kind"],
+                description=entry["description"],
+                payload=_read_json(path),
+                path=path,
+            )
+        )
+    return tuple(cases)
 
 
 @lru_cache(maxsize=None)
@@ -159,6 +204,8 @@ def _cached_invalid_heads() -> tuple[InvalidHead, ...]:
                 expected_error=payload["expected_error"],
                 head=payload["head"],
                 path=case_path,
+                schema_valid=payload.get("schema_valid", False),
+                schema_note=payload.get("schema_note", ""),
             )
         )
     return tuple(cases)
@@ -180,6 +227,35 @@ def vendored_modality_types() -> dict[str, Any]:
     """The vendored copy of euler-loading's emitted modality vocabulary."""
 
     return deepcopy(_cached_vendored_modality_types())
+
+
+def dataset_modality_types() -> dict[str, Any]:
+    """Operator-reported dataset vocabulary, including unused names."""
+
+    return deepcopy(_cached_inventory("dataset-modality-types"))
+
+
+def loader_observations() -> dict[str, Any]:
+    """Source-derived CPU/GPU declarations, not verified decoded profiles."""
+
+    return deepcopy(_cached_inventory("loader-observations"))
+
+
+def evidence_cases(kind: str | None = None) -> tuple[EvidenceCase, ...]:
+    """Detached Phase 0 evidence, in manifest order, optionally filtered.
+
+    Reject an unknown kind so a typo cannot silently run zero conformance cases.
+    """
+
+    cases = _cached_evidence_cases()
+    if kind is not None:
+        known = {case.kind for case in cases}
+        if kind not in known:
+            raise ValueError(
+                f"Unknown evidence kind {kind!r}; available: {sorted(known)}"
+            )
+        cases = tuple(case for case in cases if case.kind == kind)
+    return tuple(deepcopy(case) for case in cases)
 
 
 def golden_heads() -> tuple[GoldenHead, ...]:

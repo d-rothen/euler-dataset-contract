@@ -1,0 +1,67 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "source-backed",
+  "kind": "persistence",
+  "description": "Opaque heads and file attributes survive present writer APIs; a resized output currently inherits stale source dimensions.",
+  "head_case": "phase0-opaque-annotations",
+  "metadata_scopes": [
+    null,
+    "rgb"
+  ],
+  "variants": [
+    {
+      "full_id": "/scene:scene_01/camera:camera_0/frame_001/crop_a",
+      "basename": "crop_a.npy",
+      "attributes": {
+        "phase0_origin": {
+          "source_full_id": "/scene:scene_01/camera:camera_0/frame_001",
+          "variant_id": "crop_a",
+          "offset": [
+            1,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "full_id": "/scene:scene_01/camera:camera_0/frame_001/crop_b",
+      "basename": "crop_b.npy",
+      "attributes": {
+        "phase0_origin": {
+          "source_full_id": "/scene:scene_01/camera:camera_0/frame_001",
+          "variant_id": "crop_b",
+          "offset": [
+            0,
+            0
+          ]
+        }
+      }
+    }
+  ],
+  "stale_metadata": {
+    "source_size": [
+      4,
+      8
+    ],
+    "crop": {
+      "size": [
+        2,
+        4
+      ],
+      "anchor": "center"
+    },
+    "saved_size": [
+      2,
+      4
+    ],
+    "observed_head_size": [
+      4,
+      8
+    ],
+    "known_failure": "writer-copies-source-dimensions"
+  },
+  "scope": "Synthetic corpus only. Origin attributes are opaque preservation probes, not a finalized transformation addon."
+}

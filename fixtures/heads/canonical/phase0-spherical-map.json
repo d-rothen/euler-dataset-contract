@@ -1,0 +1,22 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_spherical_map",
+    "name": "Synthetic spherical_map"
+  },
+  "modality": {
+    "key": "spherical_map",
+    "meta": {
+      "representation": "ray_map",
+      "normalization": "unspecified",
+      "dimensions": {
+        "height": 2,
+        "width": 4,
+        "channels": 3
+      }
+    }
+  }
+}

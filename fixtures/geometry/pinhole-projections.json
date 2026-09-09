@@ -1,0 +1,277 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "pinhole-projections",
+  "kind": "geometry",
+  "description": "Independent homogeneous-coordinate references for crop bounds and K_out = crop @ resize @ K_in; skew exposes a current loading defect.",
+  "cases": [
+    {
+      "name": "documented",
+      "source_size": [
+        480,
+        960
+      ],
+      "resize": [
+        384,
+        768
+      ],
+      "crop": {
+        "size": [
+          320,
+          640
+        ],
+        "anchor": "center"
+      },
+      "crop_box": [
+        32,
+        64,
+        320,
+        640
+      ],
+      "K_in": [
+        [
+          800,
+          0,
+          479.5
+        ],
+        [
+          0,
+          800,
+          239.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "K_out": [
+        [
+          640,
+          0,
+          319.5
+        ],
+        [
+          0,
+          640,
+          159.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "point": [
+        0,
+        0,
+        2
+      ],
+      "pixel": [
+        319.5,
+        159.5
+      ]
+    },
+    {
+      "name": "odd-center",
+      "source_size": [
+        5,
+        9
+      ],
+      "resize": null,
+      "crop": {
+        "size": [
+          2,
+          4
+        ],
+        "anchor": "center"
+      },
+      "crop_box": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "K_in": [
+        [
+          9,
+          2,
+          4
+        ],
+        [
+          0,
+          5,
+          2
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "K_out": [
+        [
+          9,
+          2,
+          2
+        ],
+        [
+          0,
+          5,
+          1
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "point": [
+        0,
+        0,
+        2
+      ],
+      "pixel": [
+        2,
+        1
+      ]
+    },
+    {
+      "name": "nonuniform-skew-offset",
+      "source_size": [
+        5,
+        9
+      ],
+      "resize": [
+        8,
+        18
+      ],
+      "crop": {
+        "size": [
+          4,
+          6
+        ],
+        "offset": [
+          3,
+          5
+        ]
+      },
+      "crop_box": [
+        3,
+        5,
+        4,
+        6
+      ],
+      "K_in": [
+        [
+          9,
+          2,
+          4
+        ],
+        [
+          0,
+          5,
+          2
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "K_out": [
+        [
+          18,
+          4,
+          3.5
+        ],
+        [
+          0,
+          8,
+          0.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "point": [
+        0,
+        1,
+        4
+      ],
+      "pixel": [
+        4.5,
+        2.5
+      ],
+      "known_failure": "loading-resize-skew",
+      "observed_loading_K": [
+        [
+          18,
+          2,
+          3.5
+        ],
+        [
+          0,
+          8,
+          0.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ]
+    }
+  ],
+  "invalid_crops": [
+    {
+      "source_size": [
+        3,
+        4
+      ],
+      "crop": {
+        "size": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "source_size": [
+        3,
+        4
+      ],
+      "crop": {
+        "size": [
+          2,
+          2
+        ],
+        "offset": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "source_size": [
+        3,
+        4
+      ],
+      "crop": {
+        "size": [
+          2,
+          2
+        ],
+        "offset": [
+          2,
+          0
+        ]
+      }
+    }
+  ],
+  "atol": 0.000001
+}

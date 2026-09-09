@@ -20,17 +20,21 @@ except ModuleNotFoundError as exc:  # pragma: no cover - depends on environment
     ) from exc
 
 from . import corpus
-from .corpus import GoldenHead, InvalidHead
+from .corpus import EvidenceCase, GoldenHead, InvalidHead
 
 __all__ = [
     "SINGLE_CASE_ARGNAMES",
     "assert_head_roundtrip",
     "conformance_fixtures_root",
+    "dataset_modality_types",
+    "evidence_case_params",
+    "evidence_cases",
     "fixture_index",
     "golden_head_params",
     "golden_heads",
     "invalid_head_params",
     "invalid_heads",
+    "loader_observations",
     "modality_inventory",
     "vendored_modality_types",
 ]
@@ -49,9 +53,16 @@ def invalid_head_params() -> list[Any]:
     return [pytest.param(case, id=case.name) for case in corpus.invalid_heads()]
 
 
+def evidence_case_params(kind: str | None = None) -> list[Any]:
+    """Parameters for all Phase 0 evidence or a named family."""
+
+    return [pytest.param(case, id=case.name) for case in corpus.evidence_cases(kind)]
+
+
 _SINGLE_CASE_PARAMS = {
     "golden_head": golden_head_params,
     "invalid_head": invalid_head_params,
+    "evidence_case": evidence_case_params,
 }
 
 #: Argument names this plugin parametrizes for any test that requests them.
@@ -63,9 +74,9 @@ def pytest_generate_tests(metafunc: "pytest.Metafunc") -> None:
     """Parametrize tests that ask for a single corpus case.
 
     A test function taking ``golden_head`` runs once per valid head, and one
-    taking ``invalid_head`` runs once per rejection case. Tests that ask for
-    the plural fixtures receive the whole corpus instead. Those two argument
-    names are reserved by this plugin.
+    taking ``invalid_head`` runs once per rejection case. ``evidence_case``
+    covers every Phase 0 example. Tests that ask for the plural fixtures
+    receive the whole corpus instead. These three argument names are reserved.
     """
 
     for argname, build_params in _SINGLE_CASE_PARAMS.items():
@@ -99,6 +110,27 @@ def vendored_modality_types() -> dict[str, Any]:
     """The vendored copy of euler-loading's emitted modality vocabulary."""
 
     return corpus.vendored_modality_types()
+
+
+@pytest.fixture(scope="session")
+def dataset_modality_types() -> dict[str, Any]:
+    """Operator-reported vocabulary, separately from loader declarations."""
+
+    return corpus.dataset_modality_types()
+
+
+@pytest.fixture(scope="session")
+def loader_observations() -> dict[str, Any]:
+    """Vendored source declarations with CPU/GPU layouts and provenance."""
+
+    return corpus.loader_observations()
+
+
+@pytest.fixture(scope="session")
+def evidence_cases() -> tuple[EvidenceCase, ...]:
+    """All Phase 0 examples; payloads distinguish observations and references."""
+
+    return corpus.evidence_cases()
 
 
 @pytest.fixture(scope="session")

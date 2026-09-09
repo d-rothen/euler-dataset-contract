@@ -1,0 +1,22 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_points_3d",
+    "name": "Synthetic points_3d"
+  },
+  "modality": {
+    "key": "points_3d",
+    "meta": {
+      "representation": "point_map",
+      "coordinate_unit": "meters",
+      "dimensions": {
+        "channels": 3,
+        "height": 2,
+        "width": 4
+      }
+    }
+  }
+}

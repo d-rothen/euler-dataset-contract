@@ -32,12 +32,32 @@ validates, and serializes exactly as before.
 - [Conformance fixtures](docs/conformance-fixtures.md), documenting the corpus,
   how a repository wires the plugin in, and the rule that a contract change is
   proven against the corpus in every repository before it ships.
+- The operator's 14 modality names and clarification: homogeneous
+  `spherical_map`, unused `spectral_map`, arbitrary-channel `map_3d`, distinct
+  transmission/coefficient quantities, and the exact `athmospheric_light`
+  spelling. Sparse-cloud aliases carry explicit conditions.
+- An AST snapshot of 90 CPU/Torch loader declarations and a repeatable refresh
+  script, kept separate from operator-reported dataset usage.
+- Ten shared evidence cases for five-field preprocessing, known-value
+  decoding/projection, calibration, backend differences, evaluation alignment,
+  and source-backed persistence; 12 additional valid/canonical heads and two
+  additional rejection cases.
+- `EvidenceCase`, `evidence_cases()`, `evidence_case_params()`,
+  `dataset_modality_types()`, and `loader_observations()` testing APIs, with
+  corresponding pytest fixtures. Corpus access needs no array libraries.
+- Opt-in consumer checks and `scripts/check_ecosystem.py`, with source/dependency
+  provenance and strict expected failures for confirmed legacy disagreements.
+  [Phase 0 evidence](docs/phase0-evidence.md) records scope and results.
 
 ### Changed
 
 - Source and wheel distributions carry the inventory and the fixture corpus,
   and `scripts/verify_distribution.py` now fails when either is missing or when
   the pytest entry point is not registered.
+- Distribution verification now follows every fixture manifest reference;
+  canonical heads are checked against JSON Schema, and two existing
+  runtime/schema rejection differences are explicitly recorded without
+  changing either behavior.
 
 ## [0.3.0] - 2026-08-04
 

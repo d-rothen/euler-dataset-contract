@@ -341,12 +341,14 @@ rewritten.
 | `instance_segmentation` | `semantics.camera.instance_labels` | `encoding` |
 | `panoptic_segmentation` | `semantics.camera.panoptic_labels` | `encoding` |
 | `sky_mask` | `semantics.camera.mask` | `class: sky` |
-| `atmospheric_light` | `radiometry.scene.atmospheric_light` | `axes` |
-| `scattering_coefficient` | `radiometry.scene.scattering_coefficient` | `unit` |
+| `atmospheric_light`, `athmospheric_light` | `radiometry.scene.atmospheric_light` | `axes`, `value_domain`; preserve the literal dataset spelling |
+| `scattering_coefficient` | `radiometry.scene.scattering_coefficient` | `axes`, `unit`, `distance_unit` |
+| `transmission_map` | `radiometry.scene.transmission` | `axes`, `value_domain`, `path_definition` |
 | `sh_coeffs` | `radiometry.scene.sh_coefficients` | `order`, `basis` |
 | `map_2d` | `signal.grid.scalar` | `axes`, `unit` |
-| `map_3d` | `signal.grid.vector3` | `axes` |
-| `spherical_map` | `signal.sphere.vector3` | `projection` |
+| `map_3d` | `signal.grid.array` | arbitrary channels/axes; no fixed XYZ count |
+| `spherical_map` | `geometry.camera.ray_direction` when `form=ray_map` | `axes`, `normalization`, `frame`, `image_plane`, `projection` |
+| `spectral_map` | *(unused; no identity assigned)* | operator confirmed it was never used |
 
 Three things this table settles that the current names cannot:
 
@@ -358,9 +360,10 @@ Three things this table settles that the current names cannot:
 - `sky_mask` generalizes to `semantics.camera.mask` with a class parameter, so
   a road mask or vehicle mask needs no new modality.
 
-Two entries deliberately need an owner decision rather than a guess:
-`spherical_map`'s projection vocabulary, and whether `signal.*` should use
-subject-as-index-space at all (§12).
+The operator clarified `spherical_map` as homogeneous ray directions, without
+a unit-length guarantee, and confirmed sparse 3D depth and organized
+`points_3d`. These are recorded in [Phase 0 evidence](phase0-evidence.md).
+Whether `signal.*` should use subject-as-index-space remains open (§12).
 
 ### 5.4 Introducing identity without changing the 1.0 core shape
 
@@ -723,12 +726,13 @@ leaving them marked.
 1. **`signal.*` subject slot.** For `signal.grid.scalar` the subject is an index
    space, not a subject. Accept the mild inconsistency, or introduce a fourth
    domain convention for container-typed signals?
-2. **`spherical_map` projection vocabulary.** Which projections must be
-   enumerated (equirectangular, cubemap, fisheye-equidistant), and is
-   projection representation or identity?
-3. **`sparse_depth` alias.** §5.3 maps it to `geometry.scene.points`. Confirm
-   that `euler-eval`'s sparse-depth path is genuinely "project a point cloud",
-   not a distinct quantity.
+2. **Resolved for reported usage: `spherical_map`.** A homogeneous ray
+   direction map; projection and normalization remain representation facts,
+   with no unit-vector guarantee inferred from its name.
+3. **Resolved conditionally: `sparse_depth`.** Reviewed MUSES/Princeton
+   declarations and evaluator projection use point clouds, consistent with the
+   operator's sparse 3D depth. Sparse rasters elsewhere still require a distinct
+   representation and cannot silently inherit this alias.
 4. **`vkitti2.read_extrinsics` shape `Nx1`.** Is this a real dataset format that
    needs a representation, or a latent bug to fix in Phase 2?
 5. **Preset naming.** Are profile presets (`@planar_meters_hw`) versioned

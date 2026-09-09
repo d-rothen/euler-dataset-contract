@@ -1,0 +1,20 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_scattering_coefficient",
+    "name": "Synthetic scattering_coefficient"
+  },
+  "modality": {
+    "key": "scattering_coefficient",
+    "meta": {
+      "unit": "inverse_meter",
+      "dimensions": {
+        "height": 2,
+        "width": 4
+      }
+    }
+  }
+}

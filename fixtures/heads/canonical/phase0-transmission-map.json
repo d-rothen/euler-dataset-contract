@@ -1,0 +1,24 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_transmission_map",
+    "name": "Synthetic transmission_map"
+  },
+  "modality": {
+    "key": "transmission_map",
+    "meta": {
+      "unit": "dimensionless",
+      "range": [
+        0,
+        1
+      ],
+      "dimensions": {
+        "height": 2,
+        "width": 4
+      }
+    }
+  }
+}

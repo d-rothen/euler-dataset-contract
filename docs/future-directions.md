@@ -62,9 +62,11 @@ each named repository; commits identify the reviewed baseline.
 | `euler-preprocess` / `7d79ec2` | `euler_preprocess/common/dataset.py`, `build_dataset`; `common/output.py`, `prepare_output_backend`, `SourceBackedOutputBackend` | The CLI does not yet pass a shared preprocessing config to the dataset. Source-backed outputs already carry metadata overrides and per-file attributes; these are integration points for receipts and variant mappings. |
 | `euler-eval` / `7e445fb` | `euler_eval/data.py`, `classify_spatial_alignment`, `align_to_prediction`, `align_intrinsics_to_prediction`; callers in `evaluate.py` | Alignment guesses a top-left multiple-of-eight crop or resizes GT. Intrinsics are adjusted for that guess, but recorded center crops cannot be recovered from shape. |
 
-The existing head corpus and modality inventory already cover part of Phase 0
-([Conformance fixtures](conformance-fixtures.md)). Transformation and
-decoded-value conformance still need their own evidence.
+The expanded head corpus, modality inventory, and executable consumer checks
+now cover Phase 0 for these checkouts. See [Phase 0 evidence](phase0-evidence.md)
+for numerical references, the operator's clarified vocabulary, confirmed
+interoperability gaps, and reproducible commands. Runtime/schema disagreements
+are recorded explicitly rather than hidden by the baseline.
 
 ## Where the boundary sits today
 
@@ -100,6 +102,13 @@ The ecosystem currently uses overlapping names:
   `camera_extrinsics`;
 - `point_cloud`, `lidar_point_cloud`, `sparse_depth`, and `points_3d`;
 - generic names such as `map_2d`, `map_3d`, `spherical_map`, and `rays`.
+
+The operator clarified that `spherical_map` is a homogeneous ray direction map
+and `spectral_map` was never used. `map_3d` is arbitrary, not necessarily XYZ;
+`points_3d` is an organized dense point map. Preserve the existing spelling
+`athmospheric_light` alongside loader spelling `atmospheric_light`, and keep
+`transmission_map` distinct from `scattering_coefficient`. These classifications
+are now recorded in the data-only inventory without changing runtime keys.
 
 Some are true semantic differences, some are storage/encoding differences, and
 some are aliases chosen by a loader. A registry should distinguish at least:
@@ -782,6 +791,9 @@ workflow only when its complete reader/writer combination passes conformance.
 
 ### Phase 0 — complete the evidence
 
+Implemented by the [Phase 0 corpus and checks](phase0-evidence.md) for the
+reviewed source and synthetic inputs. The following is the maintained scope:
+
 - Extend the existing contract head corpus and modality inventory; do not
   recreate them. Mark conditional aliases and record output shapes, dtypes,
   units, backend differences, and current calibration behavior.
@@ -791,8 +803,11 @@ workflow only when its complete reader/writer combination passes conformance.
 - Verify current directory/ZIP/scoped writer preservation and eval's heuristic
   behavior so migration changes are visible.
 
-Exit: the interoperability failures have reproducible evidence and existing
-1.0 fixtures still agree between runtime validation and JSON Schema.
+Exit: interoperability failures have reproducible evidence, existing 1.0
+runtime acceptance is unchanged, and canonical golden heads satisfy JSON
+Schema. Rejection-case disagreements must be identified explicitly. Phase 0
+found two pre-existing differences (reversed range and dual file-type spelling);
+their fixtures pin both results pending a deliberate compatibility decision.
 
 ### Phase 1 — descriptors, bindings, and compatibility
 

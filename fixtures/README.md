@@ -4,9 +4,9 @@ This directory is the cross-repository source of truth for what a valid
 `dataset-head.json` is, what an invalid one fails with, and which modality
 identity each legacy modality name resolves to.
 
-Every repository in the ecosystem asserts against these exact files. A contract
-change that a repository cannot satisfy is visible in that repository's CI
-before it ships, rather than after. Python consumers get the corpus from the
+Consumer repositories can assert against these exact files. The opt-in Phase 0
+checks exercise four consumer packages against the same corpus. Python consumers
+get the corpus from the
 `euler_dataset_contract.testing` pytest plugin; non-Python consumers such as
 `euler-view` read the JSON directly.
 
@@ -22,6 +22,16 @@ no repository-local paths.
 | `heads/canonical/<name>.json` | The expected result of parsing the matching valid head and serializing it again. |
 | `heads/invalid/<name>.json` | One rejection case: a head plus the error it must produce. |
 | `inventory/` | Vendored vocabularies used to detect drift against other repositories. |
+| `preprocessing/` | Two five-field resize/crop examples, backend and invalid-depth observations. |
+| `geometry/` | Independent camera/projection references and known metric depth/XYZ values. |
+| `calibration/` | Current hierarchical selection and source-immutability probes. |
+| `alignment/` | Evaluator shape heuristics and reference crop-origin counterexample. |
+| `decoding/` | Known raw arrays with expected scaling, dtypes, layouts, and label/cloud representations. |
+| `persistence/` | Opaque addon and variant-origin probes, storage scopes, and stale output metadata. |
+
+The manifest contains 19 valid heads, 19 invalid cases, three inventories, and
+ten evidence cases. `phase0-*` heads are synthetic metadata examples; none
+asserts that a real dataset or built-in loader uses that exact encoding.
 
 ## The three assertions
 
@@ -55,6 +65,16 @@ message produced when the head is parsed with the default context
 `dataset_head`; a consumer that passes its own context asserts against the part
 of the substring that follows the context prefix.
 
+`schema_valid` defaults to `false`. The two existing rejection cases accepted
+by the current JSON Schema set it to `true` and give a `schema_note`. This
+records a discrepancy without changing the runtime acceptance contract.
+
+Evidence payloads use `contract.kind: phase0_evidence` and carry their own
+`name`, `kind`, and description. Their `reference`/`observed` answers are test
+data, not executable transform descriptors. `phase0_annotations` and
+`phase0_origin` are deliberately opaque preservation probes, with no replay or
+materialization claim. See [Phase 0 evidence](../docs/phase0-evidence.md).
+
 ## Index metadata
 
 `index.json` carries the description of each case and, for valid heads, a
@@ -73,6 +93,20 @@ through the shipped modality inventory
 (`euler_dataset_contract/data/modality-inventory-1.0.json`) without taking a
 dependency on `euler-loading`. Refresh it when `loaders.json` changes; the
 drift test then names any type that has no inventory entry.
+
+`inventory/dataset-modality-types.json` records the operator's exact 14 names,
+including the clarification that `spectral_map` was never used and
+`spherical_map` is homogeneous ray directions. `inventory/loader-observations.json`
+captures 90 CPU/Torch declarations and their source hashes independently of the
+reported dataset list. Capture it without importing array libraries:
+
+```bash
+python scripts/refresh_loader_observations.py /path/to/euler-loading --check
+```
+
+Run from the repository root; omit `--check` to refresh both loader inventories
+after reviewing source changes. Numerical checks separately verify selected
+declarations against actual synthetic encoded bytes.
 
 ## Changing the corpus
 

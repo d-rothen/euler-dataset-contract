@@ -1,0 +1,20 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_athmospheric_light",
+    "name": "Synthetic athmospheric_light"
+  },
+  "modality": {
+    "key": "athmospheric_light",
+    "meta": {
+      "dimensions": {
+        "height": 2,
+        "width": 4,
+        "channels": 3
+      }
+    }
+  }
+}

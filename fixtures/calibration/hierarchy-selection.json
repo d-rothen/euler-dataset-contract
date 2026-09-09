@@ -1,0 +1,105 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "hierarchy-selection",
+  "kind": "calibration",
+  "description": "Current reduce=first sorts keys rather than proving sensor applicability; source calibration must not be mutated.",
+  "source_size": [
+    4,
+    8
+  ],
+  "config": {
+    "resize": [
+      2,
+      4
+    ],
+    "reference_field": "rgb",
+    "infer_fields": false,
+    "fields": {
+      "rgb": {
+        "kind": "image",
+        "layout": "HWC"
+      },
+      "intrinsics": {
+        "kind": "intrinsics",
+        "reduce": "first"
+      }
+    }
+  },
+  "calibrations": {
+    "z_camera_0": [
+      [
+        8,
+        0,
+        3.5
+      ],
+      [
+        0,
+        4,
+        1.5
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "a_camera_1": [
+      [
+        80,
+        0,
+        3.5
+      ],
+      [
+        0,
+        40,
+        1.5
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ]
+  },
+  "intended_camera": "z_camera_0",
+  "observed_selected_key": "a_camera_1",
+  "observed_K": [
+    [
+      40,
+      0,
+      1.5
+    ],
+    [
+      0,
+      20,
+      0.5
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "reference_K": [
+    [
+      4,
+      0,
+      1.5
+    ],
+    [
+      0,
+      2,
+      0.5
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "implication": "Repeatable lexical selection is insufficient to establish a correct binding.",
+  "preprocess_observation": "extract_intrinsics looks up the literal file id intrinsics, or accepts a direct matrix. A differently named calibration dictionary yields None."
+}

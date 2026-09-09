@@ -1,0 +1,19 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_map_2d",
+    "name": "Synthetic map_2d"
+  },
+  "modality": {
+    "key": "map_2d",
+    "meta": {
+      "dimensions": {
+        "height": 2,
+        "width": 4
+      }
+    }
+  }
+}

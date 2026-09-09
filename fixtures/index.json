@@ -19,7 +19,9 @@
       "head": "heads/valid/rgb-minimal.json",
       "canonical": "heads/canonical/rgb-minimal.json",
       "description": "The smallest valid head: required sections only, one registered modality, no addons.",
-      "covers": ["modality_key:rgb"]
+      "covers": [
+        "modality_key:rgb"
+      ]
     },
     {
       "name": "rgb-file-types-camel-case",
@@ -53,7 +55,10 @@
       "head": "heads/valid/segmentation-sky-class.json",
       "canonical": "heads/canonical/segmentation-sky-class.json",
       "description": "The segmentation modality with a non-default skyclass value.",
-      "covers": ["modality_key:segmentation", "shared_meta:file_types"]
+      "covers": [
+        "modality_key:segmentation",
+        "shared_meta:file_types"
+      ]
     },
     {
       "name": "semantic-segmentation-shared-meta",
@@ -72,40 +77,297 @@
       "head": "heads/valid/custom-modality-open-meta.json",
       "canonical": "heads/canonical/custom-modality-open-meta.json",
       "description": "An unregistered modality key with free-form meta. The ecosystem may add modalities before this package releases support for them.",
-      "covers": ["modality_key:unregistered", "shared_meta:dimensions"]
+      "covers": [
+        "modality_key:unregistered",
+        "shared_meta:dimensions"
+      ]
     },
     {
       "name": "custom-modality-without-meta",
       "head": "heads/valid/custom-modality-without-meta.json",
       "canonical": "heads/canonical/custom-modality-without-meta.json",
       "description": "An unregistered modality key with no meta at all. The canonical form omits modality.meta rather than emitting an empty object.",
-      "covers": ["modality_key:unregistered", "meta:absent"]
+      "covers": [
+        "modality_key:unregistered",
+        "meta:absent"
+      ]
+    },
+    {
+      "name": "phase0-spherical-map",
+      "head": "heads/valid/phase0-spherical-map.json",
+      "canonical": "heads/canonical/phase0-spherical-map.json",
+      "description": "Synthetic metadata-only example preserving the spherical_map key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:spherical_map",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-map-2d",
+      "head": "heads/valid/phase0-map-2d.json",
+      "canonical": "heads/canonical/phase0-map-2d.json",
+      "description": "Synthetic metadata-only example preserving the map_2d key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:map_2d",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-map-3d",
+      "head": "heads/valid/phase0-map-3d.json",
+      "canonical": "heads/canonical/phase0-map-3d.json",
+      "description": "Synthetic metadata-only example preserving the map_3d key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:map_3d",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-scattering-coefficient",
+      "head": "heads/valid/phase0-scattering-coefficient.json",
+      "canonical": "heads/canonical/phase0-scattering-coefficient.json",
+      "description": "Synthetic metadata-only example preserving the scattering_coefficient key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:scattering_coefficient",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-athmospheric-light",
+      "head": "heads/valid/phase0-athmospheric-light.json",
+      "canonical": "heads/canonical/phase0-athmospheric-light.json",
+      "description": "Synthetic metadata-only example preserving the athmospheric_light key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:athmospheric_light",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-atmospheric-light",
+      "head": "heads/valid/phase0-atmospheric-light.json",
+      "canonical": "heads/canonical/phase0-atmospheric-light.json",
+      "description": "Synthetic metadata-only example preserving the atmospheric_light key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:atmospheric_light",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-sparse-depth",
+      "head": "heads/valid/phase0-sparse-depth.json",
+      "canonical": "heads/canonical/phase0-sparse-depth.json",
+      "description": "Synthetic metadata-only example preserving the sparse_depth key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:sparse_depth",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-intrinsics",
+      "head": "heads/valid/phase0-intrinsics.json",
+      "canonical": "heads/canonical/phase0-intrinsics.json",
+      "description": "Synthetic metadata-only example preserving the intrinsics key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:intrinsics",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-camera-extrinsics",
+      "head": "heads/valid/phase0-camera-extrinsics.json",
+      "canonical": "heads/canonical/phase0-camera-extrinsics.json",
+      "description": "Synthetic metadata-only example preserving the camera_extrinsics key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:camera_extrinsics",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-points-3d",
+      "head": "heads/valid/phase0-points-3d.json",
+      "canonical": "heads/canonical/phase0-points-3d.json",
+      "description": "Synthetic metadata-only example preserving the points_3d key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:points_3d",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-transmission-map",
+      "head": "heads/valid/phase0-transmission-map.json",
+      "canonical": "heads/canonical/phase0-transmission-map.json",
+      "description": "Synthetic metadata-only example preserving the transmission_map key. No loader or actual dataset encoding is implied.",
+      "covers": [
+        "modality_key:transmission_map",
+        "modality_key:unregistered"
+      ]
+    },
+    {
+      "name": "phase0-opaque-annotations",
+      "head": "heads/valid/phase0-opaque-annotations.json",
+      "canonical": "heads/canonical/phase0-opaque-annotations.json",
+      "description": "Opaque versioned nested annotations survive core parsing and producer persistence. This is not the proposed euler_transforms schema.",
+      "covers": [
+        "modality_key:rgb",
+        "section:addons",
+        "section:dataset_attributes",
+        "shared_meta:dimensions"
+      ]
     }
   ],
   "invalid_heads": [
-    {"name": "contract-kind-wrong", "case": "heads/invalid/contract-kind-wrong.json"},
-    {"name": "contract-version-missing", "case": "heads/invalid/contract-version-missing.json"},
-    {"name": "contract-version-malformed", "case": "heads/invalid/contract-version-malformed.json"},
-    {"name": "dataset-id-not-a-token", "case": "heads/invalid/dataset-id-not-a-token.json"},
-    {"name": "dataset-name-blank", "case": "heads/invalid/dataset-name-blank.json"},
-    {"name": "unknown-structural-key", "case": "heads/invalid/unknown-structural-key.json"},
-    {"name": "modality-key-dotted", "case": "heads/invalid/modality-key-dotted.json"},
-    {"name": "depth-meta-missing", "case": "heads/invalid/depth-meta-missing.json"},
-    {"name": "depth-scale-to-meters-missing", "case": "heads/invalid/depth-scale-to-meters-missing.json"},
-    {"name": "depth-scale-to-meters-boolean", "case": "heads/invalid/depth-scale-to-meters-boolean.json"},
-    {"name": "rgb-range-reversed", "case": "heads/invalid/rgb-range-reversed.json"},
-    {"name": "segmentation-skyclass-missing", "case": "heads/invalid/segmentation-skyclass-missing.json"},
-    {"name": "file-types-both-spellings", "case": "heads/invalid/file-types-both-spellings.json"},
-    {"name": "file-types-duplicate", "case": "heads/invalid/file-types-duplicate.json"},
-    {"name": "dimensions-zero-size", "case": "heads/invalid/dimensions-zero-size.json"},
-    {"name": "addon-version-missing", "case": "heads/invalid/addon-version-missing.json"},
-    {"name": "addon-payload-not-object", "case": "heads/invalid/addon-payload-not-object.json"}
+    {
+      "name": "contract-kind-wrong",
+      "case": "heads/invalid/contract-kind-wrong.json"
+    },
+    {
+      "name": "contract-version-missing",
+      "case": "heads/invalid/contract-version-missing.json"
+    },
+    {
+      "name": "contract-version-malformed",
+      "case": "heads/invalid/contract-version-malformed.json"
+    },
+    {
+      "name": "dataset-id-not-a-token",
+      "case": "heads/invalid/dataset-id-not-a-token.json"
+    },
+    {
+      "name": "dataset-name-blank",
+      "case": "heads/invalid/dataset-name-blank.json"
+    },
+    {
+      "name": "unknown-structural-key",
+      "case": "heads/invalid/unknown-structural-key.json"
+    },
+    {
+      "name": "modality-key-dotted",
+      "case": "heads/invalid/modality-key-dotted.json"
+    },
+    {
+      "name": "depth-meta-missing",
+      "case": "heads/invalid/depth-meta-missing.json"
+    },
+    {
+      "name": "depth-scale-to-meters-missing",
+      "case": "heads/invalid/depth-scale-to-meters-missing.json"
+    },
+    {
+      "name": "depth-scale-to-meters-boolean",
+      "case": "heads/invalid/depth-scale-to-meters-boolean.json"
+    },
+    {
+      "name": "rgb-range-reversed",
+      "case": "heads/invalid/rgb-range-reversed.json"
+    },
+    {
+      "name": "segmentation-skyclass-missing",
+      "case": "heads/invalid/segmentation-skyclass-missing.json"
+    },
+    {
+      "name": "file-types-both-spellings",
+      "case": "heads/invalid/file-types-both-spellings.json"
+    },
+    {
+      "name": "file-types-duplicate",
+      "case": "heads/invalid/file-types-duplicate.json"
+    },
+    {
+      "name": "dimensions-zero-size",
+      "case": "heads/invalid/dimensions-zero-size.json"
+    },
+    {
+      "name": "addon-version-missing",
+      "case": "heads/invalid/addon-version-missing.json"
+    },
+    {
+      "name": "addon-payload-not-object",
+      "case": "heads/invalid/addon-payload-not-object.json"
+    },
+    {
+      "name": "modality-id-is-not-a-core-field",
+      "case": "heads/invalid/modality-id-is-not-a-core-field.json"
+    },
+    {
+      "name": "modality-key-required-with-id",
+      "case": "heads/invalid/modality-key-required-with-id.json"
+    }
   ],
   "inventory": [
     {
       "name": "euler-loading-modality-types",
       "path": "inventory/euler-loading-modality-types.json",
       "description": "Vendored copy of the modality vocabulary euler-loading emits, used to detect drift against the shipped modality inventory."
+    },
+    {
+      "name": "dataset-modality-types",
+      "path": "inventory/dataset-modality-types.json"
+    },
+    {
+      "name": "loader-observations",
+      "path": "inventory/loader-observations.json"
+    }
+  ],
+  "evidence": [
+    {
+      "name": "tiny-five-field",
+      "kind": "preprocessing",
+      "path": "preprocessing/tiny-five-field.json",
+      "description": "Small independently calculated half-pixel bilinear resize followed by a shared center crop."
+    },
+    {
+      "name": "documented-five-field",
+      "kind": "preprocessing",
+      "path": "preprocessing/documented-five-field.json",
+      "description": "The task's resize 384x768 then crop 320x640 example, with analytic interior pixel probes and known camera projection."
+    },
+    {
+      "name": "backend-resize",
+      "kind": "backend",
+      "path": "preprocessing/backend-resize.json",
+      "description": "NumPy preprocessing changes backend when Torch is installed; Pillow and Torch also choose different nearest neighbors."
+    },
+    {
+      "name": "invalid-depth",
+      "kind": "backend",
+      "path": "preprocessing/invalid-depth.json",
+      "description": "Current ordinary bilinear depth resize blends invalid zero into otherwise valid metric depth."
+    },
+    {
+      "name": "pinhole-projections",
+      "kind": "geometry",
+      "path": "geometry/pinhole-projections.json",
+      "description": "Independent homogeneous-coordinate references for crop bounds and K_out = crop @ resize @ K_in; skew exposes a current loading defect."
+    },
+    {
+      "name": "depth-projection",
+      "kind": "projection",
+      "path": "geometry/depth-projection.json",
+      "description": "Known metric planar depth unprojection to an organized XYZ map, distinct from sparse point-cloud representation."
+    },
+    {
+      "name": "hierarchy-selection",
+      "kind": "calibration",
+      "path": "calibration/hierarchy-selection.json",
+      "description": "Current reduce=first sorts keys rather than proving sensor applicability; source calibration must not be mutated."
+    },
+    {
+      "name": "legacy-spatial-alignment",
+      "kind": "alignment",
+      "path": "alignment/legacy-spatial-alignment.json",
+      "description": "Shape-only evaluator decisions and their current sampling policies, recorded before lineage-aware alignment exists."
+    },
+    {
+      "name": "known-values",
+      "kind": "decoding",
+      "path": "decoding/known-values.json",
+      "description": "Raw encoded fixtures distinguish declared units, observed scaling, layouts, palette triplets, and cloud/map representations."
+    },
+    {
+      "name": "source-backed",
+      "kind": "persistence",
+      "path": "persistence/source-backed.json",
+      "description": "Opaque heads and file attributes survive present writer APIs; a resized output currently inherits stale source dimensions."
     }
   ]
 }

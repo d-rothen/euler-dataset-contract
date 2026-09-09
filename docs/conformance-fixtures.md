@@ -47,11 +47,19 @@ extensions are lowercased, stripped of a leading dot, and sorted — and the
 canonical file states the result rather than a test asserting it in one
 repository and not another.
 
+Canonical golden heads also validate against the generated JSON Schema.
+Rejection cases expose `schema_valid` (default `false`) and `schema_note`:
+two existing inputs are rejected by runtime but accepted by the schema.
+Those differences are pinned explicitly; see [Phase 0 evidence](phase0-evidence.md).
+The new synthetic modality heads prove metadata acceptance, not loader support.
+
 ## Wiring a repository in
 
-The corpus and the plugin exist; connecting the seven Python repositories in
-section 4.1 of the plan is a per-repository follow-up, because each asserts
-something different against the same heads.
+The corpus and plugin can be used in each repository's own suite. Phase 0 also
+ships opt-in checks for ds-crawler, loading, preprocess, and eval, with a driver
+that runs them against local source checkouts. See the
+[commands and tested revisions](phase0-evidence.md#run-and-maintain-the-checks).
+Adding these checks to consumer CI remains a per-repository integration.
 
 Add the testing extra to the development dependencies:
 
@@ -84,8 +92,10 @@ Two functions become one test per case. When the contract adds a case, the
 repository runs it on its next `uv sync` without editing a test.
 
 The more useful form for a consumer is to run its own reader over the same
-heads: `ds-crawler` asserts that it can write them, `euler-loading` that it can
-resolve a loader for each, `euler-eval` that it accepts what it claims to.
+heads: `ds-crawler` asserts that it can preserve them, `euler-loading` verifies
+declared supported loaders against known bytes, and `euler-eval` checks the
+representations it claims to accept. A valid open-world head does not promise
+that a built-in loader exists for its key.
 
 ### What the plugin provides
 
@@ -93,26 +103,36 @@ resolve a loader for each, `euler-eval` that it accepts what it claims to.
 |---|---|---|
 | `golden_head` | parametrized argument | One valid case per test run, id'd by case name. |
 | `invalid_head` | parametrized argument | One rejection case per test run. |
+| `evidence_case` | parametrized argument | One Phase 0 evidence case per test run. |
 | `golden_heads` | session fixture | Every valid case, in manifest order. |
 | `invalid_heads` | session fixture | Every rejection case, each with `expected_error`. |
 | `modality_inventory` | session fixture | The shipped modality inventory. |
 | `vendored_modality_types` | session fixture | The vocabulary `euler-loading` emits today. |
+| `dataset_modality_types` | session fixture | Operator-reported names and meanings, including the unused spectral name. |
+| `loader_observations` | session fixture | Source declarations for both backends, with hashes and the generated catalog. |
+| `evidence_cases` | session fixture | Shared numerical and persistence examples with separate reference/observed values. |
 | `fixture_index` | session fixture | The corpus manifest. |
 | `conformance_fixtures_root` | session fixture | Filesystem root of the corpus. |
 | `assert_head_roundtrip` | session fixture | Callable asserting a head parses to a stable, idempotent mapping. |
 
-`golden_head` and `invalid_head` are reserved argument names: a test that takes
-either one is parametrized by the plugin, so do not define a local fixture with
-those names.
+`golden_head`, `invalid_head`, and `evidence_case` are reserved argument names:
+a test taking one is parametrized by the plugin. Do not define local fixtures
+with those names. Explicit `golden_head_params()`, `invalid_head_params()`, and
+`evidence_case_params(kind=None)` helpers allow different argument names.
 
 Outside a pytest run the same values are plain functions:
 
 ```python
-from euler_dataset_contract.testing import golden_heads, modality_inventory
+from euler_dataset_contract.testing import evidence_cases, golden_heads, modality_inventory
+
+preprocessing_cases = evidence_cases("preprocessing")
 ```
 
 That layer imports no test framework, so a script or a non-pytest test runner
-can use it. Importing the plugin without pytest installed raises an
+can use it. Each function returns detached values; an unknown evidence kind
+raises `ValueError` rather than yielding an empty suite. NumPy, Torch, Pillow,
+OpenCV, and consumer packages are only imported by explicitly selected consumer
+checks. Importing the plugin without pytest installed raises an
 `ImportError` naming the extra to install.
 
 ## The rule
@@ -137,10 +157,10 @@ repository's current behaviour is now wrong. Those land together.
 
 ## The modality inventory
 
-`euler_dataset_contract/data/modality-inventory-1.0.json` records the modality
-identities the ecosystem emits today, the legacy names that resolve to them,
-and the two names that are not modalities at all. It encodes section 5.3 of the
-plan.
+`euler_dataset_contract/data/modality-inventory-1.0.json` records proposed
+identities, legacy aliases and their conditions, the two names that represent
+bundling/cardinality, and the unused spectral name. It incorporates section 5.3
+of the plan and the operator's clarified dataset vocabulary.
 
 In phase 0 it is **data only**. No parsing, validation, or schema generation
 reads it, and `modality.key` behaves exactly as it did before. It exists so
@@ -154,11 +174,13 @@ Two properties of the file are worth knowing when reading it:
   a record of what is not yet decided, not a decision.
 - Aliases are objects rather than bare strings, so one lookup yields the
   canonical id together with the status, the provenance of the legacy name, and
-  any representation values the name implies. Phase 4's deprecation windows have
+  any representation values and conditions the name requires. Deprecation windows have
   somewhere to live without a second structure.
 
 `fixtures/inventory/euler-loading-modality-types.json` is a vendored copy of
 what `euler-loading` emits, so `tests/test_modality_inventory.py` can prove that
 every emitted type resolves to exactly one identity without this package
 depending on that one. Refresh it when `loaders.json` changes; the test then
-names anything unclassified.
+names anything unclassified. `scripts/refresh_loader_observations.py` refreshes
+that vocabulary and the AST declaration snapshot together; `--check` detects
+source drift. Neither inventory assigns a decoder to operator-only names.

@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_intrinsics",
+    "name": "Synthetic intrinsics"
+  },
+  "modality": {
+    "key": "intrinsics",
+    "meta": {
+      "camera_model": "pinhole",
+      "image_plane": "camera_0",
+      "dimensions": {
+        "rows": 3,
+        "columns": 3
+      }
+    }
+  }
+}

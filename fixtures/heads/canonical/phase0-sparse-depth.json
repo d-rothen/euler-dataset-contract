@@ -1,0 +1,25 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_sparse_depth",
+    "name": "Synthetic sparse_depth"
+  },
+  "modality": {
+    "key": "sparse_depth",
+    "meta": {
+      "representation": "point_cloud",
+      "coordinate_unit": "meters",
+      "columns": [
+        "x",
+        "y",
+        "z",
+        "intensity",
+        "timestamp",
+        "ring"
+      ]
+    }
+  }
+}

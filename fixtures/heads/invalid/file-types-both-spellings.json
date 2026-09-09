@@ -26,5 +26,7 @@
         ]
       }
     }
-  }
+  },
+  "schema_valid": true,
+  "schema_note": "Runtime rejects simultaneous compatibility and canonical spellings. The current open metadata schema accepts the legacy name as an unknown annotation."
 }

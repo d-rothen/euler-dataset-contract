@@ -1,0 +1,73 @@
+{
+  "contract": {
+    "kind": "dataset_modality_types",
+    "version": "1.0"
+  },
+  "provenance": {
+    "source": "Operator dataset inventory and clarification in the Phase 0 task",
+    "dataset_bytes_inspected": false,
+    "consumed_by_runtime": false
+  },
+  "modality_types": {
+    "rgb": {
+      "active": true,
+      "meaning": "RGB image."
+    },
+    "spectral_map": {
+      "active": false,
+      "meaning": "Never used; semantic identity intentionally unassigned."
+    },
+    "spherical_map": {
+      "active": true,
+      "meaning": "Homogeneous ray direction map; unit length is not implied."
+    },
+    "map_2d": {
+      "active": true,
+      "meaning": "Arbitrary two-dimensional map; no physical meaning implied."
+    },
+    "map_3d": {
+      "active": true,
+      "meaning": "Arbitrary three-dimensional map; no fixed XYZ component count implied."
+    },
+    "scattering_coefficient": {
+      "active": true,
+      "meaning": "Extinction/scattering map determining light transmission."
+    },
+    "athmospheric_light": {
+      "active": true,
+      "meaning": "Light colour map; exact dataset spelling retained."
+    },
+    "sparse_depth": {
+      "active": true,
+      "meaning": "Sparse 3D depth (point-cloud representation in the reviewed loaders)."
+    },
+    "intrinsics": {
+      "active": true,
+      "meaning": "Camera intrinsics."
+    },
+    "camera_extrinsics": {
+      "active": true,
+      "meaning": "Camera extrinsics; transform direction and frames must be declared."
+    },
+    "points_3d": {
+      "active": true,
+      "meaning": "Dense per-pixel 3D points projected from a dense two-dimensional depth map."
+    },
+    "depth": {
+      "active": true,
+      "meaning": "Two-dimensional depth map."
+    },
+    "semantic_segmentation": {
+      "active": true,
+      "meaning": "Per-pixel semantic segmentation; encoding may be labels or a palette."
+    },
+    "transmission_map": {
+      "active": true,
+      "meaning": "Light transmission map, distinct from its extinction coefficient."
+    }
+  },
+  "unknowns": [
+    "Actual per-dataset encodings, calibration frames, and units were not supplied by the operator list. Loader declarations and synthetic conformance arrays are separate evidence.",
+    "spherical_map is homogeneous; a unit-vector guarantee must not be inferred."
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "legacy-spatial-alignment",
+  "kind": "alignment",
+  "description": "Shape-only evaluator decisions and their current sampling policies, recorded before lineage-aware alignment exists.",
+  "classifications": [
+    {
+      "gt": [
+        8,
+        16
+      ],
+      "pred": [
+        8,
+        16
+      ],
+      "method": "none"
+    },
+    {
+      "gt": [
+        10,
+        10
+      ],
+      "pred": [
+        8,
+        8
+      ],
+      "method": "vae_crop"
+    },
+    {
+      "gt": [
+        15,
+        23
+      ],
+      "pred": [
+        8,
+        16
+      ],
+      "method": "vae_crop"
+    },
+    {
+      "gt": [
+        16,
+        24
+      ],
+      "pred": [
+        8,
+        16
+      ],
+      "method": "resize"
+    },
+    {
+      "gt": [
+        5,
+        7
+      ],
+      "pred": [
+        3,
+        4
+      ],
+      "method": "resize"
+    },
+    {
+      "gt": [
+        2,
+        4
+      ],
+      "pred": [
+        4,
+        8
+      ],
+      "method": "resize"
+    }
+  ],
+  "small_resize": {
+    "gt": [
+      [
+        0,
+        2,
+        4,
+        6
+      ],
+      [
+        8,
+        10,
+        12,
+        14
+      ]
+    ],
+    "pred_size": [
+      1,
+      2
+    ],
+    "observed": [
+      [
+        5,
+        9
+      ]
+    ],
+    "policy": "cv2.INTER_AREA for non-boolean downsampling"
+  },
+  "center_crop_ambiguity": {
+    "gt_size": [
+      10,
+      10
+    ],
+    "pred_size": [
+      8,
+      8
+    ],
+    "actual_crop_box": [
+      1,
+      1,
+      8,
+      8
+    ],
+    "observed_crop_box": [
+      0,
+      0,
+      8,
+      8
+    ],
+    "K_in": [
+      [
+        10,
+        0,
+        4.5
+      ],
+      [
+        0,
+        10,
+        4.5
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "reference_K": [
+      [
+        10,
+        0,
+        3.5
+      ],
+      [
+        0,
+        10,
+        3.5
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "observed_K": [
+      [
+        10,
+        0,
+        4.5
+      ],
+      [
+        0,
+        10,
+        4.5
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "known_failure": "eval-crop-origin"
+  },
+  "defaults": {
+    "contract_radial_depth": false,
+    "eval_radial_depth": true,
+    "scope": "Evaluator fallback for a legacy/unchecked metadata provider. Canonical depth heads require radial_depth explicitly."
+  }
+}

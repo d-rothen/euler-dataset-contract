@@ -210,16 +210,81 @@ def test_representation_stays_out_of_identity(modality_inventory) -> None:
 # --- Section 5.3: the three things the table settles ---
 
 
-def test_sparse_depth_and_lidar_point_cloud_are_the_same_quantity(
+def test_reported_sparse_depth_mapping_requires_a_cloud(
     modality_inventory,
 ) -> None:
-    """Section 5.3: sparsity describes a use, not an identity."""
+    """Operator-confirmed 3D depth does not license aliases for sparse rasters."""
 
     aliases = modality_inventory["aliases"]
     assert aliases["sparse_depth"]["id"] == aliases["lidar_point_cloud"]["id"]
     assert aliases["sparse_depth"]["id"] == "geometry.scene.points"
-    # Open question 3 is unanswered, so the mapping is not yet authoritative.
-    assert aliases["sparse_depth"]["status"] == "provisional"
+    assert aliases["sparse_depth"]["status"] == "settled"
+    assert aliases["sparse_depth"]["conditions"] == {
+        "representation.form": "point_cloud"
+    }
+
+
+def test_operator_dataset_names_are_classified_without_inventing_loaders(
+    modality_inventory, dataset_modality_types, vendored_modality_types
+) -> None:
+    expected = {
+        "rgb",
+        "spectral_map",
+        "spherical_map",
+        "map_2d",
+        "map_3d",
+        "scattering_coefficient",
+        "athmospheric_light",
+        "sparse_depth",
+        "intrinsics",
+        "camera_extrinsics",
+        "points_3d",
+        "depth",
+        "semantic_segmentation",
+        "transmission_map",
+    }
+    reported = dataset_modality_types["modality_types"]
+    assert set(reported) == expected
+    assert {key for key, value in reported.items() if not value["active"]} == {
+        "spectral_map"
+    }
+    assert "spectral_map" in modality_inventory["unused_names"]
+    assert "spectral_map" not in modality_inventory["aliases"]
+    for name, entry in reported.items():
+        assert entry["meaning"].strip()
+        if entry["active"]:
+            assert name in modality_inventory["aliases"], name
+    assert expected - set(vendored_modality_types["modality_types"]) == {
+        "spectral_map",
+        "athmospheric_light",
+        "transmission_map",
+    }
+
+
+def test_reported_rays_and_generic_arrays_are_distinct(modality_inventory) -> None:
+    aliases = modality_inventory["aliases"]
+    assert aliases["spherical_map"]["id"] == "geometry.camera.ray_direction"
+    assert aliases["spherical_map"]["conditions"] == {"representation.form": "ray_map"}
+    assert aliases["map_3d"]["id"] == "signal.grid.array"
+    assert aliases["map_3d"]["id"] != aliases["points_3d"]["id"]
+    assert aliases["transmission_map"]["id"] != aliases["scattering_coefficient"]["id"]
+    assert aliases["athmospheric_light"]["id"] == aliases["atmospheric_light"]["id"]
+
+
+def test_all_active_dataset_names_have_literal_golden_heads(
+    dataset_modality_types, golden_heads
+) -> None:
+    covered = {case.head["modality"]["key"] for case in golden_heads}
+    active = {
+        name
+        for name, entry in dataset_modality_types["modality_types"].items()
+        if entry["active"]
+    }
+    assert active <= covered
+    spellings = {"athmospheric_light", "atmospheric_light"}
+    for case in golden_heads:
+        if case.head["modality"]["key"] in spellings:
+            assert case.canonical["modality"]["key"] == case.head["modality"]["key"]
 
 
 def test_segmentation_names_resolve_to_class_labels(modality_inventory) -> None:

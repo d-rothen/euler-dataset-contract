@@ -13,7 +13,7 @@ import textwrap
 
 import pytest
 
-from euler_dataset_contract.testing import GoldenHead, InvalidHead, corpus
+from euler_dataset_contract.testing import EvidenceCase, GoldenHead, InvalidHead, corpus
 from euler_dataset_contract.testing import assert_head_roundtrip as roundtrip_helper
 
 BLOCK_PYTEST = """
@@ -22,7 +22,7 @@ import sys
 
 class _BlockPytest:
     def find_spec(self, name, path=None, target=None):
-        if name == "pytest" or name.startswith("pytest."):
+        if name.split(".")[0] in {"pytest", "numpy", "torch", "PIL", "cv2"}:
             raise ModuleNotFoundError(f"No module named {name!r}", name=name)
         return None
 
@@ -84,10 +84,16 @@ def test_core_package_imports_without_pytest_installed() -> None:
 def test_corpus_layer_works_without_pytest_installed() -> None:
     result = _run(
         """
-        from euler_dataset_contract.testing import golden_heads, modality_inventory
+        from euler_dataset_contract.testing import (
+            golden_heads, modality_inventory, evidence_cases,
+            dataset_modality_types, loader_observations,
+        )
 
         assert golden_heads()
         assert modality_inventory()["contract"]["kind"] == "modality_inventory"
+        assert evidence_cases()
+        assert dataset_modality_types()
+        assert loader_observations()
         print("clean")
         """,
         without_pytest=True,
@@ -147,7 +153,11 @@ def test_single_case_helpers_expose_one_param_per_case() -> None:
     parametrization stopped working.
     """
 
-    from euler_dataset_contract.testing import golden_head_params, invalid_head_params
+    from euler_dataset_contract.testing import (
+        evidence_case_params,
+        golden_head_params,
+        invalid_head_params,
+    )
 
     valid = golden_head_params()
     invalid = invalid_head_params()
@@ -158,6 +168,10 @@ def test_single_case_helpers_expose_one_param_per_case() -> None:
     assert [param.id for param in invalid] == [
         case.name for case in corpus.invalid_heads()
     ]
+    assert [param.id for param in evidence_case_params()] == [
+        case.name for case in corpus.evidence_cases()
+    ]
+    assert len(evidence_case_params("preprocessing")) == 2
 
 
 def test_corpus_objects_are_detached() -> None:
@@ -174,10 +188,16 @@ def test_fixtures_expose_the_documented_types(
     golden_heads,
     invalid_heads,
     modality_inventory,
+    evidence_cases,
+    dataset_modality_types,
+    loader_observations,
 ) -> None:
     assert all(isinstance(case, GoldenHead) for case in golden_heads)
     assert all(isinstance(case, InvalidHead) for case in invalid_heads)
     assert modality_inventory["contract"]["version"] == "1.0"
+    assert all(isinstance(case, EvidenceCase) for case in evidence_cases)
+    assert dataset_modality_types == corpus.dataset_modality_types()
+    assert loader_observations == corpus.loader_observations()
 
 
 def test_assert_head_roundtrip_rejects_what_is_not_a_head() -> None:

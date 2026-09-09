@@ -4,11 +4,11 @@
     "version": "1.0"
   },
   "provenance": {
-    "document": "docs/ecosystem-streamlining-plan.md",
-    "section": "5.3",
+    "document": "docs/future-directions.md",
+    "section": "Suggested rollout / Phase 0",
     "phase": "0",
     "consumed_by_runtime": false,
-    "description": "Inventory of the modality identities the ecosystem emits today and the legacy names that resolve to them. Phase 0 ships this as data only: parsing, validation, and schema generation do not read it."
+    "description": "Data-only Phase 0 inventory, amended from the operator dataset list, clarification, and source observations. Conditional aliases require their stated evidence; no runtime parser, normalization, or schema reads this file."
   },
   "vocabularies": {
     "status": {
@@ -18,7 +18,8 @@
     "alias_source": {
       "contract.modality_key": "A modality.key with registered meta fields in euler-dataset-contract today.",
       "euler_loading.modality_type": "A value of the type field in euler-loading's generated loaders.json.",
-      "euler_loading.loader_function": "A loader function name in euler-loading that is not itself a modality type."
+      "euler_loading.loader_function": "A loader function name in euler-loading that is not itself a modality type.",
+      "dataset.modality_key": "A name reported by the operator for the current datasets; separate from emitted loader types."
     },
     "non_modality_reason": {
       "bundle": "Several distinct quantities carried under one name.",
@@ -45,7 +46,10 @@
       "quantity": "color",
       "status": "settled",
       "description": "Colour recorded by a camera, whatever the filter array or channel order.",
-      "aliases": ["rgb", "rccb"],
+      "aliases": [
+        "rgb",
+        "rccb"
+      ],
       "representation_fields": [
         "layout",
         "value_domain",
@@ -60,10 +64,19 @@
       "quantity": "depth",
       "status": "settled",
       "description": "Per-pixel distance from the camera, either perpendicular to the image plane or along the ray.",
-      "aliases": ["depth"],
-      "representation_fields": ["depth_kind", "unit", "invalid"],
+      "aliases": [
+        "depth"
+      ],
+      "representation_fields": [
+        "depth_kind",
+        "unit",
+        "invalid"
+      ],
       "representation_enums": {
-        "depth_kind": ["planar_z", "radial"]
+        "depth_kind": [
+          "planar_z",
+          "radial"
+        ]
       }
     },
     "geometry.camera.intrinsics": {
@@ -72,8 +85,14 @@
       "quantity": "intrinsics",
       "status": "settled",
       "description": "Projection parameters mapping camera-frame points to the image plane.",
-      "aliases": ["intrinsics"],
-      "representation_fields": ["model", "layout", "image_plane"]
+      "aliases": [
+        "intrinsics"
+      ],
+      "representation_fields": [
+        "model",
+        "layout",
+        "image_plane"
+      ]
     },
     "geometry.camera.extrinsics": {
       "domain": "geometry",
@@ -81,7 +100,10 @@
       "quantity": "extrinsics",
       "status": "settled",
       "description": "Rigid transform between the camera frame and a reference frame.",
-      "aliases": ["extrinsics", "camera_extrinsics"],
+      "aliases": [
+        "extrinsics",
+        "camera_extrinsics"
+      ],
       "representation_fields": [
         "layout",
         "direction",
@@ -95,10 +117,26 @@
       "quantity": "points",
       "status": "settled",
       "description": "Three-dimensional scene points, either indexed by pixel as a point map or listed as an unordered cloud.",
-      "aliases": ["points_3d", "point_cloud", "lidar_point_cloud", "sparse_depth"],
-      "representation_fields": ["form", "axes", "columns"],
+      "aliases": [
+        "points_3d",
+        "point_cloud",
+        "lidar_point_cloud",
+        "sparse_depth"
+      ],
+      "representation_fields": [
+        "form",
+        "axes",
+        "columns",
+        "unit",
+        "frame",
+        "image_plane",
+        "invalid"
+      ],
       "representation_enums": {
-        "form": ["point_map", "point_cloud"]
+        "form": [
+          "point_map",
+          "point_cloud"
+        ]
       }
     },
     "geometry.scene.flow": {
@@ -107,8 +145,13 @@
       "quantity": "flow",
       "status": "settled",
       "description": "Per-point or per-pixel scene motion between two times.",
-      "aliases": ["scene_flow"],
-      "representation_fields": ["axes", "unit"]
+      "aliases": [
+        "scene_flow"
+      ],
+      "representation_fields": [
+        "axes",
+        "unit"
+      ]
     },
     "semantics.camera.class_labels": {
       "domain": "semantics",
@@ -122,9 +165,16 @@
         "class_segmentation",
         "semantic_segmentation_color"
       ],
-      "representation_fields": ["encoding", "palette", "label_space"],
+      "representation_fields": [
+        "encoding",
+        "palette",
+        "label_space"
+      ],
       "representation_enums": {
-        "encoding": ["class_id", "rgb_palette"]
+        "encoding": [
+          "class_id",
+          "rgb_palette"
+        ]
       }
     },
     "semantics.camera.instance_labels": {
@@ -133,8 +183,12 @@
       "quantity": "instance_labels",
       "status": "settled",
       "description": "Per-pixel instance identity, without class meaning.",
-      "aliases": ["instance_segmentation"],
-      "representation_fields": ["encoding"]
+      "aliases": [
+        "instance_segmentation"
+      ],
+      "representation_fields": [
+        "encoding"
+      ]
     },
     "semantics.camera.panoptic_labels": {
       "domain": "semantics",
@@ -142,8 +196,12 @@
       "quantity": "panoptic_labels",
       "status": "settled",
       "description": "Per-pixel class and instance identity combined in one map.",
-      "aliases": ["panoptic_segmentation"],
-      "representation_fields": ["encoding"]
+      "aliases": [
+        "panoptic_segmentation"
+      ],
+      "representation_fields": [
+        "encoding"
+      ]
     },
     "semantics.camera.mask": {
       "domain": "semantics",
@@ -151,8 +209,12 @@
       "quantity": "mask",
       "status": "settled",
       "description": "Per-pixel membership of one named class. The class is a representation parameter, so a road or vehicle mask needs no new modality.",
-      "aliases": ["sky_mask"],
-      "representation_fields": ["class"]
+      "aliases": [
+        "sky_mask"
+      ],
+      "representation_fields": [
+        "class"
+      ]
     },
     "radiometry.scene.atmospheric_light": {
       "domain": "radiometry",
@@ -160,17 +222,30 @@
       "quantity": "atmospheric_light",
       "status": "settled",
       "description": "Airlight colour of the scene atmosphere.",
-      "aliases": ["atmospheric_light"],
-      "representation_fields": ["axes"]
+      "aliases": [
+        "atmospheric_light",
+        "athmospheric_light"
+      ],
+      "representation_fields": [
+        "axes",
+        "color_space",
+        "value_domain"
+      ]
     },
     "radiometry.scene.scattering_coefficient": {
       "domain": "radiometry",
       "subject": "scene",
       "quantity": "scattering_coefficient",
       "status": "settled",
-      "description": "Volumetric scattering coefficient of the participating medium.",
-      "aliases": ["scattering_coefficient"],
-      "representation_fields": ["unit"]
+      "description": "Extinction/scattering coefficient controlling transmission through the medium, e.g. exp(-beta * distance) in the fog producer. It is distinct from dimensionless transmission.",
+      "aliases": [
+        "scattering_coefficient"
+      ],
+      "representation_fields": [
+        "unit",
+        "axes",
+        "distance_unit"
+      ]
     },
     "radiometry.scene.sh_coefficients": {
       "domain": "radiometry",
@@ -178,8 +253,13 @@
       "quantity": "sh_coefficients",
       "status": "settled",
       "description": "Spherical-harmonic coefficients describing scene illumination.",
-      "aliases": ["sh_coeffs"],
-      "representation_fields": ["order", "basis"]
+      "aliases": [
+        "sh_coeffs"
+      ],
+      "representation_fields": [
+        "order",
+        "basis"
+      ]
     },
     "signal.grid.scalar": {
       "domain": "signal",
@@ -188,162 +268,294 @@
       "status": "provisional",
       "note": "Open question 1: for signal.* the subject slot holds an index space rather than a subject. The id may change if a separate convention is adopted for container-typed signals.",
       "description": "A scalar value per cell of a regular grid, with no committed physical meaning.",
-      "aliases": ["map_2d"],
-      "representation_fields": ["axes", "unit"]
+      "aliases": [
+        "map_2d"
+      ],
+      "representation_fields": [
+        "axes",
+        "unit"
+      ]
     },
-    "signal.grid.vector3": {
+    "signal.grid.array": {
       "domain": "signal",
       "subject": "grid",
-      "quantity": "vector3",
+      "quantity": "array",
       "status": "provisional",
-      "note": "Open question 1: for signal.* the subject slot holds an index space rather than a subject. The id may change if a separate convention is adopted for container-typed signals.",
-      "description": "A three-component vector per cell of a regular grid, with no committed physical meaning.",
-      "aliases": ["map_3d"],
-      "representation_fields": ["axes"]
+      "note": "Open question 1: signal registry naming remains provisional. Current generic map_3d accepts arbitrary channel counts.",
+      "description": "An arbitrary rank-three array; the third axis is not necessarily XYZ or a three-component vector.",
+      "aliases": [
+        "map_3d"
+      ],
+      "representation_fields": [
+        "axes",
+        "shape",
+        "component_meanings",
+        "unit"
+      ]
     },
-    "signal.sphere.vector3": {
-      "domain": "signal",
-      "subject": "sphere",
-      "quantity": "vector3",
-      "status": "provisional",
-      "note": "Open questions 1 and 2: the subject slot holds an index space, and the projection vocabulary is unenumerated. Whether projection is representation or identity is undecided.",
-      "description": "A three-component vector per direction on the sphere, stored under some projection.",
-      "aliases": ["spherical_map"],
-      "representation_fields": ["projection"]
+    "geometry.camera.ray_direction": {
+      "domain": "geometry",
+      "subject": "camera",
+      "quantity": "ray_direction",
+      "status": "settled",
+      "description": "A homogeneous direction per image-plane pixel. Unit length, component order, and coordinate frame require explicit declarations.",
+      "aliases": [
+        "spherical_map"
+      ],
+      "representation_fields": [
+        "form",
+        "axes",
+        "normalization",
+        "frame",
+        "image_plane",
+        "projection"
+      ]
+    },
+    "radiometry.scene.transmission": {
+      "domain": "radiometry",
+      "subject": "scene",
+      "quantity": "transmission",
+      "status": "settled",
+      "description": "Fraction of light transmitted along a path, distinct from the extinction coefficient. Actual channel layout and encoding remain dataset-specific.",
+      "aliases": [
+        "transmission_map"
+      ],
+      "representation_fields": [
+        "axes",
+        "value_domain",
+        "path_definition"
+      ]
     }
   },
   "aliases": {
     "rgb": {
       "id": "appearance.camera.color",
       "status": "settled",
-      "sources": ["contract.modality_key", "euler_loading.modality_type"]
+      "sources": [
+        "contract.modality_key",
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ]
     },
     "rccb": {
       "id": "appearance.camera.color",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"],
-      "representation": {"filter_array": "rccb"}
+      "sources": [
+        "euler_loading.modality_type"
+      ],
+      "representation": {
+        "filter_array": "rccb"
+      }
     },
     "depth": {
       "id": "geometry.camera.depth",
       "status": "settled",
-      "sources": ["contract.modality_key", "euler_loading.modality_type"]
+      "sources": [
+        "contract.modality_key",
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ]
     },
     "intrinsics": {
       "id": "geometry.camera.intrinsics",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ]
     },
     "extrinsics": {
       "id": "geometry.camera.extrinsics",
       "status": "provisional",
       "note": "Open question 4: vkitti2.read_extrinsics returns shape Nx1 where the other producers return 4x4. Until that is classified as a representation or a defect, the shared id is asserted for the quantity only.",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     },
     "camera_extrinsics": {
       "id": "geometry.camera.extrinsics",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ]
     },
     "points_3d": {
       "id": "geometry.scene.points",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"],
-      "representation": {"form": "point_map"}
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ],
+      "representation": {
+        "form": "point_map"
+      },
+      "note": "Operator confirms dense per-pixel XYZ obtained by projecting a dense depth map. Generic CPU and GPU loaders preserve 3HW; density alone does not make the representation interchangeable with a cloud."
     },
     "point_cloud": {
       "id": "geometry.scene.points",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"],
-      "representation": {"form": "point_cloud"}
+      "sources": [
+        "euler_loading.modality_type"
+      ],
+      "representation": {
+        "form": "point_cloud"
+      }
     },
     "lidar_point_cloud": {
       "id": "geometry.scene.points",
       "status": "settled",
-      "sources": ["euler_loading.loader_function"],
-      "representation": {"form": "point_cloud"}
+      "sources": [
+        "euler_loading.loader_function"
+      ],
+      "representation": {
+        "form": "point_cloud"
+      }
     },
     "sparse_depth": {
       "id": "geometry.scene.points",
-      "status": "provisional",
-      "note": "Open question 3: the plan maps sparse depth to scene points because sparsity describes a use, not a quantity. Confirm that euler-eval's sparse-depth path is a point-cloud projection before this is authoritative.",
-      "sources": ["euler_loading.modality_type"],
-      "representation": {"form": "point_cloud"}
+      "status": "settled",
+      "note": "Operator confirms sparse 3D depth; MUSES and Princeton loaders return point clouds. This mapping applies to declared clouds, not an unknown dataset carrying a sparse raster.",
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ],
+      "representation": {
+        "form": "point_cloud"
+      },
+      "conditions": {
+        "representation.form": "point_cloud"
+      }
     },
     "scene_flow": {
       "id": "geometry.scene.flow",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     },
     "segmentation": {
       "id": "semantics.camera.class_labels",
       "status": "settled",
-      "sources": ["contract.modality_key"]
+      "sources": [
+        "contract.modality_key"
+      ]
     },
     "semantic_segmentation": {
       "id": "semantics.camera.class_labels",
       "status": "settled",
-      "sources": ["contract.modality_key", "euler_loading.modality_type"]
+      "sources": [
+        "contract.modality_key",
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ]
     },
     "class_segmentation": {
       "id": "semantics.camera.class_labels",
       "status": "settled",
-      "sources": ["euler_loading.loader_function"]
+      "sources": [
+        "euler_loading.loader_function"
+      ]
     },
     "semantic_segmentation_color": {
       "id": "semantics.camera.class_labels",
       "status": "settled",
       "note": "The legacy name suggests encoding rgb_palette, but no declaration carries it. The encoding is recorded per dataset in phase 2, not assumed here.",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     },
     "instance_segmentation": {
       "id": "semantics.camera.instance_labels",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     },
     "panoptic_segmentation": {
       "id": "semantics.camera.panoptic_labels",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     },
     "sky_mask": {
       "id": "semantics.camera.mask",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"],
-      "representation": {"class": "sky"}
+      "sources": [
+        "euler_loading.modality_type"
+      ],
+      "representation": {
+        "class": "sky"
+      }
     },
     "atmospheric_light": {
       "id": "radiometry.scene.atmospheric_light",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     },
     "scattering_coefficient": {
       "id": "radiometry.scene.scattering_coefficient",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ]
     },
     "sh_coeffs": {
       "id": "radiometry.scene.sh_coefficients",
       "status": "settled",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     },
     "map_2d": {
       "id": "signal.grid.scalar",
       "status": "provisional",
       "note": "Open question 1: the target id's subject slot is unsettled.",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ]
     },
     "map_3d": {
-      "id": "signal.grid.vector3",
+      "id": "signal.grid.array",
       "status": "provisional",
-      "note": "Open question 1: the target id's subject slot is unsettled.",
-      "sources": ["euler_loading.modality_type"]
+      "note": "Open question 1: target naming remains provisional. No fixed channel count or geometric meaning may be inferred from map_3d.",
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ]
     },
     "spherical_map": {
-      "id": "signal.sphere.vector3",
-      "status": "provisional",
-      "note": "Open questions 1 and 2: the target id's subject slot is unsettled and the projection vocabulary is unenumerated.",
-      "sources": ["euler_loading.modality_type"]
+      "id": "geometry.camera.ray_direction",
+      "status": "settled",
+      "note": "Operator clarification: the used spherical_map is a homogeneous ray direction map, not a sphere-indexed generic signal. Loading preserves magnitude; preprocessing may renormalize.",
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ],
+      "conditions": {
+        "representation.form": "ray_map"
+      }
+    },
+    "athmospheric_light": {
+      "id": "radiometry.scene.atmospheric_light",
+      "status": "settled",
+      "sources": [
+        "dataset.modality_key"
+      ],
+      "note": "Operator-reported dataset spelling. Loaders spell it atmospheric_light. Preserve both persisted keys; this inventory performs no spelling normalization."
+    },
+    "transmission_map": {
+      "id": "radiometry.scene.transmission",
+      "status": "settled",
+      "sources": [
+        "dataset.modality_key"
+      ],
+      "note": "Reported active dataset quantity; there is no dedicated emitted loader type in the reviewed loading catalog."
     }
   },
   "non_modalities": {
@@ -352,7 +564,9 @@
       "status": "settled",
       "description": "The same quantity as intrinsics, held once per sensor. It becomes a binding concern (cardinality per_sensor) rather than a separate identity.",
       "resolves_to": "geometry.camera.intrinsics",
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     },
     "calibration": {
       "reason": "bundle",
@@ -362,7 +576,9 @@
         "geometry.camera.intrinsics",
         "geometry.camera.extrinsics"
       ],
-      "sources": ["euler_loading.modality_type"]
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     }
   },
   "open_questions": [
@@ -371,27 +587,36 @@
       "summary": "Whether signal.* may use the subject slot for an index space.",
       "affects": [
         "signal.grid.scalar",
-        "signal.grid.vector3",
-        "signal.sphere.vector3",
+        "signal.grid.array",
         "map_2d",
-        "map_3d",
-        "spherical_map"
+        "map_3d"
       ]
-    },
-    {
-      "number": 2,
-      "summary": "Which projections the spherical_map vocabulary enumerates, and whether projection is representation or identity.",
-      "affects": ["signal.sphere.vector3", "spherical_map"]
-    },
-    {
-      "number": 3,
-      "summary": "Whether euler-eval's sparse-depth path is genuinely a point-cloud projection.",
-      "affects": ["sparse_depth"]
     },
     {
       "number": 4,
       "summary": "Whether vkitti2's Nx1 extrinsics is a real storage representation or a defect.",
-      "affects": ["extrinsics"]
+      "affects": [
+        "extrinsics"
+      ]
+    }
+  ],
+  "unused_names": {
+    "spectral_map": {
+      "status": "unused",
+      "sources": [
+        "dataset.modality_key"
+      ],
+      "note": "Operator clarifies this name was never used. No spectral-band or spherical-harmonic meaning is inferred and no canonical id is assigned."
+    }
+  },
+  "resolved_questions": [
+    {
+      "number": 2,
+      "resolution": "Operator identifies spherical_map as homogeneous image-plane ray directions. Projection, frame and normalization still require per-dataset declarations."
+    },
+    {
+      "number": 3,
+      "resolution": "Operator confirms sparse_depth contains sparse 3D depth; observed loaders consume clouds. The alias is conditional on that representation."
     }
   ]
 }

@@ -1,0 +1,223 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "documented-five-field",
+  "kind": "preprocessing",
+  "description": "The task's resize 384x768 then crop 320x640 example, with analytic interior pixel probes and known camera projection.",
+  "source_size": [
+    480,
+    960
+  ],
+  "config": {
+    "resize": [
+      384,
+      768
+    ],
+    "crop": {
+      "size": [
+        320,
+        640
+      ],
+      "anchor": "center"
+    },
+    "reference_field": "rgb",
+    "infer_fields": false,
+    "fields": {
+      "rgb": {
+        "kind": "image",
+        "layout": "HWC"
+      },
+      "depth": {
+        "kind": "depth",
+        "layout": "HW"
+      },
+      "valid_mask": {
+        "kind": "mask",
+        "layout": "HW"
+      },
+      "intrinsics": {
+        "kind": "intrinsics",
+        "reduce": "first"
+      },
+      "ray_map": {
+        "kind": "ray_map",
+        "layout": "HWC"
+      }
+    }
+  },
+  "inputs": {
+    "rgb": {
+      "generator": "affine_grid",
+      "dtype": "float32",
+      "coefficients": [
+        [
+          0,
+          0,
+          0.0010416666666666667
+        ],
+        [
+          0,
+          0.0020833333333333333,
+          0
+        ],
+        [
+          0.5,
+          0,
+          0
+        ]
+      ]
+    },
+    "depth": {
+      "generator": "affine_grid",
+      "dtype": "float32",
+      "coefficients": [
+        1,
+        0.01,
+        0.001
+      ]
+    },
+    "valid_mask": {
+      "generator": "rectangle",
+      "dtype": "bool",
+      "box": [
+        100,
+        200,
+        200,
+        500
+      ]
+    },
+    "intrinsics": {
+      "generator": "calibration",
+      "dtype": "float32",
+      "key": "camera_0",
+      "value": [
+        [
+          800,
+          0,
+          479.5
+        ],
+        [
+          0,
+          800,
+          239.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    "ray_map": {
+      "generator": "constant",
+      "dtype": "float32",
+      "value": [
+        0,
+        0,
+        3
+      ]
+    }
+  },
+  "reference": {
+    "crop_box": [
+      32,
+      64,
+      320,
+      640
+    ],
+    "output_size": [
+      320,
+      640
+    ],
+    "intrinsics": [
+      [
+        640,
+        0,
+        319.5
+      ],
+      [
+        0,
+        640,
+        159.5
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "ray_vector": [
+      0,
+      0,
+      1
+    ],
+    "atol": 0.00001,
+    "probes": [
+      {
+        "at": [
+          0,
+          0
+        ],
+        "source_xy": [
+          80.125,
+          40.125
+        ],
+        "rgb": [
+          0.08346354166666667,
+          0.08359375,
+          0.5
+        ],
+        "depth": 1.481375,
+        "valid_mask": false
+      },
+      {
+        "at": [
+          100,
+          200
+        ],
+        "source_xy": [
+          330.125,
+          165.125
+        ],
+        "rgb": [
+          0.3438802083333333,
+          0.34401041666666665,
+          0.5
+        ],
+        "depth": 2.981375,
+        "valid_mask": true
+      },
+      {
+        "at": [
+          319,
+          639
+        ],
+        "source_xy": [
+          878.875,
+          438.875
+        ],
+        "rgb": [
+          0.9154947916666667,
+          0.9143229166666667,
+          0.5
+        ],
+        "depth": 6.267625,
+        "valid_mask": false
+      }
+    ],
+    "projected_point": {
+      "xyz": [
+        0,
+        0,
+        2
+      ],
+      "pixel": [
+        319.5,
+        159.5
+      ]
+    }
+  },
+  "execution_profile": "Torch interpolation on CPU, align_corners=False, antialias=False."
+}

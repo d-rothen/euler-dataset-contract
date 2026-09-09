@@ -1,0 +1,91 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "depth-projection",
+  "kind": "projection",
+  "description": "Known metric planar depth unprojection to an organized XYZ map, distinct from sparse point-cloud representation.",
+  "K": [
+    [
+      2,
+      0,
+      1
+    ],
+    [
+      0,
+      2,
+      0.5
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "depth": [
+    [
+      2,
+      4,
+      6
+    ],
+    [
+      8,
+      10,
+      12
+    ]
+  ],
+  "depth_unit": "meter",
+  "depth_kind": "planar_z",
+  "point_map_hwc": [
+    [
+      [
+        -1,
+        -0.5,
+        2
+      ],
+      [
+        0,
+        -1,
+        4
+      ],
+      [
+        3,
+        -1.5,
+        6
+      ]
+    ],
+    [
+      [
+        -4,
+        2,
+        8
+      ],
+      [
+        0,
+        2.5,
+        10
+      ],
+      [
+        6,
+        3,
+        12
+      ]
+    ]
+  ],
+  "radial_squared": [
+    [
+      5.25,
+      17,
+      47.25
+    ],
+    [
+      84,
+      106.25,
+      189
+    ]
+  ],
+  "point_map_layout": "HWC",
+  "frame": "synthetic_pinhole_camera",
+  "atol": 0.00001
+}

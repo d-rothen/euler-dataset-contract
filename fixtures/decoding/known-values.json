@@ -1,0 +1,227 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "known-values",
+  "kind": "decoding",
+  "description": "Raw encoded fixtures distinguish declared units, observed scaling, layouts, palette triplets, and cloud/map representations.",
+  "depth": {
+    "raw_dtype": "uint16",
+    "raw": [
+      [
+        0,
+        100,
+        1234
+      ],
+      [
+        200,
+        1000,
+        65535
+      ]
+    ],
+    "declared_centimeters": {
+      "scale_to_meters": 0.01,
+      "expected_meters": [
+        [
+          0,
+          1,
+          12.34
+        ],
+        [
+          2,
+          10,
+          655.35
+        ]
+      ]
+    },
+    "declared_millimeters": {
+      "scale_to_meters": 0.001,
+      "expected_meters": [
+        [
+          0,
+          0.1,
+          1.234
+        ],
+        [
+          0.2,
+          1,
+          65.535
+        ]
+      ],
+      "known_failure": "loader-ignores-head-scale"
+    },
+    "atol": 0.0001
+  },
+  "rgb": {
+    "raw_dtype": "uint8",
+    "raw": [
+      [
+        [
+          0,
+          127,
+          255
+        ],
+        [
+          255,
+          64,
+          0
+        ],
+        [
+          90,
+          200,
+          255
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      [
+        [
+          10,
+          20,
+          30
+        ],
+        [
+          40,
+          50,
+          60
+        ],
+        [
+          70,
+          80,
+          90
+        ],
+        [
+          100,
+          110,
+          120
+        ]
+      ]
+    ],
+    "decoded_unit": "normalized_color",
+    "scale": 0.00392156862745098
+  },
+  "palette": {
+    "raw_dtype": "uint8",
+    "raw": [
+      [
+        [
+          90,
+          200,
+          255
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          90,
+          200,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          90,
+          200,
+          255
+        ]
+      ]
+    ],
+    "observed_dtype": "int64",
+    "observed_encoding": "rgb_palette",
+    "not_class_ids": true
+  },
+  "cloud": {
+    "loader": "muses.sparse_depth",
+    "raw_dtype": "float64",
+    "raw": [
+      [
+        1,
+        2,
+        3,
+        0.25,
+        11,
+        4
+      ],
+      [
+        -1,
+        0,
+        2,
+        0.75,
+        12,
+        5
+      ]
+    ],
+    "observed_shape": [
+      2,
+      6
+    ],
+    "coordinate_unit": "meters"
+  },
+  "scalar_maps": {
+    "raw": [[0.0, 0.25, 0.5, 1.0], [1.5, 2.0, 2.5, 3.0]],
+    "loaders": ["map_2d", "scattering_coefficient"],
+    "observed_layout": "HW",
+    "observed_dtype": "float32",
+    "unit": "Unspecified by these generic decoders; the caller supplies meaning."
+  },
+  "class_ids": {
+    "raw": [[0, 1, 2, 255], [2, 1, 0, 255]],
+    "observed_dtype": "uint8",
+    "observed_layout": "HW",
+    "void_id": 255
+  },
+  "generic_maps": {
+    "stored_layout": "CHW",
+    "stored_shape": [
+      5,
+      2,
+      4
+    ],
+    "cpu_layout": "HWC",
+    "gpu_layout": "CHW",
+    "no_xyz_assumption": true
+  },
+  "ray_map": {
+    "stored_direction": [
+      0,
+      0,
+      3
+    ],
+    "decoded_direction": [
+      0,
+      0,
+      3
+    ],
+    "preprocessed_resize_direction": [
+      0,
+      0,
+      1
+    ]
+  }
+}

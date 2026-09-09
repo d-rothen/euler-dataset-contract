@@ -1,0 +1,55 @@
+{
+  "description": "Contract 1.0 keeps modality closed and requires its legacy key; richer ids need an addon or a new format.",
+  "expected_exception": "ValueError",
+  "expected_error": "Unknown dataset_head.modality key(s): id",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "phase0_rgb",
+      "name": "Phase 0 synthetic RGB",
+      "attributes": {
+        "synthetic": true
+      }
+    },
+    "modality": {
+      "key": "rgb",
+      "meta": {
+        "range": [
+          0,
+          255
+        ],
+        "dimensions": {
+          "height": 4,
+          "width": 8,
+          "channels": 3
+        }
+      },
+      "id": "appearance.camera.color"
+    },
+    "addons": {
+      "phase0_annotations": {
+        "version": "1.0",
+        "description": "Opaque preservation test only; no replay or materialization claim.",
+        "nested": {
+          "operations": [
+            {
+              "resize": [
+                2,
+                4
+              ]
+            },
+            {
+              "crop": [
+                2,
+                2
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

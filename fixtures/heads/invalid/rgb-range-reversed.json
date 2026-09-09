@@ -20,5 +20,7 @@
         ]
       }
     }
-  }
+  },
+  "schema_valid": true,
+  "schema_note": "Runtime compares the two endpoints; standard JSON Schema has no cross-value numeric comparison. This existing semantic gap is explicitly tracked in Phase 0."
 }

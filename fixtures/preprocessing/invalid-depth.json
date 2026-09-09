@@ -1,0 +1,63 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "invalid-depth",
+  "kind": "backend",
+  "description": "Current ordinary bilinear depth resize blends invalid zero into otherwise valid metric depth.",
+  "config": {
+    "resize": [
+      1,
+      1
+    ],
+    "reference_field": "depth",
+    "infer_fields": false,
+    "fields": {
+      "depth": {
+        "kind": "depth",
+        "layout": "HW"
+      },
+      "valid_mask": {
+        "kind": "mask",
+        "layout": "HW"
+      }
+    }
+  },
+  "inputs": {
+    "depth": [
+      [
+        0,
+        4
+      ],
+      [
+        4,
+        4
+      ]
+    ],
+    "valid_mask": [
+      [
+        false,
+        true
+      ],
+      [
+        true,
+        true
+      ]
+    ]
+  },
+  "observed": {
+    "depth": [
+      [
+        3
+      ]
+    ],
+    "valid_mask": [
+      [
+        false
+      ]
+    ]
+  },
+  "reference_valid_only_mean": 4,
+  "implication": "A future validity-aware operation needs a separate declared policy; Phase 0 does not silently change legacy depth interpolation."
+}

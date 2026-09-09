@@ -1,0 +1,77 @@
+{
+  "contract": {
+    "kind": "phase0_evidence",
+    "version": "1.0"
+  },
+  "name": "backend-resize",
+  "kind": "backend",
+  "description": "NumPy preprocessing changes backend when Torch is installed; Pillow and Torch also choose different nearest neighbors.",
+  "config": {
+    "resize": [
+      1,
+      2
+    ],
+    "reference_field": "image",
+    "infer_fields": false,
+    "fields": {
+      "image": {
+        "kind": "image",
+        "layout": "HW"
+      },
+      "mask": {
+        "kind": "mask",
+        "layout": "HW"
+      }
+    }
+  },
+  "inputs": {
+    "image": [
+      [
+        0,
+        1,
+        0,
+        1
+      ]
+    ],
+    "mask": [
+      [
+        false,
+        true,
+        false,
+        true
+      ]
+    ]
+  },
+  "observed": {
+    "torch_cpu": {
+      "image": [
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "mask": [
+        [
+          false,
+          false
+        ]
+      ]
+    },
+    "pillow": {
+      "image": [
+        [
+          0.42857142857142855,
+          0.5714285714285714
+        ]
+      ],
+      "mask": [
+        [
+          true,
+          true
+        ]
+      ]
+    }
+  },
+  "atol": 0.000001,
+  "implication": "A config without an execution/sampling profile is insufficient for backend-independent replay. These are legacy observations, not the desired cross-backend equality."
+}

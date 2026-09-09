@@ -1,0 +1,20 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_map_3d",
+    "name": "Synthetic map_3d"
+  },
+  "modality": {
+    "key": "map_3d",
+    "meta": {
+      "dimensions": {
+        "height": 2,
+        "width": 4,
+        "channels": 5
+      }
+    }
+  }
+}
