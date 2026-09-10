@@ -59,6 +59,18 @@ from .validation import (
 )
 
 __all__ = [
+    'ArtifactReceipt',
+    'ExecutionReceipt',
+    'MaterializedTransforms',
+    'OutputEncoding',
+    'OutputPlan',
+    'receipt_location',
+    'resolve_receipt',
+    'validate_artifact_receipt',
+    'validate_execution',
+    'canonical_digest',
+    'canonical_json',
+
     "CalibrationBinding",
     "ExecutionProfile",
     "FieldBinding",
@@ -110,3 +122,16 @@ __all__ = [
     "validate_string_list",
     "validate_token",
 ]
+
+from .canonical import canonical_digest, canonical_json  # noqa: F401
+from .materialization import (  # noqa: F401
+    ArtifactReceipt,
+    ExecutionReceipt,
+    MaterializedTransforms,
+    OutputEncoding,
+    OutputPlan,
+    receipt_location,
+    resolve_receipt,
+    validate_artifact_receipt,
+    validate_execution,
+)

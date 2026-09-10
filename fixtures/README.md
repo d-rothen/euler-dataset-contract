@@ -120,3 +120,7 @@ change: it means some repository's current behaviour is now wrong, so land it
 together with the follow-up in the repositories that assert against it. See
 [docs/conformance-fixtures.md](../docs/conformance-fixtures.md) for the
 consumer wiring and the rule that governs contract changes.
+
+The `phase2-five-field` descriptor vector covers the 2.0 receipt/output wire format.
+Its source/array label hashes are synthetic assertions; opt-in consumer tests
+generate real files from the analytic five-field corpus and verify actual IO.

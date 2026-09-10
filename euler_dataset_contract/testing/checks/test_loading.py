@@ -59,15 +59,10 @@ def test_crop_boxes_and_current_intrinsics(entry):
         )
     matrix = crop_intrinsics(matrix, top=box[0], left=box[1])
     np.testing.assert_allclose(
-        matrix, entry.get("observed_loading_K", entry["K_out"]), rtol=0, atol=1e-6
+        matrix, entry["K_out"], rtol=0, atol=1e-6
     )
 
 
-@pytest.mark.xfail(
-    strict=True,
-    raises=AssertionError,
-    reason="loading-resize-skew: resize_intrinsics leaves skew unchanged",
-)
 def test_loading_intrinsics_agree_with_nonzero_skew_projection():
     entry = next(
         e for e in evidence("pinhole-projections")["cases"] if e.get("known_failure")

@@ -214,3 +214,6 @@ and [SECURITY.md](SECURITY.md) for private vulnerability reporting.
 ## License
 
 [MIT](LICENSE) © Daniel Rothenpieler
+
+Phase 2 adds opt-in [captured spatial exports and validated materialization](docs/phase2.md),
+with [verification and source installation details](docs/phase2-verification.md).

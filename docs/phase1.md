@@ -1,3 +1,5 @@
+> [Phase 2](phase2.md) adds separately negotiated materialization and receipts in 2.0. The planned 1.0 wire format documented here is unchanged.
+
 # Phase 1: descriptors, bindings, and compatibility
 
 Implemented in the contract 0.4.0 and loading 2.23.0 source changes. No release

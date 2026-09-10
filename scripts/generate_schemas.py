@@ -41,6 +41,8 @@ def _schemas() -> dict[str, dict]:
     }
     return {
         "dataset-head-1.0.schema.json": dataset_head,
+        **{f"{name.replace('_', '-')}-2.0.schema.json": build_descriptor_schema(name)
+           for name in ("materialized_transforms", "execution_receipt", "artifact_receipt", "output_plan")},
         "modality-meta-1.0.schema.json": modality_meta,
         **{f"{name.replace('_', '-')}-1.0.schema.json": build_descriptor_schema(name)
            for name in ("euler_representation", "euler_transforms", "recipe", "profile")},

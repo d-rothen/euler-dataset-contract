@@ -1,4 +1,4 @@
-"""Run the opt-in Phase 0 consumer checks against local source checkouts.
+"""Run the opt-in ecosystem consumer checks against local source checkouts.
 
 Use a Python environment containing the selected consumers' dependencies.
 This script neither installs packages nor changes the consumer repositories.
@@ -21,6 +21,7 @@ TARGETS = {
     "loading": ("ds-crawler", "euler-loading"),
     "preprocess": ("ds-crawler", "euler-loading", "euler-preprocess"),
     "eval": ("ds-crawler", "euler-loading", "euler-eval"),
+    "materialization": ("ds-crawler", "euler-loading", "euler-preprocess"),
 }
 
 
@@ -88,7 +89,7 @@ def main() -> int:
         "--target",
         choices=tuple(TARGETS),
         action="append",
-        help="Repeat to select consumers; default: all four",
+        help="Repeat to select consumers; default: all five",
     )
     parser.add_argument("--report", type=Path, help="Write a JSON execution report")
     args = parser.parse_args()
@@ -160,7 +161,7 @@ print(json.dumps({'python': platform.python_version(), 'platform': platform.syst
         print(result.stderr, file=sys.stderr)
         return result.returncode
     report = {
-        "scope": "Synthetic Phase 0 checks; Torch runs on CPU; no CUDA parity claim",
+        "scope": "Synthetic Phase 0 and Phase 2 checks; Torch runs on CPU; no CUDA parity claim",
         "environment": json.loads(result.stdout),
         "sources": {name: {"path": path, **source_state(Path(path))}
                     for name, path in checked_roots.items()},

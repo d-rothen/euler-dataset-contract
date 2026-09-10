@@ -1,3 +1,5 @@
+> Phase 2 source implementation: [finalized format and APIs](phase2.md). Its `euler_transforms` 2.0 format supersedes the Phase 2 sketches below; Phase 1 remains planned-only 1.0.
+
 # Future contract directions
 
 This is a design lookout, not a promise that the next release will implement
@@ -659,7 +661,7 @@ auxiliary fog maps need not share the resulting plane.
 ### 7.7 Resolve evaluation from lineage, not shape
 
 Loading a materialized output **never reapplies its recorded preprocessing**.
-The addon is history. Version 1 covers materialized datasets only; executable
+The addon is history. Version 2.0 covers materialized datasets only; executable
 virtual datasets would require a separately negotiated state and resolver.
 Evaluation constructs a transient view of GT to match an explicitly chosen
 prediction plane:

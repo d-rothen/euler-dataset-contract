@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0 (unreleased)
+
+- Add separately negotiated `euler_transforms` 2.0 materialization, bound execution
+  and artifact receipts, per-output plans/variants, content-addressed references,
+  shared schemas and a reproducible wire vector. Planned 1.0 behavior is unchanged.
+- Add containing-head output identity/profile checks and opt-in real consumer
+  capture/write/reload/replay coverage. Keep core array-free with no runtime dependencies.
+- Pin the shared geometry skew correction as a passing consumer projection check.
+  Evaluator pairing/alignment remains Phase 3; benchmark use remains opt-in.
+
+
 All notable changes to this project are documented here. Package releases use
 semantic versioning independently of the serialized dataset contract version.
 

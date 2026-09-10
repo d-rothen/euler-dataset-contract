@@ -400,6 +400,11 @@
       "name": "rejections",
       "path": "descriptors/rejections.json",
       "description": "Shared structural and graph rejection edits against five-field addon, with schema/runtime distinctions."
+    },
+    {
+      "name": "phase2-five-field",
+      "path": "descriptors/phase2-five-field.json",
+      "description": "Bound receipts, explicit output mapping and content-addressed records; synthetic wire assertions."
     }
   ]
 }

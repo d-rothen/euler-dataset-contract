@@ -104,15 +104,18 @@ def test_producer_variant_ids_attributes_and_opaque_addon(tmp_path, zip_output):
     assert dataset.get_modality_index("depth")["head"] == head
 
 
-def test_dataset_builder_does_not_yet_apply_preprocessing_config(tmp_path):
+def test_dataset_builder_applies_shared_preprocessing_config(tmp_path):
     _, _, values = make_dataset(tmp_path / "source", modality="depth")
     config = {
         "modalities": {"depth": str(tmp_path / "source")},
         "preprocessing": {"crop": {"size": [2, 4]}},
     }
     dataset = build_dataset(config, {"depth"})
-    # Loader resolution may choose Torch's 1HW output; spatial bytes stay 4x8.
-    np.testing.assert_array_equal(as_numpy(dataset[0]["depth"]).reshape(4, 8), values)
+    # Loader resolution may choose Torch's 1HW output; the shared center crop
+    # must still select the same source pixels.
+    np.testing.assert_array_equal(
+        as_numpy(dataset[0]["depth"]).reshape(2, 4), values[1:3, 2:6]
+    )
 
 
 def test_producer_calibration_requires_the_intrinsics_file_id():

@@ -1,0 +1,2102 @@
+{
+  "name": "phase2-five-field",
+  "description": "Synthetic wire assertions only. Recipe/plan/receipt digests are computed; source/array label hashes are not independently checked content. Real IO conformance uses the shared analytic corpus through consumer APIs.",
+  "descriptor": {
+    "recipe": {
+      "execution": {
+        "antialias": false,
+        "backend": "torch_cpu",
+        "boundary": "edge",
+        "device": "cpu",
+        "integer_rounding": "ties_to_even",
+        "nearest": "floor",
+        "numeric_tolerance": {
+          "atol": 1e-05,
+          "rtol": 1e-05
+        },
+        "output_dtype": "preserve",
+        "vector_epsilon": 1e-12,
+        "versions": {
+          "numpy": "2.4.6",
+          "torch": "2.12.1+cu130"
+        },
+        "work_dtype": "float32"
+      },
+      "fields": {
+        "depth": {
+          "policy": {
+            "interpolation": "bilinear",
+            "invalid_depth": "legacy_blend",
+            "mask_threshold": 0.5,
+            "rays": "preserve"
+          },
+          "profile": {
+            "depth_kind": "planar_z",
+            "dtype": "float32",
+            "frame": "camera_0_optical",
+            "image_plane": "camera_0",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            },
+            "kind": "depth",
+            "layout": "HW",
+            "shape": [
+              480,
+              960
+            ],
+            "unit": "meter"
+          },
+          "source": "source_depth"
+        },
+        "intrinsics": {
+          "calibration": {
+            "applies_to": [
+              "rgb",
+              "depth",
+              "valid_mask",
+              "ray_map"
+            ],
+            "camera_model": "pinhole",
+            "frame": "camera_0_optical",
+            "full_id": "/scene_01/camera_0/calibration",
+            "image_plane": "camera_0",
+            "revision": "sha256:854936b6b1576a72b14a17febc2d0879bfbb4aeff94034f44cfe14fa2dd1a280"
+          },
+          "policy": {
+            "interpolation": "bilinear",
+            "invalid_depth": "legacy_blend",
+            "mask_threshold": 0.5,
+            "rays": "preserve"
+          },
+          "profile": {
+            "camera_model": "pinhole",
+            "dtype": "float32",
+            "frame": "camera_0_optical",
+            "image_plane": "camera_0",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": null
+            },
+            "kind": "intrinsics",
+            "layout": "matrix",
+            "shape": [
+              3,
+              3
+            ],
+            "unit": "pixel"
+          },
+          "selection": "camera_0",
+          "source": "source_intrinsics"
+        },
+        "ray_map": {
+          "policy": {
+            "interpolation": "bilinear",
+            "invalid_depth": "legacy_blend",
+            "mask_threshold": 0.5,
+            "rays": "resample_normalize"
+          },
+          "profile": {
+            "components": [
+              "x",
+              "y",
+              "z"
+            ],
+            "dtype": "float32",
+            "frame": "camera_0_optical",
+            "image_plane": "camera_0",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": null
+            },
+            "kind": "ray_map",
+            "layout": "HWC",
+            "normalization": "homogeneous",
+            "shape": [
+              480,
+              960,
+              3
+            ],
+            "unit": "dimensionless"
+          },
+          "source": "source_ray_map"
+        },
+        "rgb": {
+          "policy": {
+            "interpolation": "bilinear",
+            "invalid_depth": "legacy_blend",
+            "mask_threshold": 0.5,
+            "rays": "preserve"
+          },
+          "profile": {
+            "dtype": "float32",
+            "image_plane": "camera_0",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": null
+            },
+            "kind": "image",
+            "layout": "HWC",
+            "shape": [
+              480,
+              960,
+              3
+            ],
+            "unit": "dimensionless"
+          },
+          "source": "source_rgb"
+        },
+        "valid_mask": {
+          "policy": {
+            "interpolation": "nearest",
+            "invalid_depth": "legacy_blend",
+            "mask_threshold": 0.5,
+            "rays": "preserve"
+          },
+          "profile": {
+            "dtype": "bool",
+            "image_plane": "camera_0",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": null
+            },
+            "kind": "mask",
+            "layout": "HW",
+            "meaning": "true denotes valid source depth",
+            "shape": [
+              480,
+              960
+            ],
+            "unit": "dimensionless"
+          },
+          "source": "source_valid_mask"
+        }
+      },
+      "image_planes": {
+        "camera_0": {
+          "camera_model": "pinhole",
+          "frame": "camera_0_optical",
+          "size": [
+            480,
+            960
+          ]
+        }
+      },
+      "operations": [
+        {
+          "id": "resize_1",
+          "op": "euler_loading.resize",
+          "parameters": {
+            "pixel_centers": "half_pixel",
+            "size": [
+              384,
+              768
+            ]
+          },
+          "version": "1.0"
+        },
+        {
+          "id": "crop_2",
+          "op": "euler_loading.crop",
+          "parameters": {
+            "anchor": "center",
+            "size": [
+              320,
+              640
+            ]
+          },
+          "version": "1.0"
+        }
+      ],
+      "reference_field": "rgb",
+      "required_features": [
+        "spatial.resize_crop",
+        "bindings.qualified",
+        "profiles.decoded"
+      ],
+      "version": "1.0"
+    },
+    "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+    "required_features": [],
+    "sources": {
+      "source_depth": {
+        "content_digest": "sha256:16ac002dc5155d791850439c77a97c687285f6739b25c0a294720384ec9601dc",
+        "dataset_id": "synthetic_depth",
+        "decoder": {
+          "id": "synthetic.affine_fixture",
+          "profile_digest": "sha256:e26a1d79ff5711752f04e86778ba0fe03bd71e515df0966908abb8f5a03cd5c3",
+          "version": "1.0"
+        },
+        "head_digest": "sha256:67dcf47e5ab99f1ff536e2cb87585b549b4172a796a7cbe0923ab3f236f6896d",
+        "index_digest": "sha256:90b0383a42ad96bd8ec72d2b139763fca8cd828932cf8a3df0251e77310e4170",
+        "metadata_scope": "depth",
+        "modality_key": "depth",
+        "revision": "sha256:4d3c34f1fea2f5480e98256a4e7c14d5524e2a2bc5b3ad906fc77d70dc36a596",
+        "verification": "content"
+      },
+      "source_intrinsics": {
+        "content_digest": "sha256:c294532ade0802119f2b0edfd738a41da102c1965e168737c0a52d4723c9147d",
+        "dataset_id": "synthetic_intrinsics",
+        "decoder": {
+          "id": "synthetic.affine_fixture",
+          "profile_digest": "sha256:2d1a3304c9efe0d05e64eb4319c189ee5a118f8ff2805d0e74752ca521dae974",
+          "version": "1.0"
+        },
+        "head_digest": "sha256:f04cfc4694761e7588d7c03740149544942df2a6af5f5afe5455d3010d225cf5",
+        "index_digest": "sha256:4dc4a0cc7178b4b4d647a560923261833fc13924bd61dd69ae51c3155bdb6a6e",
+        "metadata_scope": "intrinsics",
+        "modality_key": "intrinsics",
+        "revision": "sha256:854936b6b1576a72b14a17febc2d0879bfbb4aeff94034f44cfe14fa2dd1a280",
+        "verification": "content"
+      },
+      "source_ray_map": {
+        "content_digest": "sha256:c1daf1f5ab85f3579d9aa3b6697b1fa9c18030f4bc19605d8aeb2c475a6b9fa4",
+        "dataset_id": "synthetic_ray_map",
+        "decoder": {
+          "id": "synthetic.affine_fixture",
+          "profile_digest": "sha256:3d01d2e5f37f7b6d6af50cf7b9e5ab36e1bfc323c9f1386ec424eb92ed3e8659",
+          "version": "1.0"
+        },
+        "head_digest": "sha256:ea461f600e9a703a0ee97b68915f9cde465bfbb9d4c358835f3aa34e9862c1db",
+        "index_digest": "sha256:4083a9acdc636e834367967faa11bf163d6a6571f6f66c88aa44a95c3693bd2b",
+        "metadata_scope": "ray_map",
+        "modality_key": "spherical_map",
+        "revision": "sha256:5ee24cab98a7af0c14b6715256298a403b63cbf2c6a901647000c1413e7e0461",
+        "verification": "content"
+      },
+      "source_rgb": {
+        "content_digest": "sha256:d73fb3e65bf48add6f81fdb6bba0e99856e97bb41cf58098c8526fa9b6abdd3c",
+        "dataset_id": "synthetic_rgb",
+        "decoder": {
+          "id": "synthetic.affine_fixture",
+          "profile_digest": "sha256:4f30f45d0aabb2012a189b2b3f9763f7374971fdbe87e1279314c0bd6e0cab37",
+          "version": "1.0"
+        },
+        "head_digest": "sha256:42c9b956be3d4ae4341526c2a10106197dfb460453bdbf9159eda84513d577fc",
+        "index_digest": "sha256:c8fad81236eaf00068557f709d2afa6cf8cb5d64192924363fc56af1a7dfc71b",
+        "metadata_scope": "rgb",
+        "modality_key": "rgb",
+        "revision": "sha256:87f83f506368951f50502b224d2f3e91d220a1ce9a7ffd75d037b8d9565cc2c4",
+        "verification": "content"
+      },
+      "source_valid_mask": {
+        "content_digest": "sha256:a98d5c2472eae382675322fdf939353622b8047799c437bdbcf327ab67ff7bf8",
+        "dataset_id": "synthetic_valid_mask",
+        "decoder": {
+          "id": "synthetic.affine_fixture",
+          "profile_digest": "sha256:f1c2f649717552edac04b11f05ed442564cd78e5c3ec2b97e46c7c761bca5382",
+          "version": "1.0"
+        },
+        "head_digest": "sha256:0edf54e26940a06d69ef7ceca20fbda1a9daa774d3423508c5d211a5192f2481",
+        "index_digest": "sha256:4b3fffcc46cb78856ecf7a1b36ac9e8055b014603d3def8fd83b183d6b0baca4",
+        "metadata_scope": "valid_mask",
+        "modality_key": "valid_mask",
+        "revision": "sha256:9da3be1833a97587d25892becdb9bcacf814a336d31ed3a472e75a9a0dbf787d",
+        "verification": "content"
+      }
+    },
+    "state": "planned",
+    "version": "1.0"
+  },
+  "execution": {
+    "bound_digest": "sha256:ac15f8e662e386ead79701fd42024c244182bd60bd5a2ddec983d73069ace18d",
+    "execution": {
+      "antialias": false,
+      "backend": "torch_cpu",
+      "boundary": "edge",
+      "device": "cpu",
+      "integer_rounding": "ties_to_even",
+      "nearest": "floor",
+      "numeric_tolerance": {
+        "atol": 1e-05,
+        "rtol": 1e-05
+      },
+      "output_dtype": "preserve",
+      "vector_epsilon": 1e-12,
+      "versions": {
+        "numpy": "2.4.6",
+        "torch": "2.12.1+cu130"
+      },
+      "work_dtype": "float32"
+    },
+    "input_digests": {
+      "depth": "sha256:e8b0a4363814002a51bbbad18de7adb0b20b7740a72abc9912d9ae7c6f288dd1",
+      "intrinsics": "sha256:e885e67abf2f845a66f3f836efacff5979e9471af8a74cafb2c4253f7b095f83",
+      "ray_map": "sha256:33fd2b3e5a0265f43abb304002e8c9311bcf070f88cbc8099b1a9343d818bd2e",
+      "rgb": "sha256:e80f08167c856642166fa3f225b7476813cb0fb481e37992e4454d04176bea2c",
+      "valid_mask": "sha256:04e6d3ff523afe2df00e079247f2d2397bba5fd6fb991d30d5fb2b89d276be47"
+    },
+    "input_shapes": {
+      "depth": [
+        480,
+        960
+      ],
+      "intrinsics": [
+        3,
+        3
+      ],
+      "ray_map": [
+        480,
+        960,
+        3
+      ],
+      "rgb": [
+        480,
+        960,
+        3
+      ],
+      "valid_mask": [
+        480,
+        960
+      ]
+    },
+    "operations": [
+      {
+        "id": "resize_1",
+        "image_transform": [
+          [
+            0.8,
+            0,
+            -0.09999999999999998
+          ],
+          [
+            0,
+            0.8,
+            -0.09999999999999998
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "input_size": [
+          480,
+          960
+        ],
+        "offset": null,
+        "op": "euler_loading.resize",
+        "output_size": [
+          384,
+          768
+        ],
+        "reason": "applied",
+        "status": "executed",
+        "version": "1.0"
+      },
+      {
+        "id": "crop_2",
+        "image_transform": [
+          [
+            1,
+            0,
+            -64
+          ],
+          [
+            0,
+            1,
+            -32
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "input_size": [
+          384,
+          768
+        ],
+        "offset": [
+          32,
+          64
+        ],
+        "op": "euler_loading.crop",
+        "output_size": [
+          320,
+          640
+        ],
+        "reason": "applied",
+        "status": "executed",
+        "version": "1.0"
+      }
+    ],
+    "output_digests": {
+      "depth": "sha256:81ec1eecc68ae28bc9ac1f2839453c7a97b63ae5b1dde97c9371e020a66f873b",
+      "intrinsics": "sha256:2b94727c0474bae12809798b692c26c3ae74499f52b527efa7b00d1f4ec459fb",
+      "ray_map": "sha256:af7a6c6bed73548f8a8398d35665e3b702a092881d4d8750d1975895ece75859",
+      "rgb": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+      "valid_mask": "sha256:3cfdaa4b9d9aa667d44e45531ad515e151e398b64906dccb910b9587af2bfa02"
+    },
+    "output_shapes": {
+      "depth": [
+        320,
+        640
+      ],
+      "intrinsics": [
+        3,
+        3
+      ],
+      "ray_map": [
+        320,
+        640,
+        3
+      ],
+      "rgb": [
+        320,
+        640,
+        3
+      ],
+      "valid_mask": [
+        320,
+        640
+      ]
+    },
+    "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+    "source_content": {
+      "source_depth": "sha256:962a6543db4e47b5e87c2097ec110467a5774357151a2f6fc6a48e5f37ffd30e",
+      "source_intrinsics": "sha256:da5c768dbbf15a8c60209acf189cb21b0b9752a45c372899c08d8cff33ca5a17",
+      "source_ray_map": "sha256:d68cb48b5f95b45065938d4f92857e3bb1e4fd89624be53e391f03c4f412b6a2",
+      "source_rgb": "sha256:4c99fa64645dd4f06d16e1b2b6a5638e921dee98dec0c982e9879783ae69c0f0",
+      "source_valid_mask": "sha256:92e81705429b3a3ff489549d31b03b599d45d7fc9741b1f6e533245de5490438"
+    },
+    "source_full_ids": {
+      "source_depth": "/scene_01/camera_0/frame_0",
+      "source_intrinsics": "/scene_01/camera_0/calibration",
+      "source_ray_map": "/scene_01/camera_0/frame_0",
+      "source_rgb": "/scene_01/camera_0/frame_0",
+      "source_valid_mask": "/scene_01/camera_0/frame_0"
+    },
+    "verification": "content",
+    "version": "2.0"
+  },
+  "plan": {
+    "dataset_id": "derived_rgb",
+    "dependencies": {
+      "default": [
+        "rgb",
+        "intrinsics"
+      ]
+    },
+    "encoding": {
+      "clipping": "reject",
+      "id": "npy",
+      "range": [
+        -9007199254740991,
+        9007199254740991
+      ],
+      "rounding": "ties_to_even",
+      "scale": 1,
+      "version": "1.0",
+      "versions": {
+        "numpy": "2.4.6"
+      }
+    },
+    "field": "rgb",
+    "metadata_scope": ".",
+    "modality_key": "rgb",
+    "profiles": {
+      "default": {
+        "decoded": {
+          "dtype": "float32",
+          "image_plane": "synthetic_output",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": null
+          },
+          "kind": "image",
+          "layout": "HWC",
+          "shape": [
+            320,
+            640,
+            3
+          ],
+          "unit": "dimensionless"
+        },
+        "storage": {
+          "dtype": "float32",
+          "image_plane": "synthetic_output",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": null
+          },
+          "kind": "image",
+          "layout": "HWC",
+          "shape": [
+            320,
+            640,
+            3
+          ],
+          "unit": "dimensionless"
+        }
+      }
+    },
+    "revision": "synthetic_v1",
+    "variants": {
+      "default": {
+        "recipe": {
+          "execution": {
+            "antialias": false,
+            "backend": "torch_cpu",
+            "boundary": "edge",
+            "device": "cpu",
+            "integer_rounding": "ties_to_even",
+            "nearest": "floor",
+            "numeric_tolerance": {
+              "atol": 1e-05,
+              "rtol": 1e-05
+            },
+            "output_dtype": "preserve",
+            "vector_epsilon": 1e-12,
+            "versions": {
+              "numpy": "2.4.6",
+              "torch": "2.12.1+cu130"
+            },
+            "work_dtype": "float32"
+          },
+          "fields": {
+            "depth": {
+              "policy": {
+                "interpolation": "bilinear",
+                "invalid_depth": "legacy_blend",
+                "mask_threshold": 0.5,
+                "rays": "preserve"
+              },
+              "profile": {
+                "depth_kind": "planar_z",
+                "dtype": "float32",
+                "frame": "camera_0_optical",
+                "image_plane": "camera_0",
+                "invalid": {
+                  "non_finite": false,
+                  "sentinel": 0
+                },
+                "kind": "depth",
+                "layout": "HW",
+                "shape": [
+                  480,
+                  960
+                ],
+                "unit": "meter"
+              },
+              "source": "source_depth"
+            },
+            "intrinsics": {
+              "calibration": {
+                "applies_to": [
+                  "rgb",
+                  "depth",
+                  "valid_mask",
+                  "ray_map"
+                ],
+                "camera_model": "pinhole",
+                "frame": "camera_0_optical",
+                "full_id": "/scene_01/camera_0/calibration",
+                "image_plane": "camera_0",
+                "revision": "sha256:854936b6b1576a72b14a17febc2d0879bfbb4aeff94034f44cfe14fa2dd1a280"
+              },
+              "policy": {
+                "interpolation": "bilinear",
+                "invalid_depth": "legacy_blend",
+                "mask_threshold": 0.5,
+                "rays": "preserve"
+              },
+              "profile": {
+                "camera_model": "pinhole",
+                "dtype": "float32",
+                "frame": "camera_0_optical",
+                "image_plane": "camera_0",
+                "invalid": {
+                  "non_finite": false,
+                  "sentinel": null
+                },
+                "kind": "intrinsics",
+                "layout": "matrix",
+                "shape": [
+                  3,
+                  3
+                ],
+                "unit": "pixel"
+              },
+              "selection": "camera_0",
+              "source": "source_intrinsics"
+            },
+            "ray_map": {
+              "policy": {
+                "interpolation": "bilinear",
+                "invalid_depth": "legacy_blend",
+                "mask_threshold": 0.5,
+                "rays": "resample_normalize"
+              },
+              "profile": {
+                "components": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "dtype": "float32",
+                "frame": "camera_0_optical",
+                "image_plane": "camera_0",
+                "invalid": {
+                  "non_finite": false,
+                  "sentinel": null
+                },
+                "kind": "ray_map",
+                "layout": "HWC",
+                "normalization": "homogeneous",
+                "shape": [
+                  480,
+                  960,
+                  3
+                ],
+                "unit": "dimensionless"
+              },
+              "source": "source_ray_map"
+            },
+            "rgb": {
+              "policy": {
+                "interpolation": "bilinear",
+                "invalid_depth": "legacy_blend",
+                "mask_threshold": 0.5,
+                "rays": "preserve"
+              },
+              "profile": {
+                "dtype": "float32",
+                "image_plane": "camera_0",
+                "invalid": {
+                  "non_finite": false,
+                  "sentinel": null
+                },
+                "kind": "image",
+                "layout": "HWC",
+                "shape": [
+                  480,
+                  960,
+                  3
+                ],
+                "unit": "dimensionless"
+              },
+              "source": "source_rgb"
+            },
+            "valid_mask": {
+              "policy": {
+                "interpolation": "nearest",
+                "invalid_depth": "legacy_blend",
+                "mask_threshold": 0.5,
+                "rays": "preserve"
+              },
+              "profile": {
+                "dtype": "bool",
+                "image_plane": "camera_0",
+                "invalid": {
+                  "non_finite": false,
+                  "sentinel": null
+                },
+                "kind": "mask",
+                "layout": "HW",
+                "meaning": "true denotes valid source depth",
+                "shape": [
+                  480,
+                  960
+                ],
+                "unit": "dimensionless"
+              },
+              "source": "source_valid_mask"
+            }
+          },
+          "image_planes": {
+            "camera_0": {
+              "camera_model": "pinhole",
+              "frame": "camera_0_optical",
+              "size": [
+                480,
+                960
+              ]
+            }
+          },
+          "operations": [
+            {
+              "id": "resize_1",
+              "op": "euler_loading.resize",
+              "parameters": {
+                "pixel_centers": "half_pixel",
+                "size": [
+                  384,
+                  768
+                ]
+              },
+              "version": "1.0"
+            },
+            {
+              "id": "crop_2",
+              "op": "euler_loading.crop",
+              "parameters": {
+                "anchor": "center",
+                "size": [
+                  320,
+                  640
+                ]
+              },
+              "version": "1.0"
+            }
+          ],
+          "reference_field": "rgb",
+          "required_features": [
+            "spatial.resize_crop",
+            "bindings.qualified",
+            "profiles.decoded"
+          ],
+          "version": "1.0"
+        },
+        "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+        "required_features": [],
+        "sources": {
+          "source_depth": {
+            "content_digest": "sha256:16ac002dc5155d791850439c77a97c687285f6739b25c0a294720384ec9601dc",
+            "dataset_id": "synthetic_depth",
+            "decoder": {
+              "id": "synthetic.affine_fixture",
+              "profile_digest": "sha256:e26a1d79ff5711752f04e86778ba0fe03bd71e515df0966908abb8f5a03cd5c3",
+              "version": "1.0"
+            },
+            "head_digest": "sha256:67dcf47e5ab99f1ff536e2cb87585b549b4172a796a7cbe0923ab3f236f6896d",
+            "index_digest": "sha256:90b0383a42ad96bd8ec72d2b139763fca8cd828932cf8a3df0251e77310e4170",
+            "metadata_scope": "depth",
+            "modality_key": "depth",
+            "revision": "sha256:4d3c34f1fea2f5480e98256a4e7c14d5524e2a2bc5b3ad906fc77d70dc36a596",
+            "verification": "content"
+          },
+          "source_intrinsics": {
+            "content_digest": "sha256:c294532ade0802119f2b0edfd738a41da102c1965e168737c0a52d4723c9147d",
+            "dataset_id": "synthetic_intrinsics",
+            "decoder": {
+              "id": "synthetic.affine_fixture",
+              "profile_digest": "sha256:2d1a3304c9efe0d05e64eb4319c189ee5a118f8ff2805d0e74752ca521dae974",
+              "version": "1.0"
+            },
+            "head_digest": "sha256:f04cfc4694761e7588d7c03740149544942df2a6af5f5afe5455d3010d225cf5",
+            "index_digest": "sha256:4dc4a0cc7178b4b4d647a560923261833fc13924bd61dd69ae51c3155bdb6a6e",
+            "metadata_scope": "intrinsics",
+            "modality_key": "intrinsics",
+            "revision": "sha256:854936b6b1576a72b14a17febc2d0879bfbb4aeff94034f44cfe14fa2dd1a280",
+            "verification": "content"
+          },
+          "source_ray_map": {
+            "content_digest": "sha256:c1daf1f5ab85f3579d9aa3b6697b1fa9c18030f4bc19605d8aeb2c475a6b9fa4",
+            "dataset_id": "synthetic_ray_map",
+            "decoder": {
+              "id": "synthetic.affine_fixture",
+              "profile_digest": "sha256:3d01d2e5f37f7b6d6af50cf7b9e5ab36e1bfc323c9f1386ec424eb92ed3e8659",
+              "version": "1.0"
+            },
+            "head_digest": "sha256:ea461f600e9a703a0ee97b68915f9cde465bfbb9d4c358835f3aa34e9862c1db",
+            "index_digest": "sha256:4083a9acdc636e834367967faa11bf163d6a6571f6f66c88aa44a95c3693bd2b",
+            "metadata_scope": "ray_map",
+            "modality_key": "spherical_map",
+            "revision": "sha256:5ee24cab98a7af0c14b6715256298a403b63cbf2c6a901647000c1413e7e0461",
+            "verification": "content"
+          },
+          "source_rgb": {
+            "content_digest": "sha256:d73fb3e65bf48add6f81fdb6bba0e99856e97bb41cf58098c8526fa9b6abdd3c",
+            "dataset_id": "synthetic_rgb",
+            "decoder": {
+              "id": "synthetic.affine_fixture",
+              "profile_digest": "sha256:4f30f45d0aabb2012a189b2b3f9763f7374971fdbe87e1279314c0bd6e0cab37",
+              "version": "1.0"
+            },
+            "head_digest": "sha256:42c9b956be3d4ae4341526c2a10106197dfb460453bdbf9159eda84513d577fc",
+            "index_digest": "sha256:c8fad81236eaf00068557f709d2afa6cf8cb5d64192924363fc56af1a7dfc71b",
+            "metadata_scope": "rgb",
+            "modality_key": "rgb",
+            "revision": "sha256:87f83f506368951f50502b224d2f3e91d220a1ce9a7ffd75d037b8d9565cc2c4",
+            "verification": "content"
+          },
+          "source_valid_mask": {
+            "content_digest": "sha256:a98d5c2472eae382675322fdf939353622b8047799c437bdbcf327ab67ff7bf8",
+            "dataset_id": "synthetic_valid_mask",
+            "decoder": {
+              "id": "synthetic.affine_fixture",
+              "profile_digest": "sha256:f1c2f649717552edac04b11f05ed442564cd78e5c3ec2b97e46c7c761bca5382",
+              "version": "1.0"
+            },
+            "head_digest": "sha256:0edf54e26940a06d69ef7ceca20fbda1a9daa774d3423508c5d211a5192f2481",
+            "index_digest": "sha256:4b3fffcc46cb78856ecf7a1b36ac9e8055b014603d3def8fd83b183d6b0baca4",
+            "metadata_scope": "valid_mask",
+            "modality_key": "valid_mask",
+            "revision": "sha256:9da3be1833a97587d25892becdb9bcacf814a336d31ed3a472e75a9a0dbf787d",
+            "verification": "content"
+          }
+        },
+        "state": "planned",
+        "version": "1.0"
+      }
+    },
+    "version": "2.0"
+  },
+  "receipt": {
+    "artifact": {
+      "decoded": {
+        "dtype": "float32",
+        "image_plane": "synthetic_output",
+        "invalid": {
+          "non_finite": false,
+          "sentinel": null
+        },
+        "kind": "image",
+        "layout": "HWC",
+        "shape": [
+          320,
+          640,
+          3
+        ],
+        "unit": "dimensionless"
+      },
+      "decoded_digest": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+      "digest": "sha256:8dd6df18f39390a986871f41f0f834c9642375d9b6d043fe4ff450bdb7095609",
+      "storage": {
+        "dtype": "float32",
+        "image_plane": "synthetic_output",
+        "invalid": {
+          "non_finite": false,
+          "sentinel": null
+        },
+        "kind": "image",
+        "layout": "HWC",
+        "shape": [
+          320,
+          640,
+          3
+        ],
+        "unit": "dimensionless"
+      }
+    },
+    "execution": {
+      "bound_digest": "sha256:ac15f8e662e386ead79701fd42024c244182bd60bd5a2ddec983d73069ace18d",
+      "execution": {
+        "antialias": false,
+        "backend": "torch_cpu",
+        "boundary": "edge",
+        "device": "cpu",
+        "integer_rounding": "ties_to_even",
+        "nearest": "floor",
+        "numeric_tolerance": {
+          "atol": 1e-05,
+          "rtol": 1e-05
+        },
+        "output_dtype": "preserve",
+        "vector_epsilon": 1e-12,
+        "versions": {
+          "numpy": "2.4.6",
+          "torch": "2.12.1+cu130"
+        },
+        "work_dtype": "float32"
+      },
+      "input_digests": {
+        "depth": "sha256:e8b0a4363814002a51bbbad18de7adb0b20b7740a72abc9912d9ae7c6f288dd1",
+        "intrinsics": "sha256:e885e67abf2f845a66f3f836efacff5979e9471af8a74cafb2c4253f7b095f83",
+        "ray_map": "sha256:33fd2b3e5a0265f43abb304002e8c9311bcf070f88cbc8099b1a9343d818bd2e",
+        "rgb": "sha256:e80f08167c856642166fa3f225b7476813cb0fb481e37992e4454d04176bea2c",
+        "valid_mask": "sha256:04e6d3ff523afe2df00e079247f2d2397bba5fd6fb991d30d5fb2b89d276be47"
+      },
+      "input_shapes": {
+        "depth": [
+          480,
+          960
+        ],
+        "intrinsics": [
+          3,
+          3
+        ],
+        "ray_map": [
+          480,
+          960,
+          3
+        ],
+        "rgb": [
+          480,
+          960,
+          3
+        ],
+        "valid_mask": [
+          480,
+          960
+        ]
+      },
+      "operations": [
+        {
+          "id": "resize_1",
+          "image_transform": [
+            [
+              0.8,
+              0,
+              -0.09999999999999998
+            ],
+            [
+              0,
+              0.8,
+              -0.09999999999999998
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "input_size": [
+            480,
+            960
+          ],
+          "offset": null,
+          "op": "euler_loading.resize",
+          "output_size": [
+            384,
+            768
+          ],
+          "reason": "applied",
+          "status": "executed",
+          "version": "1.0"
+        },
+        {
+          "id": "crop_2",
+          "image_transform": [
+            [
+              1,
+              0,
+              -64
+            ],
+            [
+              0,
+              1,
+              -32
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "input_size": [
+            384,
+            768
+          ],
+          "offset": [
+            32,
+            64
+          ],
+          "op": "euler_loading.crop",
+          "output_size": [
+            320,
+            640
+          ],
+          "reason": "applied",
+          "status": "executed",
+          "version": "1.0"
+        }
+      ],
+      "output_digests": {
+        "depth": "sha256:81ec1eecc68ae28bc9ac1f2839453c7a97b63ae5b1dde97c9371e020a66f873b",
+        "intrinsics": "sha256:2b94727c0474bae12809798b692c26c3ae74499f52b527efa7b00d1f4ec459fb",
+        "ray_map": "sha256:af7a6c6bed73548f8a8398d35665e3b702a092881d4d8750d1975895ece75859",
+        "rgb": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+        "valid_mask": "sha256:3cfdaa4b9d9aa667d44e45531ad515e151e398b64906dccb910b9587af2bfa02"
+      },
+      "output_shapes": {
+        "depth": [
+          320,
+          640
+        ],
+        "intrinsics": [
+          3,
+          3
+        ],
+        "ray_map": [
+          320,
+          640,
+          3
+        ],
+        "rgb": [
+          320,
+          640,
+          3
+        ],
+        "valid_mask": [
+          320,
+          640
+        ]
+      },
+      "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+      "source_content": {
+        "source_depth": "sha256:962a6543db4e47b5e87c2097ec110467a5774357151a2f6fc6a48e5f37ffd30e",
+        "source_intrinsics": "sha256:da5c768dbbf15a8c60209acf189cb21b0b9752a45c372899c08d8cff33ca5a17",
+        "source_ray_map": "sha256:d68cb48b5f95b45065938d4f92857e3bb1e4fd89624be53e391f03c4f412b6a2",
+        "source_rgb": "sha256:4c99fa64645dd4f06d16e1b2b6a5638e921dee98dec0c982e9879783ae69c0f0",
+        "source_valid_mask": "sha256:92e81705429b3a3ff489549d31b03b599d45d7fc9741b1f6e533245de5490438"
+      },
+      "source_full_ids": {
+        "source_depth": "/scene_01/camera_0/frame_0",
+        "source_intrinsics": "/scene_01/camera_0/calibration",
+        "source_ray_map": "/scene_01/camera_0/frame_0",
+        "source_rgb": "/scene_01/camera_0/frame_0",
+        "source_valid_mask": "/scene_01/camera_0/frame_0"
+      },
+      "verification": "content",
+      "version": "2.0"
+    },
+    "output_full_id": "/changed/frame_0",
+    "plan_digest": "sha256:f1097e5cfff6a2feaf78910ac92e89e488bda429a8917bc4228793b203a694bb",
+    "variant_id": "default",
+    "version": "2.0"
+  },
+  "inline": {
+    "version": "2.0",
+    "digest": "sha256:a3a8c9b6faf89d287107036da4d89872b748eff70c37403d49a701303a5e61c0",
+    "receipt": {
+      "artifact": {
+        "decoded": {
+          "dtype": "float32",
+          "image_plane": "synthetic_output",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": null
+          },
+          "kind": "image",
+          "layout": "HWC",
+          "shape": [
+            320,
+            640,
+            3
+          ],
+          "unit": "dimensionless"
+        },
+        "decoded_digest": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+        "digest": "sha256:8dd6df18f39390a986871f41f0f834c9642375d9b6d043fe4ff450bdb7095609",
+        "storage": {
+          "dtype": "float32",
+          "image_plane": "synthetic_output",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": null
+          },
+          "kind": "image",
+          "layout": "HWC",
+          "shape": [
+            320,
+            640,
+            3
+          ],
+          "unit": "dimensionless"
+        }
+      },
+      "execution": {
+        "bound_digest": "sha256:ac15f8e662e386ead79701fd42024c244182bd60bd5a2ddec983d73069ace18d",
+        "execution": {
+          "antialias": false,
+          "backend": "torch_cpu",
+          "boundary": "edge",
+          "device": "cpu",
+          "integer_rounding": "ties_to_even",
+          "nearest": "floor",
+          "numeric_tolerance": {
+            "atol": 1e-05,
+            "rtol": 1e-05
+          },
+          "output_dtype": "preserve",
+          "vector_epsilon": 1e-12,
+          "versions": {
+            "numpy": "2.4.6",
+            "torch": "2.12.1+cu130"
+          },
+          "work_dtype": "float32"
+        },
+        "input_digests": {
+          "depth": "sha256:e8b0a4363814002a51bbbad18de7adb0b20b7740a72abc9912d9ae7c6f288dd1",
+          "intrinsics": "sha256:e885e67abf2f845a66f3f836efacff5979e9471af8a74cafb2c4253f7b095f83",
+          "ray_map": "sha256:33fd2b3e5a0265f43abb304002e8c9311bcf070f88cbc8099b1a9343d818bd2e",
+          "rgb": "sha256:e80f08167c856642166fa3f225b7476813cb0fb481e37992e4454d04176bea2c",
+          "valid_mask": "sha256:04e6d3ff523afe2df00e079247f2d2397bba5fd6fb991d30d5fb2b89d276be47"
+        },
+        "input_shapes": {
+          "depth": [
+            480,
+            960
+          ],
+          "intrinsics": [
+            3,
+            3
+          ],
+          "ray_map": [
+            480,
+            960,
+            3
+          ],
+          "rgb": [
+            480,
+            960,
+            3
+          ],
+          "valid_mask": [
+            480,
+            960
+          ]
+        },
+        "operations": [
+          {
+            "id": "resize_1",
+            "image_transform": [
+              [
+                0.8,
+                0,
+                -0.09999999999999998
+              ],
+              [
+                0,
+                0.8,
+                -0.09999999999999998
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "input_size": [
+              480,
+              960
+            ],
+            "offset": null,
+            "op": "euler_loading.resize",
+            "output_size": [
+              384,
+              768
+            ],
+            "reason": "applied",
+            "status": "executed",
+            "version": "1.0"
+          },
+          {
+            "id": "crop_2",
+            "image_transform": [
+              [
+                1,
+                0,
+                -64
+              ],
+              [
+                0,
+                1,
+                -32
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "input_size": [
+              384,
+              768
+            ],
+            "offset": [
+              32,
+              64
+            ],
+            "op": "euler_loading.crop",
+            "output_size": [
+              320,
+              640
+            ],
+            "reason": "applied",
+            "status": "executed",
+            "version": "1.0"
+          }
+        ],
+        "output_digests": {
+          "depth": "sha256:81ec1eecc68ae28bc9ac1f2839453c7a97b63ae5b1dde97c9371e020a66f873b",
+          "intrinsics": "sha256:2b94727c0474bae12809798b692c26c3ae74499f52b527efa7b00d1f4ec459fb",
+          "ray_map": "sha256:af7a6c6bed73548f8a8398d35665e3b702a092881d4d8750d1975895ece75859",
+          "rgb": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+          "valid_mask": "sha256:3cfdaa4b9d9aa667d44e45531ad515e151e398b64906dccb910b9587af2bfa02"
+        },
+        "output_shapes": {
+          "depth": [
+            320,
+            640
+          ],
+          "intrinsics": [
+            3,
+            3
+          ],
+          "ray_map": [
+            320,
+            640,
+            3
+          ],
+          "rgb": [
+            320,
+            640,
+            3
+          ],
+          "valid_mask": [
+            320,
+            640
+          ]
+        },
+        "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+        "source_content": {
+          "source_depth": "sha256:962a6543db4e47b5e87c2097ec110467a5774357151a2f6fc6a48e5f37ffd30e",
+          "source_intrinsics": "sha256:da5c768dbbf15a8c60209acf189cb21b0b9752a45c372899c08d8cff33ca5a17",
+          "source_ray_map": "sha256:d68cb48b5f95b45065938d4f92857e3bb1e4fd89624be53e391f03c4f412b6a2",
+          "source_rgb": "sha256:4c99fa64645dd4f06d16e1b2b6a5638e921dee98dec0c982e9879783ae69c0f0",
+          "source_valid_mask": "sha256:92e81705429b3a3ff489549d31b03b599d45d7fc9741b1f6e533245de5490438"
+        },
+        "source_full_ids": {
+          "source_depth": "/scene_01/camera_0/frame_0",
+          "source_intrinsics": "/scene_01/camera_0/calibration",
+          "source_ray_map": "/scene_01/camera_0/frame_0",
+          "source_rgb": "/scene_01/camera_0/frame_0",
+          "source_valid_mask": "/scene_01/camera_0/frame_0"
+        },
+        "verification": "content",
+        "version": "2.0"
+      },
+      "output_full_id": "/changed/frame_0",
+      "plan_digest": "sha256:f1097e5cfff6a2feaf78910ac92e89e488bda429a8917bc4228793b203a694bb",
+      "variant_id": "default",
+      "version": "2.0"
+    }
+  },
+  "sidecar": {
+    "version": "2.0",
+    "record": {
+      "path": "records/a3a8c9b6faf89d287107036da4d89872b748eff70c37403d49a701303a5e61c0.json",
+      "digest": "sha256:a3a8c9b6faf89d287107036da4d89872b748eff70c37403d49a701303a5e61c0"
+    }
+  },
+  "records": {
+    "records/a3a8c9b6faf89d287107036da4d89872b748eff70c37403d49a701303a5e61c0.json": {
+      "artifact": {
+        "decoded": {
+          "dtype": "float32",
+          "image_plane": "synthetic_output",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": null
+          },
+          "kind": "image",
+          "layout": "HWC",
+          "shape": [
+            320,
+            640,
+            3
+          ],
+          "unit": "dimensionless"
+        },
+        "decoded_digest": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+        "digest": "sha256:8dd6df18f39390a986871f41f0f834c9642375d9b6d043fe4ff450bdb7095609",
+        "storage": {
+          "dtype": "float32",
+          "image_plane": "synthetic_output",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": null
+          },
+          "kind": "image",
+          "layout": "HWC",
+          "shape": [
+            320,
+            640,
+            3
+          ],
+          "unit": "dimensionless"
+        }
+      },
+      "execution": {
+        "bound_digest": "sha256:ac15f8e662e386ead79701fd42024c244182bd60bd5a2ddec983d73069ace18d",
+        "execution": {
+          "antialias": false,
+          "backend": "torch_cpu",
+          "boundary": "edge",
+          "device": "cpu",
+          "integer_rounding": "ties_to_even",
+          "nearest": "floor",
+          "numeric_tolerance": {
+            "atol": 1e-05,
+            "rtol": 1e-05
+          },
+          "output_dtype": "preserve",
+          "vector_epsilon": 1e-12,
+          "versions": {
+            "numpy": "2.4.6",
+            "torch": "2.12.1+cu130"
+          },
+          "work_dtype": "float32"
+        },
+        "input_digests": {
+          "depth": "sha256:e8b0a4363814002a51bbbad18de7adb0b20b7740a72abc9912d9ae7c6f288dd1",
+          "intrinsics": "sha256:e885e67abf2f845a66f3f836efacff5979e9471af8a74cafb2c4253f7b095f83",
+          "ray_map": "sha256:33fd2b3e5a0265f43abb304002e8c9311bcf070f88cbc8099b1a9343d818bd2e",
+          "rgb": "sha256:e80f08167c856642166fa3f225b7476813cb0fb481e37992e4454d04176bea2c",
+          "valid_mask": "sha256:04e6d3ff523afe2df00e079247f2d2397bba5fd6fb991d30d5fb2b89d276be47"
+        },
+        "input_shapes": {
+          "depth": [
+            480,
+            960
+          ],
+          "intrinsics": [
+            3,
+            3
+          ],
+          "ray_map": [
+            480,
+            960,
+            3
+          ],
+          "rgb": [
+            480,
+            960,
+            3
+          ],
+          "valid_mask": [
+            480,
+            960
+          ]
+        },
+        "operations": [
+          {
+            "id": "resize_1",
+            "image_transform": [
+              [
+                0.8,
+                0,
+                -0.09999999999999998
+              ],
+              [
+                0,
+                0.8,
+                -0.09999999999999998
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "input_size": [
+              480,
+              960
+            ],
+            "offset": null,
+            "op": "euler_loading.resize",
+            "output_size": [
+              384,
+              768
+            ],
+            "reason": "applied",
+            "status": "executed",
+            "version": "1.0"
+          },
+          {
+            "id": "crop_2",
+            "image_transform": [
+              [
+                1,
+                0,
+                -64
+              ],
+              [
+                0,
+                1,
+                -32
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "input_size": [
+              384,
+              768
+            ],
+            "offset": [
+              32,
+              64
+            ],
+            "op": "euler_loading.crop",
+            "output_size": [
+              320,
+              640
+            ],
+            "reason": "applied",
+            "status": "executed",
+            "version": "1.0"
+          }
+        ],
+        "output_digests": {
+          "depth": "sha256:81ec1eecc68ae28bc9ac1f2839453c7a97b63ae5b1dde97c9371e020a66f873b",
+          "intrinsics": "sha256:2b94727c0474bae12809798b692c26c3ae74499f52b527efa7b00d1f4ec459fb",
+          "ray_map": "sha256:af7a6c6bed73548f8a8398d35665e3b702a092881d4d8750d1975895ece75859",
+          "rgb": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+          "valid_mask": "sha256:3cfdaa4b9d9aa667d44e45531ad515e151e398b64906dccb910b9587af2bfa02"
+        },
+        "output_shapes": {
+          "depth": [
+            320,
+            640
+          ],
+          "intrinsics": [
+            3,
+            3
+          ],
+          "ray_map": [
+            320,
+            640,
+            3
+          ],
+          "rgb": [
+            320,
+            640,
+            3
+          ],
+          "valid_mask": [
+            320,
+            640
+          ]
+        },
+        "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+        "source_content": {
+          "source_depth": "sha256:962a6543db4e47b5e87c2097ec110467a5774357151a2f6fc6a48e5f37ffd30e",
+          "source_intrinsics": "sha256:da5c768dbbf15a8c60209acf189cb21b0b9752a45c372899c08d8cff33ca5a17",
+          "source_ray_map": "sha256:d68cb48b5f95b45065938d4f92857e3bb1e4fd89624be53e391f03c4f412b6a2",
+          "source_rgb": "sha256:4c99fa64645dd4f06d16e1b2b6a5638e921dee98dec0c982e9879783ae69c0f0",
+          "source_valid_mask": "sha256:92e81705429b3a3ff489549d31b03b599d45d7fc9741b1f6e533245de5490438"
+        },
+        "source_full_ids": {
+          "source_depth": "/scene_01/camera_0/frame_0",
+          "source_intrinsics": "/scene_01/camera_0/calibration",
+          "source_ray_map": "/scene_01/camera_0/frame_0",
+          "source_rgb": "/scene_01/camera_0/frame_0",
+          "source_valid_mask": "/scene_01/camera_0/frame_0"
+        },
+        "verification": "content",
+        "version": "2.0"
+      },
+      "output_full_id": "/changed/frame_0",
+      "plan_digest": "sha256:f1097e5cfff6a2feaf78910ac92e89e488bda429a8917bc4228793b203a694bb",
+      "variant_id": "default",
+      "version": "2.0"
+    }
+  },
+  "addon": {
+    "mapping": {
+      "count": 1,
+      "index_digest": "sha256:30b601886756129e1c798b9f96066afb2d3bc90be095cc65c94043ec9a1347c6",
+      "mode": "explicit",
+      "receipts": "per_file"
+    },
+    "plan": {
+      "dataset_id": "derived_rgb",
+      "dependencies": {
+        "default": [
+          "rgb",
+          "intrinsics"
+        ]
+      },
+      "encoding": {
+        "clipping": "reject",
+        "id": "npy",
+        "range": [
+          -9007199254740991,
+          9007199254740991
+        ],
+        "rounding": "ties_to_even",
+        "scale": 1,
+        "version": "1.0",
+        "versions": {
+          "numpy": "2.4.6"
+        }
+      },
+      "field": "rgb",
+      "metadata_scope": ".",
+      "modality_key": "rgb",
+      "profiles": {
+        "default": {
+          "decoded": {
+            "dtype": "float32",
+            "image_plane": "synthetic_output",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": null
+            },
+            "kind": "image",
+            "layout": "HWC",
+            "shape": [
+              320,
+              640,
+              3
+            ],
+            "unit": "dimensionless"
+          },
+          "storage": {
+            "dtype": "float32",
+            "image_plane": "synthetic_output",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": null
+            },
+            "kind": "image",
+            "layout": "HWC",
+            "shape": [
+              320,
+              640,
+              3
+            ],
+            "unit": "dimensionless"
+          }
+        }
+      },
+      "revision": "synthetic_v1",
+      "variants": {
+        "default": {
+          "recipe": {
+            "execution": {
+              "antialias": false,
+              "backend": "torch_cpu",
+              "boundary": "edge",
+              "device": "cpu",
+              "integer_rounding": "ties_to_even",
+              "nearest": "floor",
+              "numeric_tolerance": {
+                "atol": 1e-05,
+                "rtol": 1e-05
+              },
+              "output_dtype": "preserve",
+              "vector_epsilon": 1e-12,
+              "versions": {
+                "numpy": "2.4.6",
+                "torch": "2.12.1+cu130"
+              },
+              "work_dtype": "float32"
+            },
+            "fields": {
+              "depth": {
+                "policy": {
+                  "interpolation": "bilinear",
+                  "invalid_depth": "legacy_blend",
+                  "mask_threshold": 0.5,
+                  "rays": "preserve"
+                },
+                "profile": {
+                  "depth_kind": "planar_z",
+                  "dtype": "float32",
+                  "frame": "camera_0_optical",
+                  "image_plane": "camera_0",
+                  "invalid": {
+                    "non_finite": false,
+                    "sentinel": 0
+                  },
+                  "kind": "depth",
+                  "layout": "HW",
+                  "shape": [
+                    480,
+                    960
+                  ],
+                  "unit": "meter"
+                },
+                "source": "source_depth"
+              },
+              "intrinsics": {
+                "calibration": {
+                  "applies_to": [
+                    "rgb",
+                    "depth",
+                    "valid_mask",
+                    "ray_map"
+                  ],
+                  "camera_model": "pinhole",
+                  "frame": "camera_0_optical",
+                  "full_id": "/scene_01/camera_0/calibration",
+                  "image_plane": "camera_0",
+                  "revision": "sha256:854936b6b1576a72b14a17febc2d0879bfbb4aeff94034f44cfe14fa2dd1a280"
+                },
+                "policy": {
+                  "interpolation": "bilinear",
+                  "invalid_depth": "legacy_blend",
+                  "mask_threshold": 0.5,
+                  "rays": "preserve"
+                },
+                "profile": {
+                  "camera_model": "pinhole",
+                  "dtype": "float32",
+                  "frame": "camera_0_optical",
+                  "image_plane": "camera_0",
+                  "invalid": {
+                    "non_finite": false,
+                    "sentinel": null
+                  },
+                  "kind": "intrinsics",
+                  "layout": "matrix",
+                  "shape": [
+                    3,
+                    3
+                  ],
+                  "unit": "pixel"
+                },
+                "selection": "camera_0",
+                "source": "source_intrinsics"
+              },
+              "ray_map": {
+                "policy": {
+                  "interpolation": "bilinear",
+                  "invalid_depth": "legacy_blend",
+                  "mask_threshold": 0.5,
+                  "rays": "resample_normalize"
+                },
+                "profile": {
+                  "components": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "dtype": "float32",
+                  "frame": "camera_0_optical",
+                  "image_plane": "camera_0",
+                  "invalid": {
+                    "non_finite": false,
+                    "sentinel": null
+                  },
+                  "kind": "ray_map",
+                  "layout": "HWC",
+                  "normalization": "homogeneous",
+                  "shape": [
+                    480,
+                    960,
+                    3
+                  ],
+                  "unit": "dimensionless"
+                },
+                "source": "source_ray_map"
+              },
+              "rgb": {
+                "policy": {
+                  "interpolation": "bilinear",
+                  "invalid_depth": "legacy_blend",
+                  "mask_threshold": 0.5,
+                  "rays": "preserve"
+                },
+                "profile": {
+                  "dtype": "float32",
+                  "image_plane": "camera_0",
+                  "invalid": {
+                    "non_finite": false,
+                    "sentinel": null
+                  },
+                  "kind": "image",
+                  "layout": "HWC",
+                  "shape": [
+                    480,
+                    960,
+                    3
+                  ],
+                  "unit": "dimensionless"
+                },
+                "source": "source_rgb"
+              },
+              "valid_mask": {
+                "policy": {
+                  "interpolation": "nearest",
+                  "invalid_depth": "legacy_blend",
+                  "mask_threshold": 0.5,
+                  "rays": "preserve"
+                },
+                "profile": {
+                  "dtype": "bool",
+                  "image_plane": "camera_0",
+                  "invalid": {
+                    "non_finite": false,
+                    "sentinel": null
+                  },
+                  "kind": "mask",
+                  "layout": "HW",
+                  "meaning": "true denotes valid source depth",
+                  "shape": [
+                    480,
+                    960
+                  ],
+                  "unit": "dimensionless"
+                },
+                "source": "source_valid_mask"
+              }
+            },
+            "image_planes": {
+              "camera_0": {
+                "camera_model": "pinhole",
+                "frame": "camera_0_optical",
+                "size": [
+                  480,
+                  960
+                ]
+              }
+            },
+            "operations": [
+              {
+                "id": "resize_1",
+                "op": "euler_loading.resize",
+                "parameters": {
+                  "pixel_centers": "half_pixel",
+                  "size": [
+                    384,
+                    768
+                  ]
+                },
+                "version": "1.0"
+              },
+              {
+                "id": "crop_2",
+                "op": "euler_loading.crop",
+                "parameters": {
+                  "anchor": "center",
+                  "size": [
+                    320,
+                    640
+                  ]
+                },
+                "version": "1.0"
+              }
+            ],
+            "reference_field": "rgb",
+            "required_features": [
+              "spatial.resize_crop",
+              "bindings.qualified",
+              "profiles.decoded"
+            ],
+            "version": "1.0"
+          },
+          "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+          "required_features": [],
+          "sources": {
+            "source_depth": {
+              "content_digest": "sha256:16ac002dc5155d791850439c77a97c687285f6739b25c0a294720384ec9601dc",
+              "dataset_id": "synthetic_depth",
+              "decoder": {
+                "id": "synthetic.affine_fixture",
+                "profile_digest": "sha256:e26a1d79ff5711752f04e86778ba0fe03bd71e515df0966908abb8f5a03cd5c3",
+                "version": "1.0"
+              },
+              "head_digest": "sha256:67dcf47e5ab99f1ff536e2cb87585b549b4172a796a7cbe0923ab3f236f6896d",
+              "index_digest": "sha256:90b0383a42ad96bd8ec72d2b139763fca8cd828932cf8a3df0251e77310e4170",
+              "metadata_scope": "depth",
+              "modality_key": "depth",
+              "revision": "sha256:4d3c34f1fea2f5480e98256a4e7c14d5524e2a2bc5b3ad906fc77d70dc36a596",
+              "verification": "content"
+            },
+            "source_intrinsics": {
+              "content_digest": "sha256:c294532ade0802119f2b0edfd738a41da102c1965e168737c0a52d4723c9147d",
+              "dataset_id": "synthetic_intrinsics",
+              "decoder": {
+                "id": "synthetic.affine_fixture",
+                "profile_digest": "sha256:2d1a3304c9efe0d05e64eb4319c189ee5a118f8ff2805d0e74752ca521dae974",
+                "version": "1.0"
+              },
+              "head_digest": "sha256:f04cfc4694761e7588d7c03740149544942df2a6af5f5afe5455d3010d225cf5",
+              "index_digest": "sha256:4dc4a0cc7178b4b4d647a560923261833fc13924bd61dd69ae51c3155bdb6a6e",
+              "metadata_scope": "intrinsics",
+              "modality_key": "intrinsics",
+              "revision": "sha256:854936b6b1576a72b14a17febc2d0879bfbb4aeff94034f44cfe14fa2dd1a280",
+              "verification": "content"
+            },
+            "source_ray_map": {
+              "content_digest": "sha256:c1daf1f5ab85f3579d9aa3b6697b1fa9c18030f4bc19605d8aeb2c475a6b9fa4",
+              "dataset_id": "synthetic_ray_map",
+              "decoder": {
+                "id": "synthetic.affine_fixture",
+                "profile_digest": "sha256:3d01d2e5f37f7b6d6af50cf7b9e5ab36e1bfc323c9f1386ec424eb92ed3e8659",
+                "version": "1.0"
+              },
+              "head_digest": "sha256:ea461f600e9a703a0ee97b68915f9cde465bfbb9d4c358835f3aa34e9862c1db",
+              "index_digest": "sha256:4083a9acdc636e834367967faa11bf163d6a6571f6f66c88aa44a95c3693bd2b",
+              "metadata_scope": "ray_map",
+              "modality_key": "spherical_map",
+              "revision": "sha256:5ee24cab98a7af0c14b6715256298a403b63cbf2c6a901647000c1413e7e0461",
+              "verification": "content"
+            },
+            "source_rgb": {
+              "content_digest": "sha256:d73fb3e65bf48add6f81fdb6bba0e99856e97bb41cf58098c8526fa9b6abdd3c",
+              "dataset_id": "synthetic_rgb",
+              "decoder": {
+                "id": "synthetic.affine_fixture",
+                "profile_digest": "sha256:4f30f45d0aabb2012a189b2b3f9763f7374971fdbe87e1279314c0bd6e0cab37",
+                "version": "1.0"
+              },
+              "head_digest": "sha256:42c9b956be3d4ae4341526c2a10106197dfb460453bdbf9159eda84513d577fc",
+              "index_digest": "sha256:c8fad81236eaf00068557f709d2afa6cf8cb5d64192924363fc56af1a7dfc71b",
+              "metadata_scope": "rgb",
+              "modality_key": "rgb",
+              "revision": "sha256:87f83f506368951f50502b224d2f3e91d220a1ce9a7ffd75d037b8d9565cc2c4",
+              "verification": "content"
+            },
+            "source_valid_mask": {
+              "content_digest": "sha256:a98d5c2472eae382675322fdf939353622b8047799c437bdbcf327ab67ff7bf8",
+              "dataset_id": "synthetic_valid_mask",
+              "decoder": {
+                "id": "synthetic.affine_fixture",
+                "profile_digest": "sha256:f1c2f649717552edac04b11f05ed442564cd78e5c3ec2b97e46c7c761bca5382",
+                "version": "1.0"
+              },
+              "head_digest": "sha256:0edf54e26940a06d69ef7ceca20fbda1a9daa774d3423508c5d211a5192f2481",
+              "index_digest": "sha256:4b3fffcc46cb78856ecf7a1b36ac9e8055b014603d3def8fd83b183d6b0baca4",
+              "metadata_scope": "valid_mask",
+              "modality_key": "valid_mask",
+              "revision": "sha256:9da3be1833a97587d25892becdb9bcacf814a336d31ed3a472e75a9a0dbf787d",
+              "verification": "content"
+            }
+          },
+          "state": "planned",
+          "version": "1.0"
+        }
+      },
+      "version": "2.0"
+    },
+    "plan_digest": "sha256:f1097e5cfff6a2feaf78910ac92e89e488bda429a8917bc4228793b203a694bb",
+    "required_features": [
+      "receipts.bound",
+      "artifacts.sha256",
+      "calibration.views"
+    ],
+    "state": "materialized",
+    "version": "2.0"
+  },
+  "index": {
+    "children": {
+      "changed": {
+        "files": [
+          {
+            "id": "frame_0",
+            "path": "sample.npy",
+            "attributes": {
+              "euler_transforms": {
+                "version": "2.0",
+                "digest": "sha256:a3a8c9b6faf89d287107036da4d89872b748eff70c37403d49a701303a5e61c0",
+                "receipt": {
+                  "artifact": {
+                    "decoded": {
+                      "dtype": "float32",
+                      "image_plane": "synthetic_output",
+                      "invalid": {
+                        "non_finite": false,
+                        "sentinel": null
+                      },
+                      "kind": "image",
+                      "layout": "HWC",
+                      "shape": [
+                        320,
+                        640,
+                        3
+                      ],
+                      "unit": "dimensionless"
+                    },
+                    "decoded_digest": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+                    "digest": "sha256:8dd6df18f39390a986871f41f0f834c9642375d9b6d043fe4ff450bdb7095609",
+                    "storage": {
+                      "dtype": "float32",
+                      "image_plane": "synthetic_output",
+                      "invalid": {
+                        "non_finite": false,
+                        "sentinel": null
+                      },
+                      "kind": "image",
+                      "layout": "HWC",
+                      "shape": [
+                        320,
+                        640,
+                        3
+                      ],
+                      "unit": "dimensionless"
+                    }
+                  },
+                  "execution": {
+                    "bound_digest": "sha256:ac15f8e662e386ead79701fd42024c244182bd60bd5a2ddec983d73069ace18d",
+                    "execution": {
+                      "antialias": false,
+                      "backend": "torch_cpu",
+                      "boundary": "edge",
+                      "device": "cpu",
+                      "integer_rounding": "ties_to_even",
+                      "nearest": "floor",
+                      "numeric_tolerance": {
+                        "atol": 1e-05,
+                        "rtol": 1e-05
+                      },
+                      "output_dtype": "preserve",
+                      "vector_epsilon": 1e-12,
+                      "versions": {
+                        "numpy": "2.4.6",
+                        "torch": "2.12.1+cu130"
+                      },
+                      "work_dtype": "float32"
+                    },
+                    "input_digests": {
+                      "depth": "sha256:e8b0a4363814002a51bbbad18de7adb0b20b7740a72abc9912d9ae7c6f288dd1",
+                      "intrinsics": "sha256:e885e67abf2f845a66f3f836efacff5979e9471af8a74cafb2c4253f7b095f83",
+                      "ray_map": "sha256:33fd2b3e5a0265f43abb304002e8c9311bcf070f88cbc8099b1a9343d818bd2e",
+                      "rgb": "sha256:e80f08167c856642166fa3f225b7476813cb0fb481e37992e4454d04176bea2c",
+                      "valid_mask": "sha256:04e6d3ff523afe2df00e079247f2d2397bba5fd6fb991d30d5fb2b89d276be47"
+                    },
+                    "input_shapes": {
+                      "depth": [
+                        480,
+                        960
+                      ],
+                      "intrinsics": [
+                        3,
+                        3
+                      ],
+                      "ray_map": [
+                        480,
+                        960,
+                        3
+                      ],
+                      "rgb": [
+                        480,
+                        960,
+                        3
+                      ],
+                      "valid_mask": [
+                        480,
+                        960
+                      ]
+                    },
+                    "operations": [
+                      {
+                        "id": "resize_1",
+                        "image_transform": [
+                          [
+                            0.8,
+                            0,
+                            -0.09999999999999998
+                          ],
+                          [
+                            0,
+                            0.8,
+                            -0.09999999999999998
+                          ],
+                          [
+                            0,
+                            0,
+                            1
+                          ]
+                        ],
+                        "input_size": [
+                          480,
+                          960
+                        ],
+                        "offset": null,
+                        "op": "euler_loading.resize",
+                        "output_size": [
+                          384,
+                          768
+                        ],
+                        "reason": "applied",
+                        "status": "executed",
+                        "version": "1.0"
+                      },
+                      {
+                        "id": "crop_2",
+                        "image_transform": [
+                          [
+                            1,
+                            0,
+                            -64
+                          ],
+                          [
+                            0,
+                            1,
+                            -32
+                          ],
+                          [
+                            0,
+                            0,
+                            1
+                          ]
+                        ],
+                        "input_size": [
+                          384,
+                          768
+                        ],
+                        "offset": [
+                          32,
+                          64
+                        ],
+                        "op": "euler_loading.crop",
+                        "output_size": [
+                          320,
+                          640
+                        ],
+                        "reason": "applied",
+                        "status": "executed",
+                        "version": "1.0"
+                      }
+                    ],
+                    "output_digests": {
+                      "depth": "sha256:81ec1eecc68ae28bc9ac1f2839453c7a97b63ae5b1dde97c9371e020a66f873b",
+                      "intrinsics": "sha256:2b94727c0474bae12809798b692c26c3ae74499f52b527efa7b00d1f4ec459fb",
+                      "ray_map": "sha256:af7a6c6bed73548f8a8398d35665e3b702a092881d4d8750d1975895ece75859",
+                      "rgb": "sha256:1a0269644d3b7a4830c8a592d9c9cfe3734fab070e3e37322e14f2eda8cdb376",
+                      "valid_mask": "sha256:3cfdaa4b9d9aa667d44e45531ad515e151e398b64906dccb910b9587af2bfa02"
+                    },
+                    "output_shapes": {
+                      "depth": [
+                        320,
+                        640
+                      ],
+                      "intrinsics": [
+                        3,
+                        3
+                      ],
+                      "ray_map": [
+                        320,
+                        640,
+                        3
+                      ],
+                      "rgb": [
+                        320,
+                        640,
+                        3
+                      ],
+                      "valid_mask": [
+                        320,
+                        640
+                      ]
+                    },
+                    "recipe_digest": "sha256:a60abd8d8260fec9920ba73db9b27732233f6e5cdf925e7eda66b6acfc76e33a",
+                    "source_content": {
+                      "source_depth": "sha256:962a6543db4e47b5e87c2097ec110467a5774357151a2f6fc6a48e5f37ffd30e",
+                      "source_intrinsics": "sha256:da5c768dbbf15a8c60209acf189cb21b0b9752a45c372899c08d8cff33ca5a17",
+                      "source_ray_map": "sha256:d68cb48b5f95b45065938d4f92857e3bb1e4fd89624be53e391f03c4f412b6a2",
+                      "source_rgb": "sha256:4c99fa64645dd4f06d16e1b2b6a5638e921dee98dec0c982e9879783ae69c0f0",
+                      "source_valid_mask": "sha256:92e81705429b3a3ff489549d31b03b599d45d7fc9741b1f6e533245de5490438"
+                    },
+                    "source_full_ids": {
+                      "source_depth": "/scene_01/camera_0/frame_0",
+                      "source_intrinsics": "/scene_01/camera_0/calibration",
+                      "source_ray_map": "/scene_01/camera_0/frame_0",
+                      "source_rgb": "/scene_01/camera_0/frame_0",
+                      "source_valid_mask": "/scene_01/camera_0/frame_0"
+                    },
+                    "verification": "content",
+                    "version": "2.0"
+                  },
+                  "output_full_id": "/changed/frame_0",
+                  "plan_digest": "sha256:f1097e5cfff6a2feaf78910ac92e89e488bda429a8917bc4228793b203a694bb",
+                  "variant_id": "default",
+                  "version": "2.0"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

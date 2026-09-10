@@ -32,9 +32,24 @@ SDIST_DIRECTORIES = {
 }
 WHEEL_PACKAGE = "euler_dataset_contract"
 MODALITY_INVENTORY = "data/modality-inventory-1.0.json"
-DESCRIPTOR_SCHEMAS = {f"{name}-1.0.schema.json" for name in (
-    "euler-representation", "euler-transforms", "recipe", "profile",
-)}
+MATERIALIZATION_SCHEMAS = {
+    f"{name}-2.0.schema.json"
+    for name in (
+        "materialized-transforms",
+        "execution-receipt",
+        "artifact-receipt",
+        "output-plan",
+    )
+}
+DESCRIPTOR_SCHEMAS = MATERIALIZATION_SCHEMAS | {
+    f"{name}-1.0.schema.json"
+    for name in (
+        "euler-representation",
+        "euler-transforms",
+        "recipe",
+        "profile",
+    )
+}
 
 # Shipped data, as opposed to shipped code. A consumer that resolves modality
 # identity or asserts against the conformance corpus fails at import time when
@@ -48,9 +63,17 @@ SDIST_DATA_PATHS = {
 }
 WHEEL_DATA_PATHS = {
     *(f"{WHEEL_PACKAGE}/_schemas/{name}" for name in DESCRIPTOR_SCHEMAS),
-    *(f"{WHEEL_PACKAGE}/{name}.py" for name in (
-        "canonical", "modalities", "descriptors", "_descriptor_definitions",
-    )),
+    *(
+        f"{WHEEL_PACKAGE}/{name}.py"
+        for name in (
+            "canonical",
+            "modalities",
+            "descriptors",
+            "_descriptor_definitions",
+            "materialization",
+            "_materialization_definitions",
+        )
+    ),
     f"{WHEEL_PACKAGE}/{MODALITY_INVENTORY}",
     f"{WHEEL_PACKAGE}/_fixtures/index.json",
     f"{WHEEL_PACKAGE}/_fixtures/README.md",
@@ -60,9 +83,10 @@ WHEEL_DATA_PATHS = {
     f"{WHEEL_PACKAGE}/testing/plugin.py",
     f"{WHEEL_PACKAGE}/testing/checks/__init__.py",
     f"{WHEEL_PACKAGE}/testing/checks/_support.py",
+    f"{WHEEL_PACKAGE}/testing/checks/_phase2_support.py",
     *(
         f"{WHEEL_PACKAGE}/testing/checks/test_{name}.py"
-        for name in ("crawler", "loading", "preprocess", "eval")
+        for name in ("crawler", "loading", "preprocess", "eval", "materialization")
     ),
 }
 PYTEST_ENTRY_POINT = "euler_dataset_contract.testing.plugin"

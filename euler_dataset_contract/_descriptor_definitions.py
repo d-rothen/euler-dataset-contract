@@ -517,6 +517,8 @@ def check(value: Any, schema: dict, path: str) -> None:
         for key in schema.get("required", []):
             if key not in value:
                 fail(f"missing required {key}")
+        if len(value) > schema.get("maxProperties", float("inf")):
+            fail("object has too many properties")
         if len(value) < schema.get("minProperties", 0):
             fail("object cannot be empty")
         for key, item in value.items():

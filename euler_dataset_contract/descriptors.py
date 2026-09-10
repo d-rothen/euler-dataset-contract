@@ -31,9 +31,15 @@ def build_descriptor_schema(name: str) -> dict[str, Any]:
     This schema deliberately makes no installed-executor support claim.
     Unknown required_features are valid data but rejected by capable readers.
     """
+    version = (
+        DEFINITIONS[name]
+        .get("properties", {})
+        .get("version", {})
+        .get("enum", ["1.0"])[0]
+    )
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "title": f"Euler {name} 1.0",
+        "title": f"Euler {name} {version}",
         **deepcopy(DEFINITIONS[name]),
     }
 
@@ -384,7 +390,12 @@ def validate_representation_addon(
 
 def validate_transforms_addon(value: Any, context: str = "euler_transforms") -> None:
     try:
-        TransformsAddon(value)
+        if isinstance(value, Mapping) and value.get("version") == "2.0":
+            from .materialization import MaterializedTransforms
+
+            MaterializedTransforms(value)
+        else:
+            TransformsAddon(value)
     except (ValueError, TypeError) as exc:
         raise ValueError(f"{context}: {exc}") from exc
 
@@ -400,6 +411,62 @@ def _validate_representation_head(head: DatasetHeadContract, context: str) -> No
         raise ValueError(
             f"{context}.addons.euler_representation: "
             + "; ".join(resolution.diagnostics)
+        )
+
+
+def _validate_transforms_head(head: DatasetHeadContract, context: str) -> None:
+    value = head.require_addon("euler_transforms")
+    if value.get("version") != "2.0":
+        return
+    from .materialization import MaterializedTransforms
+
+    plan = MaterializedTransforms(value)["plan"]
+    if (
+        head.dataset_id != plan["dataset_id"]
+        or head.modality_key != plan["modality_key"]
+    ):
+        raise ValueError(f"{context}: materialized output identity disagrees with head")
+    revision = head.to_mapping()["dataset"].get("attributes", {}).get("revision")
+    if revision is not None and revision != plan["revision"]:
+        raise ValueError(f"{context}: output revision disagrees with plan")
+    profiles = [p["decoded"] for p in plan["profiles"].values()]
+    for profile in profiles:
+        resolution = resolve_modality(
+            head.modality_key, representation={"form": profile["kind"]}
+        )
+        if resolution.status in {"conflict", "conditional"}:
+            raise ValueError(
+                f"{context}: output profile disagrees with modality key: "
+                + "; ".join(resolution.diagnostics)
+            )
+        if resolution.modality_id is not None:
+            RepresentationAddon(
+                {
+                    "version": "1.0",
+                    "modality_id": resolution.modality_id,
+                    "decoded": profile,
+                }
+            )
+    meta = head.meta or {}
+    dimensions = meta.get("dimensions")
+    shapes = {tuple(p["shape"]) for p in profiles}
+    if dimensions:
+        if len(shapes) != 1:
+            raise ValueError(
+                f"{context}: variable outputs cannot declare uniform dimensions"
+            )
+        profile = profiles[0]
+        for axis, name in (("H", "height"), ("W", "width"), ("C", "channels")):
+            if (
+                axis in profile["layout"]
+                and dimensions.get(name)
+                != profile["shape"][profile["layout"].index(axis)]
+            ):
+                raise ValueError(f"{context}: output dimensions disagree with profiles")
+    representation = head.get_addon("euler_representation")
+    if representation and any(representation["decoded"] != p for p in profiles):
+        raise ValueError(
+            f"{context}: output representation disagrees with materialized profiles"
         )
 
 
@@ -419,7 +486,7 @@ def register_descriptor_validators() -> None:
             validate_representation_addon,
             _validate_representation_head,
         ),
-        ("euler_transforms", validate_transforms_addon, None),
+        ("euler_transforms", validate_transforms_addon, _validate_transforms_head),
     )
     # Check the whole registration before mutating process state.
     for name, validator, head_validator in registrations:

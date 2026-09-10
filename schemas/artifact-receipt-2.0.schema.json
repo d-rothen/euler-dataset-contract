@@ -1,0 +1,1405 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Euler artifact_receipt 2.0",
+  "type": "object",
+  "properties": {
+    "version": {
+      "enum": [
+        "2.0"
+      ]
+    },
+    "plan_digest": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+    },
+    "variant_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+    },
+    "output_full_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^/(?!\\.{1,2}(?:/|$))[^/]+(?:/(?!\\.{1,2}(?:/|$))[^/]+)*(?![\\s\\S])"
+    },
+    "execution": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "enum": [
+            "2.0"
+          ]
+        },
+        "recipe_digest": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+        },
+        "bound_digest": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+        },
+        "source_full_ids": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^/(?!\\.{1,2}(?:/|$))[^/]+(?:/(?!\\.{1,2}(?:/|$))[^/]+)*(?![\\s\\S])"
+          },
+          "minProperties": 1,
+          "maxProperties": 64
+        },
+        "source_content": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+          },
+          "minProperties": 1
+        },
+        "input_digests": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+          },
+          "minProperties": 1
+        },
+        "output_digests": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+          },
+          "minProperties": 1
+        },
+        "input_shapes": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minItems": 2,
+            "maxItems": 4
+          },
+          "minProperties": 1
+        },
+        "output_shapes": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minItems": 2,
+            "maxItems": 4
+          },
+          "minProperties": 1
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+              },
+              "op": {
+                "enum": [
+                  "euler_loading.resize",
+                  "euler_loading.crop"
+                ]
+              },
+              "version": {
+                "enum": [
+                  "1.0"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "executed",
+                  "skipped"
+                ]
+              },
+              "reason": {
+                "enum": [
+                  "applied",
+                  "identity_size"
+                ]
+              },
+              "input_size": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "output_size": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "offset": {
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "image_transform": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "id",
+              "op",
+              "version",
+              "status",
+              "reason",
+              "input_size",
+              "output_size",
+              "offset",
+              "image_transform"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 128
+        },
+        "execution": {
+          "type": "object",
+          "properties": {
+            "backend": {
+              "enum": [
+                "torch_cpu",
+                "pillow_cpu"
+              ]
+            },
+            "versions": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minProperties": 1
+            },
+            "device": {
+              "enum": [
+                "cpu"
+              ],
+              "default": "cpu"
+            },
+            "work_dtype": {
+              "enum": [
+                "float32"
+              ],
+              "default": "float32"
+            },
+            "output_dtype": {
+              "enum": [
+                "preserve"
+              ],
+              "default": "preserve"
+            },
+            "boundary": {
+              "enum": [
+                "edge"
+              ],
+              "default": "edge"
+            },
+            "nearest": {
+              "enum": [
+                "floor",
+                "half_pixel"
+              ]
+            },
+            "antialias": {
+              "type": "boolean"
+            },
+            "integer_rounding": {
+              "enum": [
+                "ties_to_even",
+                "legacy_truncate"
+              ]
+            },
+            "vector_epsilon": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "numeric_tolerance": {
+              "type": "object",
+              "properties": {
+                "atol": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "rtol": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "atol",
+                "rtol"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "backend",
+            "versions",
+            "nearest",
+            "antialias",
+            "integer_rounding",
+            "vector_epsilon",
+            "numeric_tolerance"
+          ],
+          "additionalProperties": false
+        },
+        "verification": {
+          "enum": [
+            "content",
+            "metadata"
+          ]
+        }
+      },
+      "required": [
+        "version",
+        "recipe_digest",
+        "bound_digest",
+        "source_full_ids",
+        "source_content",
+        "input_digests",
+        "output_digests",
+        "input_shapes",
+        "output_shapes",
+        "operations",
+        "execution",
+        "verification"
+      ],
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "properties": {
+        "digest": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+        },
+        "decoded_digest": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+        },
+        "decoded": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "image",
+                "depth",
+                "mask",
+                "ray_map",
+                "intrinsics",
+                "point_map",
+                "point_cloud",
+                "extrinsics",
+                "generic"
+              ]
+            },
+            "layout": {
+              "enum": [
+                "HW",
+                "CHW",
+                "HWC",
+                "NHW",
+                "NCHW",
+                "NHWC",
+                "matrix",
+                "NC"
+              ]
+            },
+            "shape": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+                  }
+                ]
+              },
+              "minItems": 2,
+              "maxItems": 4
+            },
+            "dtype": {
+              "enum": [
+                "bool",
+                "uint8",
+                "uint16",
+                "int16",
+                "int32",
+                "int64",
+                "float32",
+                "float64"
+              ]
+            },
+            "unit": {
+              "type": "string",
+              "minLength": 1
+            },
+            "invalid": {
+              "type": "object",
+              "properties": {
+                "non_finite": {
+                  "type": "boolean"
+                },
+                "sentinel": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "non_finite",
+                "sentinel"
+              ],
+              "additionalProperties": false
+            },
+            "image_plane": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+            },
+            "frame": {
+              "type": "string",
+              "minLength": 1
+            },
+            "depth_kind": {
+              "enum": [
+                "planar_z",
+                "radial"
+              ]
+            },
+            "normalization": {
+              "enum": [
+                "homogeneous",
+                "unit",
+                "none",
+                "unit_or_zero"
+              ]
+            },
+            "components": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 3,
+              "uniqueItems": true
+            },
+            "camera_model": {
+              "enum": [
+                "pinhole",
+                "fisheye",
+                "other"
+              ]
+            },
+            "meaning": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_frame": {
+              "type": "string",
+              "minLength": 1
+            },
+            "target_frame": {
+              "type": "string",
+              "minLength": 1
+            },
+            "direction": {
+              "enum": [
+                "target_from_source",
+                "source_from_target"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "layout",
+            "shape",
+            "dtype",
+            "unit",
+            "invalid"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "image",
+                      "depth",
+                      "mask",
+                      "ray_map",
+                      "point_map",
+                      "intrinsics"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "image_plane"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "depth"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "depth_kind",
+                  "frame"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "ray_map",
+                      "point_map",
+                      "point_cloud"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "components",
+                  "frame"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "ray_map"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "normalization"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "mask"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "meaning"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "intrinsics"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "camera_model",
+                  "frame"
+                ],
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "matrix"
+                    ]
+                  },
+                  "shape": {
+                    "const": [
+                      3,
+                      3
+                    ]
+                  },
+                  "dtype": {
+                    "enum": [
+                      "float32",
+                      "float64"
+                    ]
+                  },
+                  "unit": {
+                    "enum": [
+                      "pixel"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "extrinsics"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "source_frame",
+                  "target_frame",
+                  "direction"
+                ],
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "matrix"
+                    ]
+                  },
+                  "shape": {
+                    "const": [
+                      4,
+                      4
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "point_cloud"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NC"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "image",
+                      "depth",
+                      "mask",
+                      "ray_map",
+                      "point_map"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "HW",
+                      "CHW",
+                      "HWC",
+                      "NHW",
+                      "NCHW",
+                      "NHWC"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "HW"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "CHW"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "HWC"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NHW"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NCHW"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NHWC"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "matrix"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NC"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "storage": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "image",
+                "depth",
+                "mask",
+                "ray_map",
+                "intrinsics",
+                "point_map",
+                "point_cloud",
+                "extrinsics",
+                "generic"
+              ]
+            },
+            "layout": {
+              "enum": [
+                "HW",
+                "CHW",
+                "HWC",
+                "NHW",
+                "NCHW",
+                "NHWC",
+                "matrix",
+                "NC"
+              ]
+            },
+            "shape": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+                  }
+                ]
+              },
+              "minItems": 2,
+              "maxItems": 4
+            },
+            "dtype": {
+              "enum": [
+                "bool",
+                "uint8",
+                "uint16",
+                "int16",
+                "int32",
+                "int64",
+                "float32",
+                "float64"
+              ]
+            },
+            "unit": {
+              "type": "string",
+              "minLength": 1
+            },
+            "invalid": {
+              "type": "object",
+              "properties": {
+                "non_finite": {
+                  "type": "boolean"
+                },
+                "sentinel": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "non_finite",
+                "sentinel"
+              ],
+              "additionalProperties": false
+            },
+            "image_plane": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+            },
+            "frame": {
+              "type": "string",
+              "minLength": 1
+            },
+            "depth_kind": {
+              "enum": [
+                "planar_z",
+                "radial"
+              ]
+            },
+            "normalization": {
+              "enum": [
+                "homogeneous",
+                "unit",
+                "none",
+                "unit_or_zero"
+              ]
+            },
+            "components": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 3,
+              "uniqueItems": true
+            },
+            "camera_model": {
+              "enum": [
+                "pinhole",
+                "fisheye",
+                "other"
+              ]
+            },
+            "meaning": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_frame": {
+              "type": "string",
+              "minLength": 1
+            },
+            "target_frame": {
+              "type": "string",
+              "minLength": 1
+            },
+            "direction": {
+              "enum": [
+                "target_from_source",
+                "source_from_target"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "layout",
+            "shape",
+            "dtype",
+            "unit",
+            "invalid"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "image",
+                      "depth",
+                      "mask",
+                      "ray_map",
+                      "point_map",
+                      "intrinsics"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "image_plane"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "depth"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "depth_kind",
+                  "frame"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "ray_map",
+                      "point_map",
+                      "point_cloud"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "components",
+                  "frame"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "ray_map"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "normalization"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "mask"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "meaning"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "intrinsics"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "camera_model",
+                  "frame"
+                ],
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "matrix"
+                    ]
+                  },
+                  "shape": {
+                    "const": [
+                      3,
+                      3
+                    ]
+                  },
+                  "dtype": {
+                    "enum": [
+                      "float32",
+                      "float64"
+                    ]
+                  },
+                  "unit": {
+                    "enum": [
+                      "pixel"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "extrinsics"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "source_frame",
+                  "target_frame",
+                  "direction"
+                ],
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "matrix"
+                    ]
+                  },
+                  "shape": {
+                    "const": [
+                      4,
+                      4
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "point_cloud"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NC"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "image",
+                      "depth",
+                      "mask",
+                      "ray_map",
+                      "point_map"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "HW",
+                      "CHW",
+                      "HWC",
+                      "NHW",
+                      "NCHW",
+                      "NHWC"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "HW"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "CHW"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "HWC"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NHW"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NCHW"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NHWC"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "matrix"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "layout": {
+                    "enum": [
+                      "NC"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "shape": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "digest",
+        "decoded_digest",
+        "decoded",
+        "storage"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "version",
+    "plan_digest",
+    "variant_id",
+    "output_full_id",
+    "execution",
+    "artifact"
+  ],
+  "additionalProperties": false
+}
