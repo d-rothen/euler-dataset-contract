@@ -165,7 +165,13 @@ _SEMANTIC_SEGMENTATION_FIELDS: dict[str, MetaFieldDefinition] = {
         accepted_type=list,
         type_label="an array of 3 integers (0-255)",
         description=(
-            "RGB colour value identifying the sky class in the segmentation map."
+            "Sky label of the segmentation map as an RGB triple: the value of a "
+            "sky pixel when the stored file is viewed as RGB. A colour-coded map "
+            "uses the sky colour (e.g. [90, 200, 255]); a single-channel class map "
+            "uses [v, v, v] for sky label v (e.g. [23, 23, 23] for Cityscapes "
+            "label IDs, [10, 10, 10] for train IDs); a class ID stored in one "
+            "channel of a colour file keeps the other channels' values (e.g. "
+            "[29, 0, 0] for an ID in the red channel)."
         ),
         validator=_validate_rgb_array,
         default=[0, 0, 0],

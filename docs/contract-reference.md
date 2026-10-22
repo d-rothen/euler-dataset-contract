@@ -134,6 +134,20 @@ included in that form.
 `[0, 0, 0]`. Both keys exist for compatibility with data already produced by
 the ecosystem.
 
+`skyclass` names the sky label as it appears in the stored segmentation file
+viewed as RGB, i.e. the RGB value of a sky pixel:
+
+| Stored map | `skyclass` | Example |
+|---|---|---|
+| Colour-coded classes | the sky colour | `[90, 200, 255]` (Virtual KITTI 2) |
+| Single-channel class IDs (grey PNG, `.npy` / `.npz` label map) | `[v, v, v]` for sky label `v` | `[23, 23, 23]` (Cityscapes label IDs), `[10, 10, 10]` (Cityscapes train IDs) |
+| Class ID in one channel of a colour file | the ID in that channel, the other channels' stored values | `[29, 0, 0]` (Real Drive Sim, ID in the red channel) |
+
+Loaders compare this value with the decoded file, so a triple that matches no
+sky pixel, such as a colour for an ID map or `[0, 0, v]` for a grey map, makes
+every sky mask empty. Under this convention the default `[0, 0, 0]` means
+label 0 or black; set `skyclass` explicitly rather than relying on it.
+
 ## Normalization and copying
 
 `parse_dataset_head()` and `DatasetHeadContract.from_mapping()` validate and

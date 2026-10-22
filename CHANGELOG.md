@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Define the `skyclass` convention for `segmentation` / `semantic_segmentation`
+  heads: the RGB value of a sky pixel in the stored file viewed as RGB, so a
+  colour-coded map uses the sky colour and a single-channel class map uses
+  `[v, v, v]` for sky label `v`. The field description in the generated
+  schemas and the contract reference say so; validation is unchanged.
+
 ## 0.5.0 (unreleased)
 
 - Add separately negotiated `euler_transforms` 2.0 materialization, bound execution
