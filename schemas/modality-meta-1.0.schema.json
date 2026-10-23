@@ -260,7 +260,10 @@
           "description": "Observed data file types for this modality, stored as lowercase extensions without leading dots (for example ['jpg', 'png'])."
         },
         "skyclass": {
-          "type": "array",
+          "type": [
+            "array",
+            "null"
+          ],
           "items": {
             "type": "integer",
             "minimum": 0,
@@ -268,12 +271,8 @@
           },
           "minItems": 3,
           "maxItems": 3,
-          "description": "Sky label of the segmentation map as an RGB triple: the value of a sky pixel when the stored file is viewed as RGB. A colour-coded map uses the sky colour (e.g. [90, 200, 255]); a single-channel class map uses [v, v, v] for sky label v (e.g. [23, 23, 23] for Cityscapes label IDs, [10, 10, 10] for train IDs); a class ID stored in one channel of a colour file keeps the other channels' values (e.g. [29, 0, 0] for an ID in the red channel).",
-          "default": [
-            0,
-            0,
-            0
-          ]
+          "description": "Sky label of the segmentation map as an RGB triple: the value of a sky pixel when the stored file is viewed as RGB. A colour-coded map uses the sky colour (e.g. [90, 200, 255]); a single-channel class map uses [v, v, v] for sky label v (e.g. [23, 23, 23] for Cityscapes label IDs, [10, 10, 10] for train IDs); a class ID stored in one channel of a colour file keeps the other channels' values (e.g. [29, 0, 0] for an ID in the red channel). null, the default, leaves the sky undeclared: a loader then uses its own default for the dataset, or rejects the head if it has none.",
+          "default": null
         }
       },
       "required": [
@@ -350,7 +349,10 @@
           "description": "Observed data file types for this modality, stored as lowercase extensions without leading dots (for example ['jpg', 'png'])."
         },
         "skyclass": {
-          "type": "array",
+          "type": [
+            "array",
+            "null"
+          ],
           "items": {
             "type": "integer",
             "minimum": 0,
@@ -358,12 +360,8 @@
           },
           "minItems": 3,
           "maxItems": 3,
-          "description": "Sky label of the segmentation map as an RGB triple: the value of a sky pixel when the stored file is viewed as RGB. A colour-coded map uses the sky colour (e.g. [90, 200, 255]); a single-channel class map uses [v, v, v] for sky label v (e.g. [23, 23, 23] for Cityscapes label IDs, [10, 10, 10] for train IDs); a class ID stored in one channel of a colour file keeps the other channels' values (e.g. [29, 0, 0] for an ID in the red channel).",
-          "default": [
-            0,
-            0,
-            0
-          ]
+          "description": "Sky label of the segmentation map as an RGB triple: the value of a sky pixel when the stored file is viewed as RGB. A colour-coded map uses the sky colour (e.g. [90, 200, 255]); a single-channel class map uses [v, v, v] for sky label v (e.g. [23, 23, 23] for Cityscapes label IDs, [10, 10, 10] for train IDs); a class ID stored in one channel of a colour file keeps the other channels' values (e.g. [29, 0, 0] for an ID in the red channel). null, the default, leaves the sky undeclared: a loader then uses its own default for the dataset, or rejects the head if it has none.",
+          "default": null
         }
       },
       "required": [

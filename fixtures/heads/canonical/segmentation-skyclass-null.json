@@ -1,0 +1,19 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "demo_segmentation_undeclared_sky",
+    "name": "Demo Segmentation, Undeclared Sky"
+  },
+  "modality": {
+    "key": "segmentation",
+    "meta": {
+      "skyclass": null,
+      "file_types": [
+        "png"
+      ]
+    }
+  }
+}

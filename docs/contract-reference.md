@@ -130,9 +130,9 @@ included in that form.
 
 ### `segmentation` and `semantic_segmentation`
 
-`skyclass` is an RGB triplet of integers in `[0, 255]`, defaulting to
-`[0, 0, 0]`. Both keys exist for compatibility with data already produced by
-the ecosystem.
+`skyclass` is an RGB triplet of integers in `[0, 255]`, or `null`, and
+defaults to `null`. The key is required either way. Both modality keys exist
+for compatibility with data already produced by the ecosystem.
 
 `skyclass` names the sky label as it appears in the stored segmentation file
 viewed as RGB, i.e. the RGB value of a sky pixel:
@@ -145,8 +145,15 @@ viewed as RGB, i.e. the RGB value of a sky pixel:
 
 Loaders compare this value with the decoded file, so a triple that matches no
 sky pixel, such as a colour for an ID map or `[0, 0, v]` for a grey map, makes
-every sky mask empty. Under this convention the default `[0, 0, 0]` means
-label 0 or black; set `skyclass` explicitly rather than relying on it.
+every sky mask empty.
+
+`null` leaves the sky undeclared: a loader then uses its own default for the
+dataset, or rejects the head if it has none. It is the default because producer
+tooling such as `ds-crawler` merges defaults into every head that does not set
+the field, and a triple there would read as a declared sky. `[0, 0, 0]` is
+always taken literally, as label 0 or black. Earlier releases defaulted to
+`[0, 0, 0]`, so heads written before this change can carry it without anyone
+having declared it; replace it with the dataset's sky or `null`.
 
 ## Normalization and copying
 

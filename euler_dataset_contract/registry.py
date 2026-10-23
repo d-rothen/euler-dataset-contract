@@ -44,6 +44,13 @@ def _validate_rgb_array(value: Any) -> str | None:
     return None
 
 
+def _validate_optional_rgb_array(value: Any) -> str | None:
+    if value is None:
+        return None
+    error = _validate_rgb_array(value)
+    return None if error is None else f"{error} or null"
+
+
 def _validate_numeric_range(value: Any) -> str | None:
     if (
         not isinstance(value, list)
@@ -162,8 +169,8 @@ SHARED_META_FIELD_DEFINITIONS: dict[str, MetaFieldDefinition] = {
 
 _SEMANTIC_SEGMENTATION_FIELDS: dict[str, MetaFieldDefinition] = {
     "skyclass": MetaFieldDefinition(
-        accepted_type=list,
-        type_label="an array of 3 integers (0-255)",
+        accepted_type=(list, type(None)),
+        type_label="an array of 3 integers (0-255) or null",
         description=(
             "Sky label of the segmentation map as an RGB triple: the value of a "
             "sky pixel when the stored file is viewed as RGB. A colour-coded map "
@@ -171,12 +178,16 @@ _SEMANTIC_SEGMENTATION_FIELDS: dict[str, MetaFieldDefinition] = {
             "uses [v, v, v] for sky label v (e.g. [23, 23, 23] for Cityscapes "
             "label IDs, [10, 10, 10] for train IDs); a class ID stored in one "
             "channel of a colour file keeps the other channels' values (e.g. "
-            "[29, 0, 0] for an ID in the red channel)."
+            "[29, 0, 0] for an ID in the red channel). null, the default, leaves "
+            "the sky undeclared: a loader then uses its own default for the "
+            "dataset, or rejects the head if it has none."
         ),
-        validator=_validate_rgb_array,
-        default=[0, 0, 0],
+        validator=_validate_optional_rgb_array,
+        # Not [0, 0, 0]: producers merge this default into heads that set no
+        # sky, and a triple would read as a declared sky of label 0 or black.
+        default=None,
         json_schema={
-            "type": "array",
+            "type": ["array", "null"],
             "items": {"type": "integer", "minimum": 0, "maximum": 255},
             "minItems": 3,
             "maxItems": 3,

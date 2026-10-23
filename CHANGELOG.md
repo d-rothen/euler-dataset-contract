@@ -7,6 +7,11 @@
   colour-coded map uses the sky colour and a single-channel class map uses
   `[v, v, v]` for sky label `v`. The field description in the generated
   schemas and the contract reference say so; validation is unchanged.
+- `skyclass` accepts `null`, and `null` replaces `[0, 0, 0]` as its default: the
+  sky is undeclared, so a loader uses its own default for the dataset. The key
+  stays required. Producers that merge defaults, such as ds-crawler's
+  `build_dataset_head`, wrote `[0, 0, 0]` into every segmentation head that set
+  no sky, and loaders that read `skyclass` took it for a sky of label 0 or black.
 
 ## 0.5.0 (unreleased)
 

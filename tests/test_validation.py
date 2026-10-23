@@ -218,6 +218,25 @@ def test_numeric_meta_fields_reject_booleans() -> None:
         validate_dataset_head(segmentation_head)
 
 
+@pytest.mark.parametrize("modality_key", ["segmentation", "semantic_segmentation"])
+def test_skyclass_null_is_the_undeclared_default(modality_key: str) -> None:
+    # A triple default would be merged into heads as a declared sky.
+    assert build_default_meta(modality_key) == {"skyclass": None}
+
+    head = _sample_head()
+    head["modality"] = {"key": modality_key, "meta": {"skyclass": None}}
+    assert parse_dataset_head(head).meta == {"skyclass": None}
+    Draft202012Validator(build_dataset_head_schema()).validate(head)
+
+    head["modality"]["meta"] = {}
+    with pytest.raises(ValueError, match="skyclass is required"):
+        validate_dataset_head(head)
+
+    head["modality"]["meta"] = {"skyclass": [0, 0]}
+    with pytest.raises(ValueError, match=r"array of 3 integers \(0-255\) or null"):
+        validate_dataset_head(head)
+
+
 def test_unregistered_modality_accepts_optional_custom_meta() -> None:
     head = _sample_head()
     head["modality"] = {

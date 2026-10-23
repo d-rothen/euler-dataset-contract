@@ -61,6 +61,16 @@
       ]
     },
     {
+      "name": "segmentation-skyclass-null",
+      "head": "heads/valid/segmentation-skyclass-null.json",
+      "canonical": "heads/canonical/segmentation-skyclass-null.json",
+      "description": "The segmentation modality with skyclass null, the default: the key is present but the sky is undeclared, and parsing keeps null rather than filling a triple.",
+      "covers": [
+        "modality_key:segmentation",
+        "shared_meta:file_types"
+      ]
+    },
+    {
       "name": "semantic-segmentation-shared-meta",
       "head": "heads/valid/semantic-segmentation-shared-meta.json",
       "canonical": "heads/canonical/semantic-segmentation-shared-meta.json",
