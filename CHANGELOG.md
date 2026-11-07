@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+- Register the ego-motion modality types euler-loading emits:
+  - `gnss` → `kinematics.platform.state`;
+  - `sensor_timing` → `timing.platform.acquisition`;
+  - `lidar_to_gnss` → `geometry.platform.extrinsics`.
+
+  They add the `kinematics` and `timing` domains and the `platform` subject,
+  recorded as resolved plan question 7.
+- Refresh the vendored euler-loading evidence. It had been stale since loader
+  annotations started using constant expressions:
+  - the declaration snapshot grows from 90 to 112 declarations and now
+    includes Synscapes;
+  - the modality vocabulary gains `gnss`, `sensor_timing` and
+    `lidar_to_gnss`.
+- `scripts/refresh_loader_observations.py` resolves `[value] * n`,
+  `list(...)` / `tuple(...)` and `alias.NAME` constants of imported loader
+  modules, still without executing loader code. Computed declarations are
+  still rejected.
+
 - Define the `skyclass` convention for `segmentation` / `semantic_segmentation`
   heads: the RGB value of a sky pixel in the stored file viewed as RGB, so a
   colour-coded map uses the sky colour and a single-channel class map uses

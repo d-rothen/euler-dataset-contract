@@ -102,8 +102,11 @@ drift test then names any type that has no inventory entry.
 `inventory/dataset-modality-types.json` records the operator's exact 14 names,
 including the clarification that `spectral_map` was never used and
 `spherical_map` is homogeneous ray directions. `inventory/loader-observations.json`
-captures 90 CPU/Torch declarations and their source hashes independently of the
-reported dataset list. Capture it without importing array libraries:
+captures 112 CPU/Torch declarations and their source hashes independently of
+the reported dataset list. Declarations are read as literals; the extractor
+also resolves module constants (`alias.NAME` on an imported loader module
+included), `[value] * n` and `list(...)` / `tuple(...)`, and rejects anything
+computed. Capture it without importing array libraries:
 
 ```bash
 python scripts/refresh_loader_observations.py /path/to/euler-loading --check

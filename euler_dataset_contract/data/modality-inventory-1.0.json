@@ -31,13 +31,16 @@
     "appearance": "Radiance as an image-forming sensor records it.",
     "semantics": "Labels attached to a spatial support.",
     "radiometry": "Physical light-transport quantities of the scene.",
-    "signal": "Container-typed values carrying no committed physical meaning."
+    "signal": "Container-typed values carrying no committed physical meaning.",
+    "kinematics": "Pose and motion of the platform carrying the sensors.",
+    "timing": "When sensors acquired their data."
   },
   "subjects": {
     "camera": "The quantity is attached to a camera and its image plane.",
     "scene": "The quantity is attached to the world, independent of any one sensor.",
     "grid": "Index space: a regular n-dimensional lattice.",
-    "sphere": "Index space: directions on the unit sphere."
+    "sphere": "Index space: directions on the unit sphere.",
+    "platform": "The quantity is attached to the vehicle carrying the sensors and its reference frame, such as the GNSS/IMU frame."
   },
   "modalities": {
     "appearance.camera.color": {
@@ -325,6 +328,53 @@
         "value_domain",
         "path_definition"
       ]
+    },
+    "kinematics.platform.state": {
+      "domain": "kinematics",
+      "subject": "platform",
+      "quantity": "state",
+      "status": "settled",
+      "description": "The platform's navigation state at one time: position, attitude, velocity and angular rates, as a GNSS/INS solution reports them.",
+      "aliases": [
+        "gnss"
+      ],
+      "representation_fields": [
+        "fields",
+        "frame",
+        "units",
+        "time_reference"
+      ]
+    },
+    "timing.platform.acquisition": {
+      "domain": "timing",
+      "subject": "platform",
+      "quantity": "acquisition",
+      "status": "settled",
+      "description": "Start and end times at which each sensor acquired one frame, such as the camera exposure and the lidar sweep.",
+      "aliases": [
+        "sensor_timing"
+      ],
+      "representation_fields": [
+        "sensors",
+        "clock",
+        "unit"
+      ]
+    },
+    "geometry.platform.extrinsics": {
+      "domain": "geometry",
+      "subject": "platform",
+      "quantity": "extrinsics",
+      "status": "settled",
+      "description": "Rigid transform between a sensor frame and the platform's reference frame, such as lidar to GNSS/IMU.",
+      "aliases": [
+        "lidar_to_gnss"
+      ],
+      "representation_fields": [
+        "layout",
+        "direction",
+        "source_frame",
+        "target_frame"
+      ]
     }
   },
   "aliases": {
@@ -556,6 +606,27 @@
         "dataset.modality_key"
       ],
       "note": "Reported active dataset quantity; there is no dedicated emitted loader type in the reviewed loading catalog."
+    },
+    "gnss": {
+      "id": "kinematics.platform.state",
+      "status": "settled",
+      "sources": [
+        "euler_loading.modality_type"
+      ]
+    },
+    "sensor_timing": {
+      "id": "timing.platform.acquisition",
+      "status": "settled",
+      "sources": [
+        "euler_loading.modality_type"
+      ]
+    },
+    "lidar_to_gnss": {
+      "id": "geometry.platform.extrinsics",
+      "status": "settled",
+      "sources": [
+        "euler_loading.modality_type"
+      ]
     }
   },
   "non_modalities": {
@@ -617,6 +688,10 @@
     {
       "number": 3,
       "resolution": "Operator confirms sparse_depth contains sparse 3D depth; observed loaders consume clouds. The alias is conditional on that representation."
+    },
+    {
+      "number": 7,
+      "resolution": "Operator settles gnss, sensor_timing and lidar_to_gnss as the inputs of lidar ego-motion compensation (MUSES). They need the kinematics and timing domains and the platform subject; lidar_to_gnss is a platform mount, not camera extrinsics."
     }
   ]
 }

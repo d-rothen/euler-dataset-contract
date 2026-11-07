@@ -156,3 +156,59 @@ def test_snapshot_extraction_reads_literals_without_executing_sources(tmp_path) 
     assert len(result["observations"]) == 2
     assert all(r["declared"]["output_unit"] == "meters" for r in result["observations"])
     assert "euler_loading/loaders/_constants.py" in result["sources"]
+
+
+def _demo_loading_root(tmp_path: Path, gpu_source: str) -> Path:
+    loaders = tmp_path / "euler_loading/loaders"
+    (loaders / "cpu").mkdir(parents=True)
+    (loaders / "gpu").mkdir()
+    (loaders / "cpu/__init__.py").write_text("")
+    (loaders / "cpu/demo.py").write_text(
+        "_LABEL = 23\n"
+        "_COLOR = (90, 200, 255)\n"
+        "_FRAME = 'ego'\n"
+        "raise RuntimeError('must not execute')\n"
+        "@modality_meta(modality_type='sky_mask', dtype='bool', shape='HW',\n"
+        "               meta={'skyclass': [_LABEL] * 3, 'color': list(_COLOR)})\n"
+        "def sky_mask(path): raise RuntimeError('must not execute')\n"
+    )
+    (loaders / "gpu/demo.py").write_text(gpu_source)
+    (loaders / "generate").mkdir()
+    (loaders / "generate/loaders.json").write_text('{"supportedLoaders": []}')
+    return tmp_path
+
+
+def test_snapshot_reads_constant_expressions_loaders_use(tmp_path) -> None:
+    """List repetition, list()/tuple() and constants of an imported loader module."""
+    script = (
+        Path(__file__).resolve().parents[1] / "scripts/refresh_loader_observations.py"
+    )
+    snapshot = runpy.run_path(str(script))["snapshot"]
+    root = _demo_loading_root(
+        tmp_path,
+        "from euler_loading.loaders.cpu import demo as _cpu\n"
+        "@modality_meta(modality_type='sky_mask', dtype='bool', shape='1HW',\n"
+        "               meta={'frame': _cpu._FRAME, 'skyclass': 3 * [_cpu._LABEL]})\n"
+        "def sky_mask(path): raise RuntimeError('must not execute')\n",
+    )
+    declared = {
+        r["backend"]: r["declared"]["meta"] for r in snapshot(root)["observations"]
+    }
+    assert declared["cpu"] == {"skyclass": [23, 23, 23], "color": [90, 200, 255]}
+    assert declared["gpu"] == {"frame": "ego", "skyclass": [23, 23, 23]}
+
+
+def test_snapshot_still_rejects_computed_declarations(tmp_path) -> None:
+    script = (
+        Path(__file__).resolve().parents[1] / "scripts/refresh_loader_observations.py"
+    )
+    snapshot = runpy.run_path(str(script))["snapshot"]
+    root = _demo_loading_root(
+        tmp_path,
+        "from euler_loading.loaders.cpu import demo as _cpu\n"
+        "@modality_meta(modality_type='sky_mask', dtype='bool', shape='1HW',\n"
+        "               meta={'skyclass': _cpu.resolve_skyclass()})\n"
+        "def sky_mask(path): raise RuntimeError('must not execute')\n",
+    )
+    with pytest.raises(ValueError, match="Nonliteral declaration"):
+        snapshot(root)

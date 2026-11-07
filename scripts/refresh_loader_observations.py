@@ -18,9 +18,31 @@ OUTPUT = ROOT / "fixtures/inventory/loader-observations.json"
 VOCABULARY = ROOT / "fixtures/inventory/euler-loading-modality-types.json"
 
 
+class _Module:
+    """Literal constants of an imported loader module, read as ``alias.NAME``."""
+
+    def __init__(self, constants: dict[str, Any]) -> None:
+        self.constants = constants
+
+
 def _literal(node: ast.AST, constants: dict[str, Any]) -> Any:
+    """Evaluate a declaration without executing loader code.
+
+    Beyond plain literals this resolves module constants (also ``alias.NAME``
+    on an imported loader module), ``[value] * n`` and ``list(...)`` /
+    ``tuple(...)`` of a literal, the side-effect-free spellings loader
+    annotations use. Anything else raises ``ValueError``.
+    """
     if isinstance(node, ast.Name) and node.id in constants:
-        return constants[node.id]
+        value = constants[node.id]
+        if isinstance(value, _Module):
+            raise ValueError(f"{node.id} is a module, not a constant")
+        return value
+    if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name):
+        module = constants.get(node.value.id)
+        if isinstance(module, _Module) and node.attr in module.constants:
+            return module.constants[node.attr]
+        raise ValueError(f"{ast.unparse(node)} is not a literal constant")
     if isinstance(node, (ast.List, ast.Tuple)):
         return [_literal(item, constants) for item in node.elts]
     if isinstance(node, ast.Dict):
@@ -28,6 +50,24 @@ def _literal(node: ast.AST, constants: dict[str, Any]) -> Any:
             _literal(key, constants): _literal(value, constants)
             for key, value in zip(node.keys, node.values)
         }
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mult):
+        left, right = _literal(node.left, constants), _literal(node.right, constants)
+        if isinstance(left, list) and type(right) is int:
+            return left * right
+        if isinstance(right, list) and type(left) is int:
+            return right * left
+        raise ValueError(f"{ast.unparse(node)} is not a list repetition")
+    if (
+        isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id in {"list", "tuple"}
+        and len(node.args) == 1
+        and not node.keywords
+    ):
+        value = _literal(node.args[0], constants)
+        if not isinstance(value, list):
+            raise ValueError(f"{ast.unparse(node)} does not convert a sequence")
+        return list(value)
     return ast.literal_eval(node)
 
 
@@ -50,14 +90,21 @@ def snapshot(loading_root: Path) -> dict[str, Any]:
                 and node.level == 0
                 and (node.module or "").startswith("euler_loading.loaders.")
             ):
-                dependency = loading_root.joinpath(*node.module.split(".")).with_suffix(
-                    ".py"
-                )
+                package = loading_root.joinpath(*node.module.split("."))
+                dependency = package.with_suffix(".py")
                 if dependency.is_file():
                     imported = literal_constants(dependency)
                     for alias in node.names:
                         if alias.name in imported:
                             constants[alias.asname or alias.name] = imported[alias.name]
+                elif package.is_dir():
+                    # ``from euler_loading.loaders.cpu import synscapes as _cpu``
+                    for alias in node.names:
+                        submodule = package / f"{alias.name}.py"
+                        if submodule.is_file():
+                            constants[alias.asname or alias.name] = _Module(
+                                literal_constants(submodule)
+                            )
             if isinstance(node, (ast.Assign, ast.AnnAssign)):
                 targets = (
                     node.targets if isinstance(node, ast.Assign) else [node.target]

@@ -746,6 +746,17 @@ leaving them marked.
    independently of the modality registry?
 6. **Deprecation window.** How long do legacy `modality.key` values stay
    readable — one minor, one major, or indefinitely?
+7. **Resolved: ego-motion inputs.** A scanning lidar such as the MUSES one
+   needs the vehicle's motion during each sweep before it lines up with the
+   camera. The operator settled the three euler-loading modality types that
+   carry it:
+   - `gnss` → `kinematics.platform.state`;
+   - `sensor_timing` → `timing.platform.acquisition`;
+   - `lidar_to_gnss` → `geometry.platform.extrinsics`.
+
+   They add the `kinematics` and `timing` domains and the `platform` subject.
+   `lidar_to_gnss` relates a sensor to the vehicle, not to a camera image
+   plane, so it is not `geometry.camera.extrinsics`.
 
 ---
 

@@ -6,7 +6,7 @@
   "provenance": {
     "repository": "euler-loading",
     "path": "euler_loading/loaders/generate/loaders.json",
-    "sha256": "c97d4f2a18f3fc8d4303a39034543f50a00a70fc9ae216b1488854976e130a77",
+    "sha256": "11375320ab7ec46a4f21d7fc0c242d72a9b4dc611534907cd02012206fa42591",
     "description": "Vendored copy of the modality vocabulary euler-loading emits, so that euler-dataset-contract can assert against it without taking a dependency on euler-loading. Refresh this file when loaders.json changes: the drift test in tests/test_modality_inventory.py fails when a type recorded here has no inventory entry.",
     "notes": [
       "modality_types holds the distinct values of the type field, each with the loader.function pairs that emit it.",
@@ -19,6 +19,7 @@
     "muses",
     "princeton_dense",
     "real_drive_sim",
+    "synscapes",
     "vkitti2"
   ],
   "modality_types": {
@@ -34,18 +35,24 @@
     "camera_extrinsics": [
       "muses.read_extrinsics",
       "princeton_dense.read_extrinsics",
-      "real_drive_sim.read_extrinsics"
+      "real_drive_sim.read_extrinsics",
+      "synscapes.read_extrinsics"
     ],
     "depth": [
       "generic_dense_depth.depth",
       "real_drive_sim.depth",
+      "synscapes.depth",
       "vkitti2.depth"
     ],
     "extrinsics": [
       "vkitti2.read_extrinsics"
     ],
+    "gnss": [
+      "muses.gnss"
+    ],
     "instance_segmentation": [
       "generic.instance_segmentation",
+      "synscapes.instance_segmentation",
       "vkitti2.instance_segmentation"
     ],
     "intrinsics": [
@@ -54,7 +61,11 @@
       "muses.read_intrinsics",
       "princeton_dense.read_intrinsics",
       "real_drive_sim.read_intrinsics",
+      "synscapes.read_intrinsics",
       "vkitti2.read_intrinsics"
+    ],
+    "lidar_to_gnss": [
+      "muses.read_lidar_to_gnss"
     ],
     "map_2d": [
       "generic.map_2d"
@@ -80,6 +91,7 @@
       "muses.rgb",
       "princeton_dense.rgb",
       "real_drive_sim.rgb",
+      "synscapes.rgb",
       "vkitti2.rgb"
     ],
     "scattering_coefficient": [
@@ -92,18 +104,24 @@
       "generic.semantic_segmentation",
       "muses.semantic_segmentation",
       "real_drive_sim.class_segmentation",
+      "synscapes.class_segmentation",
       "vkitti2.class_segmentation"
     ],
     "semantic_segmentation_color": [
       "muses.semantic_segmentation_color"
     ],
+    "sensor_timing": [
+      "muses.sensor_timing"
+    ],
     "sh_coeffs": [
       "generic.sh_coeffs"
     ],
     "sky_mask": [
+      "generic.sky_mask",
       "generic_dense_depth.sky_mask",
       "muses.sky_mask",
       "real_drive_sim.sky_mask",
+      "synscapes.sky_mask",
       "vkitti2.sky_mask"
     ],
     "sparse_depth": [
@@ -120,6 +138,7 @@
     "calibration",
     "class_segmentation",
     "depth",
+    "gnss",
     "instance_segmentation",
     "intrinsics",
     "lidar_point_cloud",
@@ -130,12 +149,14 @@
     "rccb",
     "read_extrinsics",
     "read_intrinsics",
+    "read_lidar_to_gnss",
     "reference_rgb",
     "rgb",
     "scattering_coefficient",
     "scene_flow",
     "semantic_segmentation",
     "semantic_segmentation_color",
+    "sensor_timing",
     "sh_coeffs",
     "sky_mask",
     "sparse_depth",

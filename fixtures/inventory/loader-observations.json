@@ -8,24 +8,27 @@
     "method": "AST literal extraction; no loader execution",
     "consumed_by_runtime": false,
     "catalog_path": "euler_loading/loaders/generate/loaders.json",
-    "catalog_sha256": "c97d4f2a18f3fc8d4303a39034543f50a00a70fc9ae216b1488854976e130a77"
+    "catalog_sha256": "11375320ab7ec46a4f21d7fc0c242d72a9b4dc611534907cd02012206fa42591"
   },
   "sources": {
-    "euler_loading/loaders/_annotations.py": "9452a885390ab11b0b7f12a073984e4bd198f5cd7bdd5a987e268ef10ffa5c07",
-    "euler_loading/loaders/_princeton_dense.py": "341fb5601c906d357e385d345f04a1260d80e7446af02332d676a31674ff3147",
-    "euler_loading/loaders/_writer_utils.py": "dbf4bfb2fc0288c020732ca0f08251cd229d6b1b2fa9c3dd34f4d42af36eaa6a",
-    "euler_loading/loaders/cpu/generic.py": "f38503f3218028df1f5c8e0ed1206b665747b63a43b13d4aa2f3294eeb190518",
-    "euler_loading/loaders/cpu/generic_dense_depth.py": "97c29593dad047d5af8f94f6ce1f3bb1d7719e7a445b2ac829fb46e7bb173d6b",
-    "euler_loading/loaders/cpu/muses.py": "46bdd0efec31c0fb09e4bf6c36b6f2d5ccc8c21ccf325d1c2b97e68495ca999f",
-    "euler_loading/loaders/cpu/princeton_dense.py": "76b72e2ddceddfed6d2bb151cf558316bb0ab05a3d36e06c740cdff8838dd65e",
-    "euler_loading/loaders/cpu/real_drive_sim.py": "098fe37025e66df807c27feddbeb864ff3aac662845c2ee4ef0d5ba7b097fa46",
-    "euler_loading/loaders/cpu/vkitti2.py": "ce5c7ee340d1438be4350abecdc56c5b762bbdaf0807115ae5e45fd4987f56b9",
-    "euler_loading/loaders/gpu/generic.py": "7e3d25a070be59e41da6818f16886454a2abf56cf9ec2c1cd81d3e69685b48a7",
-    "euler_loading/loaders/gpu/generic_dense_depth.py": "73314296694422106017caa54b2fba6566ec49c5755c9ada67483e8edc287606",
-    "euler_loading/loaders/gpu/muses.py": "223812e65e307ce0d8841f036f3918a9243fa2987c86bebf53e3e1b2d642f6b9",
-    "euler_loading/loaders/gpu/princeton_dense.py": "07201c210398b48a7fc988575e58fcefaa5528951eb4c0f327f22264380d64c0",
-    "euler_loading/loaders/gpu/real_drive_sim.py": "eb944b111dde754a186d7b6ca83c0f2ee9a20480131a1fbae16aacd6bf39d631",
-    "euler_loading/loaders/gpu/vkitti2.py": "45d2cc5867614aa10d936a4ebd5c18e925fc2f3d5e2b7d2c8ce2fdbeeeae7863"
+    "euler_loading/loaders/_annotations.py": "37637b835a90f6645ac3da7c7fd2964a4abc0c94ca4a62450e065d6834e00364",
+    "euler_loading/loaders/_princeton_dense.py": "47253412cc6a30d18b91fbad3dc35771e1368ef500f6bc7653aea6697cb800ab",
+    "euler_loading/loaders/_sky.py": "6f9f7584cb5cba782f3350f35a6d82182d477926f50dcaa6ae6a82d7dda7d72b",
+    "euler_loading/loaders/_writer_utils.py": "5221e86c8ca98439e144cab3f591ee993b8dac36bcedeb19a393693dcf851884",
+    "euler_loading/loaders/cpu/generic.py": "0a6205069d1f0cff481f048ff8c50acad587f401158db705a067d4a90a084e75",
+    "euler_loading/loaders/cpu/generic_dense_depth.py": "f6f3f90f5a1776e56933495599575af0c79c75b2f27efe0f11a9965a38c44973",
+    "euler_loading/loaders/cpu/muses.py": "82d06fca7bbec7bc361eed49527d4ddeac5cfcd4669f05cd33a277b519a698c0",
+    "euler_loading/loaders/cpu/princeton_dense.py": "c12c1a9c3a9dae57bca8347156fd8dd323e46c6bdfb4b3193f3f4ddf228ab323",
+    "euler_loading/loaders/cpu/real_drive_sim.py": "0dda77ce3a596bc164af3292b838dabdc8a3cef8263c45cbbde7275251a36e0b",
+    "euler_loading/loaders/cpu/synscapes.py": "f3bbd53bc6f90edf68d2473dc142dc33faaedf45498a94becbd4f19e38817fcb",
+    "euler_loading/loaders/cpu/vkitti2.py": "17291eb010d6409032108075170d485aea6ba6f575e6505e1f2c25bb9fa73403",
+    "euler_loading/loaders/gpu/generic.py": "44953ba25e72692445c4e7f4a5ac7fccd4ec4cd4847b5862fa9b633f1475521d",
+    "euler_loading/loaders/gpu/generic_dense_depth.py": "ac6d422f06ace5c7ae60767f7c2ada56e4f33206a69e3f55561154471c01cd47",
+    "euler_loading/loaders/gpu/muses.py": "ae05a1de27b8c15918adfd65be1262777b5defdf16a062dde1e5998fe03bebe4",
+    "euler_loading/loaders/gpu/princeton_dense.py": "2564cbef1c98c7a31a700b16a24ffca1ffd2cb860c3ce6857caf6288dd18be0b",
+    "euler_loading/loaders/gpu/real_drive_sim.py": "e6c88b978aed10433c4e2e94204c61684719cc681f498539ce3d1f3fb7d32998",
+    "euler_loading/loaders/gpu/synscapes.py": "a3521cda47bf46e694661658281de8def4a6c675cdfb5c4796f94fa70d065cc4",
+    "euler_loading/loaders/gpu/vkitti2.py": "0bad62e263013b95fd8b59f965e16b26cf3d2162e9fca8e580017829162887bd"
   },
   "observations": [
     {
@@ -33,7 +36,7 @@
       "function": "map_2d",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 125,
+      "line": 128,
       "declared": {
         "modality_type": "map_2d",
         "dtype": "float32",
@@ -49,7 +52,7 @@
       "function": "semantic_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 141,
+      "line": 144,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "uint8",
@@ -62,10 +65,29 @@
     },
     {
       "loader": "generic",
+      "function": "sky_mask",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/generic.py",
+      "line": 156,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "HW",
+        "file_formats": [
+          ".npy",
+          ".npz"
+        ],
+        "requires_meta": [
+          "skyclass"
+        ]
+      }
+    },
+    {
+      "loader": "generic",
       "function": "instance_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 152,
+      "line": 175,
       "declared": {
         "modality_type": "instance_segmentation",
         "dtype": "uint16",
@@ -81,7 +103,7 @@
       "function": "map_3d",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 163,
+      "line": 186,
       "declared": {
         "modality_type": "map_3d",
         "dtype": "float32",
@@ -97,7 +119,7 @@
       "function": "points_3d",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 181,
+      "line": 204,
       "declared": {
         "modality_type": "points_3d",
         "dtype": "float32",
@@ -113,7 +135,7 @@
       "function": "scattering_coefficient",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 198,
+      "line": 221,
       "declared": {
         "modality_type": "scattering_coefficient",
         "dtype": "float32",
@@ -129,7 +151,7 @@
       "function": "atmospheric_light",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 209,
+      "line": 232,
       "declared": {
         "modality_type": "atmospheric_light",
         "dtype": "float32",
@@ -145,7 +167,7 @@
       "function": "spherical_map",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 220,
+      "line": 243,
       "declared": {
         "modality_type": "spherical_map",
         "dtype": "float32",
@@ -161,7 +183,7 @@
       "function": "intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 241,
+      "line": 264,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -177,7 +199,7 @@
       "function": "sh_coeffs",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic.py",
-      "line": 259,
+      "line": 282,
       "declared": {
         "modality_type": "sh_coeffs",
         "dtype": "float32",
@@ -193,7 +215,7 @@
       "function": "rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic_dense_depth.py",
-      "line": 98,
+      "line": 99,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -219,7 +241,7 @@
       "function": "depth",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic_dense_depth.py",
-      "line": 117,
+      "line": 118,
       "declared": {
         "modality_type": "depth",
         "dtype": "float32",
@@ -241,7 +263,7 @@
       "function": "sky_mask",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic_dense_depth.py",
-      "line": 145,
+      "line": 146,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -255,7 +277,7 @@
           ".tiff"
         ],
         "requires_meta": [
-          "sky_mask"
+          "skyclass"
         ]
       }
     },
@@ -264,7 +286,7 @@
       "function": "read_intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/generic_dense_depth.py",
-      "line": 171,
+      "line": 183,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -280,7 +302,7 @@
       "function": "rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 272,
+      "line": 285,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -299,7 +321,7 @@
       "function": "reference_rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 285,
+      "line": 298,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -321,7 +343,7 @@
       "function": "semantic_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 300,
+      "line": 313,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "int64",
@@ -343,7 +365,7 @@
       "function": "sky_mask",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 317,
+      "line": 330,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -353,9 +375,9 @@
         ],
         "meta": {
           "encoding": "single_channel",
-          "sky_class": [
-            0,
-            0,
+          "skyclass": [
+            23,
+            23,
             23
           ],
           "sky_label_id": 23,
@@ -368,7 +390,7 @@
       "function": "semantic_segmentation_color",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 335,
+      "line": 351,
       "declared": {
         "modality_type": "semantic_segmentation_color",
         "dtype": "uint8",
@@ -389,7 +411,7 @@
       "function": "panoptic_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 347,
+      "line": 363,
       "declared": {
         "modality_type": "panoptic_segmentation",
         "dtype": "int64",
@@ -407,7 +429,7 @@
       "function": "lidar_point_cloud",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 363,
+      "line": 379,
       "declared": {
         "modality_type": "point_cloud",
         "dtype": "float64",
@@ -434,7 +456,7 @@
       "function": "sparse_depth",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 385,
+      "line": 401,
       "declared": {
         "modality_type": "sparse_depth",
         "dtype": "float64",
@@ -462,7 +484,7 @@
       "function": "read_intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 398,
+      "line": 414,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -481,7 +503,7 @@
       "function": "read_extrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 419,
+      "line": 435,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -497,11 +519,71 @@
       }
     },
     {
+      "loader": "muses",
+      "function": "gnss",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/muses.py",
+      "line": 501,
+      "declared": {
+        "modality_type": "gnss",
+        "dtype": "dict",
+        "shape": "dict",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "source": "u-blox navigation record, gnss/dataformat.txt",
+          "heading_rate_axis": "negative yaw axis (clockwise from above is positive)"
+        }
+      }
+    },
+    {
+      "loader": "muses",
+      "function": "sensor_timing",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/muses.py",
+      "line": 620,
+      "declared": {
+        "modality_type": "sensor_timing",
+        "dtype": "dict",
+        "hierarchical": true,
+        "shape": "dict",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "source": "meta.json",
+          "unit": "microseconds",
+          "matched_by": "path_to_* file names"
+        }
+      }
+    },
+    {
+      "loader": "muses",
+      "function": "read_lidar_to_gnss",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/muses.py",
+      "line": 666,
+      "declared": {
+        "modality_type": "lidar_to_gnss",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "transform": "lidar2gnss",
+          "transform_direction": "lidar_to_gnss"
+        }
+      }
+    },
+    {
       "loader": "princeton_dense",
       "function": "rccb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 56,
+      "line": 62,
       "declared": {
         "modality_type": "rccb",
         "dtype": "float32",
@@ -517,7 +599,7 @@
         "meta": {
           "dataset": "SeeingThroughFog",
           "raw_bit_depth": 12,
-          "bayer_pattern": "GBRG",
+          "bayer_pattern": "GRBG",
           "raw_max_value": 4095.0
         }
       }
@@ -527,7 +609,7 @@
       "function": "rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 73,
+      "line": 79,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -546,7 +628,7 @@
       "function": "sparse_depth",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 107,
+      "line": 113,
       "declared": {
         "modality_type": "sparse_depth",
         "dtype": "float32",
@@ -573,7 +655,7 @@
       "function": "read_intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 149,
+      "line": 157,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -585,7 +667,9 @@
         "meta": {
           "dataset": "SeeingThroughFog",
           "camera_frame": "cam_stereo_left_optical",
-          "source": "calib_cam_stereo_left"
+          "source": "calib_cam_stereo_left",
+          "camera_model": "pinhole",
+          "intrinsics_matrix": "P"
         }
       }
     },
@@ -594,7 +678,7 @@
       "function": "read_extrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 172,
+      "line": 186,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -616,7 +700,7 @@
       "function": "rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/real_drive_sim.py",
-      "line": 59,
+      "line": 61,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -635,7 +719,7 @@
       "function": "depth",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/real_drive_sim.py",
-      "line": 72,
+      "line": 74,
       "declared": {
         "modality_type": "depth",
         "dtype": "float32",
@@ -654,7 +738,7 @@
       "function": "class_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/real_drive_sim.py",
-      "line": 88,
+      "line": 90,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "int64",
@@ -664,7 +748,11 @@
         ],
         "meta": {
           "encoding": "single_channel",
-          "sky_class_id": 29
+          "skyclass": [
+            29,
+            0,
+            0
+          ]
         }
       }
     },
@@ -673,7 +761,7 @@
       "function": "sky_mask",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/real_drive_sim.py",
-      "line": 107,
+      "line": 129,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -682,7 +770,11 @@
           ".png"
         ],
         "meta": {
-          "sky_class_id": 29
+          "skyclass": [
+            29,
+            0,
+            0
+          ]
         }
       }
     },
@@ -691,7 +783,7 @@
       "function": "calibration",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/real_drive_sim.py",
-      "line": 149,
+      "line": 175,
       "declared": {
         "modality_type": "calibration",
         "dtype": "dict",
@@ -719,7 +811,7 @@
       "function": "all_intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/real_drive_sim.py",
-      "line": 208,
+      "line": 234,
       "declared": {
         "modality_type": "all_intrinsics",
         "dtype": "dict",
@@ -735,7 +827,7 @@
       "function": "read_intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/real_drive_sim.py",
-      "line": 234,
+      "line": 260,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -754,7 +846,7 @@
       "function": "read_extrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/real_drive_sim.py",
-      "line": 292,
+      "line": 318,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -772,11 +864,159 @@
       }
     },
     {
+      "loader": "synscapes",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/synscapes.py",
+      "line": 241,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/synscapes.py",
+      "line": 260,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".exr"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "channel": "Z",
+          "radial_depth": false,
+          "scale_to_meters": 1.0
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "class_segmentation",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/synscapes.py",
+      "line": 308,
+      "declared": {
+        "modality_type": "semantic_segmentation",
+        "dtype": "int64",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "encoding": "single_channel",
+          "label_ids": "cityscapes",
+          "skyclass": [
+            23,
+            23,
+            23
+          ]
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "instance_segmentation",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/synscapes.py",
+      "line": 333,
+      "declared": {
+        "modality_type": "instance_segmentation",
+        "dtype": "int64",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "encoding": "rgb",
+          "id_formula": "R + 256 * G + 65536 * B"
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "sky_mask",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/synscapes.py",
+      "line": 371,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "skyclass": [
+            23,
+            23,
+            23
+          ]
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/synscapes.py",
+      "line": 397,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "source": "camera.intrinsic"
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "read_extrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/synscapes.py",
+      "line": 436,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "source": "camera.extrinsic",
+          "dataset": "Synscapes",
+          "angle_unit": "radians",
+          "translation_unit": "meters",
+          "ego_frame": "x_forward_y_left_z_up",
+          "rotation_order": "Rz(yaw) @ Ry(pitch) @ Rx(roll)",
+          "default_transform_direction": "camera_to_ego",
+          "default_camera_axes": "vehicle"
+        }
+      }
+    },
+    {
       "loader": "vkitti2",
       "function": "rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/vkitti2.py",
-      "line": 63,
+      "line": 65,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -795,7 +1035,7 @@
       "function": "depth",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/vkitti2.py",
-      "line": 76,
+      "line": 78,
       "declared": {
         "modality_type": "depth",
         "dtype": "float32",
@@ -819,7 +1059,7 @@
       "function": "class_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/vkitti2.py",
-      "line": 93,
+      "line": 95,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "int64",
@@ -837,7 +1077,7 @@
       "function": "instance_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/vkitti2.py",
-      "line": 105,
+      "line": 107,
       "declared": {
         "modality_type": "instance_segmentation",
         "dtype": "int64",
@@ -855,7 +1095,7 @@
       "function": "sky_mask",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/vkitti2.py",
-      "line": 120,
+      "line": 136,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -864,7 +1104,7 @@
           ".png"
         ],
         "meta": {
-          "sky_color": [
+          "skyclass": [
             90,
             200,
             255
@@ -877,7 +1117,7 @@
       "function": "scene_flow",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/vkitti2.py",
-      "line": 141,
+      "line": 156,
       "declared": {
         "modality_type": "scene_flow",
         "dtype": "float32",
@@ -896,7 +1136,7 @@
       "function": "read_intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/vkitti2.py",
-      "line": 158,
+      "line": 173,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -912,7 +1152,7 @@
       "function": "read_extrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/vkitti2.py",
-      "line": 191,
+      "line": 206,
       "declared": {
         "modality_type": "extrinsics",
         "dtype": "float32",
@@ -928,7 +1168,7 @@
       "function": "map_2d",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 126,
+      "line": 129,
       "declared": {
         "modality_type": "map_2d",
         "dtype": "float32",
@@ -944,7 +1184,7 @@
       "function": "semantic_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 143,
+      "line": 146,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "uint8",
@@ -957,10 +1197,29 @@
     },
     {
       "loader": "generic",
+      "function": "sky_mask",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/generic.py",
+      "line": 158,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "1HW",
+        "file_formats": [
+          ".npy",
+          ".npz"
+        ],
+        "requires_meta": [
+          "skyclass"
+        ]
+      }
+    },
+    {
+      "loader": "generic",
       "function": "instance_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 154,
+      "line": 170,
       "declared": {
         "modality_type": "instance_segmentation",
         "dtype": "uint16",
@@ -976,7 +1235,7 @@
       "function": "map_3d",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 165,
+      "line": 181,
       "declared": {
         "modality_type": "map_3d",
         "dtype": "float32",
@@ -992,7 +1251,7 @@
       "function": "points_3d",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 182,
+      "line": 198,
       "declared": {
         "modality_type": "points_3d",
         "dtype": "float32",
@@ -1008,7 +1267,7 @@
       "function": "scattering_coefficient",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 197,
+      "line": 213,
       "declared": {
         "modality_type": "scattering_coefficient",
         "dtype": "float32",
@@ -1024,7 +1283,7 @@
       "function": "atmospheric_light",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 208,
+      "line": 224,
       "declared": {
         "modality_type": "atmospheric_light",
         "dtype": "float32",
@@ -1040,7 +1299,7 @@
       "function": "spherical_map",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 219,
+      "line": 235,
       "declared": {
         "modality_type": "spherical_map",
         "dtype": "float32",
@@ -1056,7 +1315,7 @@
       "function": "intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 239,
+      "line": 255,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -1072,7 +1331,7 @@
       "function": "sh_coeffs",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic.py",
-      "line": 258,
+      "line": 274,
       "declared": {
         "modality_type": "sh_coeffs",
         "dtype": "float32",
@@ -1150,7 +1409,7 @@
           ".tiff"
         ],
         "requires_meta": [
-          "sky_mask"
+          "skyclass"
         ]
       }
     },
@@ -1159,7 +1418,7 @@
       "function": "read_intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/generic_dense_depth.py",
-      "line": 175,
+      "line": 165,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -1175,7 +1434,7 @@
       "function": "rgb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 273,
+      "line": 229,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -1194,7 +1453,7 @@
       "function": "reference_rgb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 287,
+      "line": 243,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -1216,7 +1475,7 @@
       "function": "semantic_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 303,
+      "line": 259,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "int64",
@@ -1238,7 +1497,7 @@
       "function": "sky_mask",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 321,
+      "line": 277,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -1248,9 +1507,9 @@
         ],
         "meta": {
           "encoding": "single_channel",
-          "sky_class": [
-            0,
-            0,
+          "skyclass": [
+            23,
+            23,
             23
           ],
           "sky_label_id": 23,
@@ -1263,7 +1522,7 @@
       "function": "semantic_segmentation_color",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 340,
+      "line": 294,
       "declared": {
         "modality_type": "semantic_segmentation_color",
         "dtype": "uint8",
@@ -1284,7 +1543,7 @@
       "function": "panoptic_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 353,
+      "line": 307,
       "declared": {
         "modality_type": "panoptic_segmentation",
         "dtype": "int64",
@@ -1302,7 +1561,7 @@
       "function": "lidar_point_cloud",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 370,
+      "line": 324,
       "declared": {
         "modality_type": "point_cloud",
         "dtype": "float64",
@@ -1329,7 +1588,7 @@
       "function": "sparse_depth",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 392,
+      "line": 346,
       "declared": {
         "modality_type": "sparse_depth",
         "dtype": "float64",
@@ -1357,7 +1616,7 @@
       "function": "read_intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 405,
+      "line": 359,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -1376,7 +1635,7 @@
       "function": "read_extrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 426,
+      "line": 380,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -1392,11 +1651,71 @@
       }
     },
     {
+      "loader": "muses",
+      "function": "gnss",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/muses.py",
+      "line": 410,
+      "declared": {
+        "modality_type": "gnss",
+        "dtype": "dict",
+        "shape": "dict",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "source": "u-blox navigation record, gnss/dataformat.txt",
+          "heading_rate_axis": "negative yaw axis (clockwise from above is positive)"
+        }
+      }
+    },
+    {
+      "loader": "muses",
+      "function": "sensor_timing",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/muses.py",
+      "line": 424,
+      "declared": {
+        "modality_type": "sensor_timing",
+        "dtype": "dict",
+        "hierarchical": true,
+        "shape": "dict",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "source": "meta.json",
+          "unit": "microseconds",
+          "matched_by": "path_to_* file names"
+        }
+      }
+    },
+    {
+      "loader": "muses",
+      "function": "read_lidar_to_gnss",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/muses.py",
+      "line": 437,
+      "declared": {
+        "modality_type": "lidar_to_gnss",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "transform": "lidar2gnss",
+          "transform_direction": "lidar_to_gnss"
+        }
+      }
+    },
+    {
       "loader": "princeton_dense",
       "function": "rccb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 57,
+      "line": 63,
       "declared": {
         "modality_type": "rccb",
         "dtype": "float32",
@@ -1412,7 +1731,7 @@
         "meta": {
           "dataset": "SeeingThroughFog",
           "raw_bit_depth": 12,
-          "bayer_pattern": "GBRG",
+          "bayer_pattern": "GRBG",
           "raw_max_value": 4095.0
         }
       }
@@ -1422,7 +1741,7 @@
       "function": "rgb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 75,
+      "line": 81,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -1441,7 +1760,7 @@
       "function": "sparse_depth",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 110,
+      "line": 116,
       "declared": {
         "modality_type": "sparse_depth",
         "dtype": "float32",
@@ -1468,7 +1787,7 @@
       "function": "read_intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 152,
+      "line": 160,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -1480,7 +1799,9 @@
         "meta": {
           "dataset": "SeeingThroughFog",
           "camera_frame": "cam_stereo_left_optical",
-          "source": "calib_cam_stereo_left"
+          "source": "calib_cam_stereo_left",
+          "camera_model": "pinhole",
+          "intrinsics_matrix": "P"
         }
       }
     },
@@ -1489,7 +1810,7 @@
       "function": "read_extrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 175,
+      "line": 189,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -1511,7 +1832,7 @@
       "function": "rgb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/real_drive_sim.py",
-      "line": 62,
+      "line": 63,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -1530,7 +1851,7 @@
       "function": "depth",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/real_drive_sim.py",
-      "line": 76,
+      "line": 77,
       "declared": {
         "modality_type": "depth",
         "dtype": "float32",
@@ -1549,7 +1870,7 @@
       "function": "class_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/real_drive_sim.py",
-      "line": 93,
+      "line": 94,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "int64",
@@ -1559,7 +1880,11 @@
         ],
         "meta": {
           "encoding": "single_channel",
-          "sky_class_id": 29
+          "skyclass": [
+            29,
+            0,
+            0
+          ]
         }
       }
     },
@@ -1568,7 +1893,7 @@
       "function": "sky_mask",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/real_drive_sim.py",
-      "line": 113,
+      "line": 114,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -1577,7 +1902,11 @@
           ".png"
         ],
         "meta": {
-          "sky_class_id": 29
+          "skyclass": [
+            29,
+            0,
+            0
+          ]
         }
       }
     },
@@ -1586,7 +1915,7 @@
       "function": "calibration",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/real_drive_sim.py",
-      "line": 156,
+      "line": 157,
       "declared": {
         "modality_type": "calibration",
         "dtype": "dict",
@@ -1614,7 +1943,7 @@
       "function": "all_intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/real_drive_sim.py",
-      "line": 206,
+      "line": 207,
       "declared": {
         "modality_type": "all_intrinsics",
         "dtype": "dict",
@@ -1630,7 +1959,7 @@
       "function": "read_intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/real_drive_sim.py",
-      "line": 231,
+      "line": 232,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -1649,7 +1978,7 @@
       "function": "read_extrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/real_drive_sim.py",
-      "line": 289,
+      "line": 290,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -1667,11 +1996,159 @@
       }
     },
     {
+      "loader": "synscapes",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/synscapes.py",
+      "line": 63,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/synscapes.py",
+      "line": 82,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".exr"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "channel": "Z",
+          "radial_depth": false,
+          "scale_to_meters": 1.0
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "class_segmentation",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/synscapes.py",
+      "line": 104,
+      "declared": {
+        "modality_type": "semantic_segmentation",
+        "dtype": "int64",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "encoding": "single_channel",
+          "label_ids": "cityscapes",
+          "skyclass": [
+            23,
+            23,
+            23
+          ]
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "instance_segmentation",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/synscapes.py",
+      "line": 122,
+      "declared": {
+        "modality_type": "instance_segmentation",
+        "dtype": "int64",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "encoding": "rgb",
+          "id_formula": "R + 256 * G + 65536 * B"
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "sky_mask",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/synscapes.py",
+      "line": 140,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "skyclass": [
+            23,
+            23,
+            23
+          ]
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/synscapes.py",
+      "line": 163,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "source": "camera.intrinsic"
+        }
+      }
+    },
+    {
+      "loader": "synscapes",
+      "function": "read_extrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/synscapes.py",
+      "line": 193,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "source": "camera.extrinsic",
+          "dataset": "Synscapes",
+          "angle_unit": "radians",
+          "translation_unit": "meters",
+          "ego_frame": "x_forward_y_left_z_up",
+          "rotation_order": "Rz(yaw) @ Ry(pitch) @ Rx(roll)",
+          "default_transform_direction": "camera_to_ego",
+          "default_camera_axes": "vehicle"
+        }
+      }
+    },
+    {
       "loader": "vkitti2",
       "function": "rgb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/vkitti2.py",
-      "line": 64,
+      "line": 65,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -1690,7 +2167,7 @@
       "function": "depth",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/vkitti2.py",
-      "line": 78,
+      "line": 79,
       "declared": {
         "modality_type": "depth",
         "dtype": "float32",
@@ -1714,7 +2191,7 @@
       "function": "class_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/vkitti2.py",
-      "line": 95,
+      "line": 96,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "int64",
@@ -1732,7 +2209,7 @@
       "function": "instance_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/vkitti2.py",
-      "line": 108,
+      "line": 109,
       "declared": {
         "modality_type": "instance_segmentation",
         "dtype": "int64",
@@ -1750,7 +2227,7 @@
       "function": "sky_mask",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/vkitti2.py",
-      "line": 124,
+      "line": 125,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -1759,7 +2236,7 @@
           ".png"
         ],
         "meta": {
-          "sky_color": [
+          "skyclass": [
             90,
             200,
             255
@@ -1772,7 +2249,7 @@
       "function": "scene_flow",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/vkitti2.py",
-      "line": 146,
+      "line": 142,
       "declared": {
         "modality_type": "scene_flow",
         "dtype": "float32",
@@ -1791,7 +2268,7 @@
       "function": "read_intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/vkitti2.py",
-      "line": 164,
+      "line": 160,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -1807,7 +2284,7 @@
       "function": "read_extrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/vkitti2.py",
-      "line": 197,
+      "line": 193,
       "declared": {
         "modality_type": "extrinsics",
         "dtype": "float32",
@@ -1977,6 +2454,26 @@
           }
         },
         {
+          "type": "sky_mask",
+          "function": "sky_mask",
+          "hierarchical": false,
+          "dtype": "bool",
+          "access": "key",
+          "file_formats": [
+            ".npy",
+            ".npz"
+          ],
+          "requires_meta": [
+            "skyclass"
+          ],
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
           "type": "spherical_map",
           "function": "spherical_map",
           "hierarchical": false,
@@ -2079,7 +2576,7 @@
             ".tiff"
           ],
           "requires_meta": [
-            "sky_mask"
+            "skyclass"
           ],
           "cpu": {
             "shape": "HW"
@@ -2093,6 +2590,26 @@
     {
       "name": "muses",
       "modalities": [
+        {
+          "type": "gnss",
+          "function": "gnss",
+          "hierarchical": false,
+          "dtype": "dict",
+          "access": "key",
+          "file_formats": [
+            ".txt"
+          ],
+          "meta": {
+            "source": "u-blox navigation record, gnss/dataformat.txt",
+            "heading_rate_axis": "negative yaw axis (clockwise from above is positive)"
+          },
+          "cpu": {
+            "shape": "dict"
+          },
+          "gpu": {
+            "shape": "dict"
+          }
+        },
         {
           "type": "point_cloud",
           "function": "lidar_point_cloud",
@@ -2177,6 +2694,26 @@
           },
           "gpu": {
             "shape": "3x3"
+          }
+        },
+        {
+          "type": "lidar_to_gnss",
+          "function": "read_lidar_to_gnss",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "transform": "lidar2gnss",
+            "transform_direction": "lidar_to_gnss"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
           }
         },
         {
@@ -2268,6 +2805,27 @@
           }
         },
         {
+          "type": "sensor_timing",
+          "function": "sensor_timing",
+          "hierarchical": true,
+          "dtype": "dict",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "source": "meta.json",
+            "unit": "microseconds",
+            "matched_by": "path_to_* file names"
+          },
+          "cpu": {
+            "shape": "dict"
+          },
+          "gpu": {
+            "shape": "dict"
+          }
+        },
+        {
           "type": "sky_mask",
           "function": "sky_mask",
           "hierarchical": false,
@@ -2278,9 +2836,9 @@
           ],
           "meta": {
             "encoding": "single_channel",
-            "sky_class": [
-              0,
-              0,
+            "skyclass": [
+              23,
+              23,
               23
             ],
             "sky_label_id": 23,
@@ -2344,7 +2902,7 @@
           "meta": {
             "dataset": "SeeingThroughFog",
             "raw_bit_depth": 12,
-            "bayer_pattern": "GBRG",
+            "bayer_pattern": "GRBG",
             "raw_max_value": 4095.0
           },
           "cpu": {
@@ -2388,7 +2946,9 @@
           "meta": {
             "dataset": "SeeingThroughFog",
             "camera_frame": "cam_stereo_left_optical",
-            "source": "calib_cam_stereo_left"
+            "source": "calib_cam_stereo_left",
+            "camera_model": "pinhole",
+            "intrinsics_matrix": "P"
           },
           "cpu": {
             "shape": "3x3"
@@ -2505,7 +3065,11 @@
           ],
           "meta": {
             "encoding": "single_channel",
-            "sky_class_id": 29
+            "skyclass": [
+              29,
+              0,
+              0
+            ]
           },
           "cpu": {
             "shape": "HW"
@@ -2605,7 +3169,171 @@
             ".png"
           ],
           "meta": {
-            "sky_class_id": 29
+            "skyclass": [
+              29,
+              0,
+              0
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        }
+      ]
+    },
+    {
+      "name": "synscapes",
+      "modalities": [
+        {
+          "type": "semantic_segmentation",
+          "function": "class_segmentation",
+          "hierarchical": false,
+          "dtype": "int64",
+          "access": "key",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "single_channel",
+            "label_ids": "cityscapes",
+            "skyclass": [
+              23,
+              23,
+              23
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".exr"
+          ],
+          "meta": {
+            "channel": "Z",
+            "radial_depth": false,
+            "scale_to_meters": 1.0
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "instance_segmentation",
+          "function": "instance_segmentation",
+          "hierarchical": false,
+          "dtype": "int64",
+          "access": "key",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "rgb",
+            "id_formula": "R + 256 * G + 65536 * B"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "camera_extrinsics",
+          "function": "read_extrinsics",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "source": "camera.extrinsic",
+            "dataset": "Synscapes",
+            "angle_unit": "radians",
+            "translation_unit": "meters",
+            "ego_frame": "x_forward_y_left_z_up",
+            "rotation_order": "Rz(yaw) @ Ry(pitch) @ Rx(roll)",
+            "default_transform_direction": "camera_to_ego",
+            "default_camera_axes": "vehicle"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "source": "camera.intrinsic"
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        },
+        {
+          "type": "sky_mask",
+          "function": "sky_mask",
+          "hierarchical": false,
+          "dtype": "bool",
+          "access": "key",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "skyclass": [
+              23,
+              23,
+              23
+            ]
           },
           "cpu": {
             "shape": "HW"
@@ -2764,7 +3492,7 @@
             ".png"
           ],
           "meta": {
-            "sky_color": [
+            "skyclass": [
               90,
               200,
               255
