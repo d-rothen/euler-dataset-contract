@@ -118,11 +118,20 @@ def test_dataset_builder_applies_shared_preprocessing_config(tmp_path):
     )
 
 
-def test_producer_calibration_requires_the_intrinsics_file_id():
+def test_producer_calibration_refuses_ambiguous_files():
+    """Two camera files for one sample are refused, never resolved by key order.
+
+    A file named ``intrinsics`` wins; otherwise the only matched file is used,
+    whatever its ID (e.g. SeeingThroughFog's ``calib_cam_stereo_left``).
+    """
     data = evidence("hierarchy-selection")
     calibrations = {k: np.array(v) for k, v in data["calibrations"].items()}
-    assert extract_intrinsics({"intrinsics": calibrations}) is None
+    with pytest.raises(ValueError, match="matched 2 files"):
+        extract_intrinsics({"intrinsics": calibrations})
     K = calibrations[data["intended_camera"]]
     np.testing.assert_array_equal(
         extract_intrinsics({"intrinsics": {"intrinsics": K}}), K
+    )
+    np.testing.assert_array_equal(
+        extract_intrinsics({"intrinsics": {data["intended_camera"]: K}}), K
     )

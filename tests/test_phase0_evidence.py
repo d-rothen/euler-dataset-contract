@@ -198,6 +198,59 @@ def test_snapshot_reads_constant_expressions_loaders_use(tmp_path) -> None:
     assert declared["gpu"] == {"frame": "ego", "skyclass": [23, 23, 23]}
 
 
+def test_snapshot_folds_arithmetic_unpacking_and_reused_annotations(tmp_path) -> None:
+    """KITTI-CARLA spellings: ``2**24 - 1``, ``len(...)``, ``{**meta}`` and a GPU
+    loader reusing its CPU counterpart's ``_modality_meta``."""
+    script = (
+        Path(__file__).resolve().parents[1] / "scripts/refresh_loader_observations.py"
+    )
+    snapshot = runpy.run_path(str(script))["snapshot"]
+    root = _demo_loading_root(
+        tmp_path,
+        "from euler_loading.loaders.cpu import demo as _cpu\n"
+        "@modality_meta(modality_type='sky_mask', dtype='bool', shape='1HW',\n"
+        "               meta=_cpu.sky_mask._modality_meta['meta'])\n"
+        "def sky_mask(path): raise RuntimeError('must not execute')\n",
+    )
+    cpu_source = root / "euler_loading/loaders/cpu/demo.py"
+    cpu_source.write_text(
+        cpu_source.read_text()
+        + "_MAX = 2**24 - 1\n"
+        "_SCALE = 1000.0 / _MAX\n"
+        "_NAMES = ('a', 'b', 'c')\n"
+        "_BASE = {'unit': 'meters'}\n"
+        "@modality_meta(modality_type='depth', dtype='float32', shape='HW',\n"
+        "               output_range=[0, len(_NAMES) - 1, -_MAX],\n"
+        "               meta={'scale': _SCALE, **_BASE})\n"
+        "def depth(path): raise RuntimeError('must not execute')\n"
+    )
+    observations = snapshot(root)["observations"]
+    depth = next(r["declared"] for r in observations if r["function"] == "depth")
+    assert depth["output_range"] == [0, 2, -(2**24 - 1)]
+    assert depth["meta"] == {"scale": 1000.0 / (2**24 - 1), "unit": "meters"}
+    gpu = next(r["declared"] for r in observations if r["backend"] == "gpu")
+    assert gpu["meta"] == {"skyclass": [23, 23, 23], "color": [90, 200, 255]}
+
+
+@pytest.mark.parametrize(
+    "expression", ["2 ** 4096", "1 / 0", "'a' - 1", "len(_cpu.resolve())", "_cpu.depth._modality_meta['meta']"]
+)
+def test_snapshot_refuses_unsafe_or_unknown_constant_expressions(tmp_path, expression) -> None:
+    script = (
+        Path(__file__).resolve().parents[1] / "scripts/refresh_loader_observations.py"
+    )
+    snapshot = runpy.run_path(str(script))["snapshot"]
+    root = _demo_loading_root(
+        tmp_path,
+        "from euler_loading.loaders.cpu import demo as _cpu\n"
+        "@modality_meta(modality_type='sky_mask', dtype='bool', shape='1HW',\n"
+        f"               meta={{'value': {expression}}})\n"
+        "def sky_mask(path): raise RuntimeError('must not execute')\n",
+    )
+    with pytest.raises(ValueError, match="Nonliteral declaration"):
+        snapshot(root)
+
+
 def test_snapshot_still_rejects_computed_declarations(tmp_path) -> None:
     script = (
         Path(__file__).resolve().parents[1] / "scripts/refresh_loader_observations.py"

@@ -345,6 +345,23 @@
         "time_reference"
       ]
     },
+    "kinematics.platform.pose": {
+      "domain": "kinematics",
+      "subject": "platform",
+      "quantity": "pose",
+      "status": "settled",
+      "description": "Rigid transform from a sensor or platform frame to the world frame at one time, such as the lidar's pose along its trajectory.",
+      "aliases": [
+        "lidar_pose"
+      ],
+      "representation_fields": [
+        "layout",
+        "direction",
+        "source_frame",
+        "target_frame",
+        "time_reference"
+      ]
+    },
     "timing.platform.acquisition": {
       "domain": "timing",
       "subject": "platform",
@@ -614,6 +631,13 @@
         "euler_loading.modality_type"
       ]
     },
+    "lidar_pose": {
+      "id": "kinematics.platform.pose",
+      "status": "settled",
+      "sources": [
+        "euler_loading.modality_type"
+      ]
+    },
     "sensor_timing": {
       "id": "timing.platform.acquisition",
       "status": "settled",
@@ -692,6 +716,10 @@
     {
       "number": 7,
       "resolution": "Operator settles gnss, sensor_timing and lidar_to_gnss as the inputs of lidar ego-motion compensation (MUSES). They need the kinematics and timing domains and the platform subject; lidar_to_gnss is a platform mount, not camera extrinsics."
+    },
+    {
+      "number": 8,
+      "resolution": "kitti_carla's lidar_pose, the lidar-to-world pose each sample takes from the 1 ms trajectory, settles as kinematics.platform.pose: the pose of the vehicle-mounted sensor in the world, not a sensor-to-camera mount."
     }
   ]
 }

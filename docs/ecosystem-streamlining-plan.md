@@ -757,6 +757,13 @@ leaving them marked.
    They add the `kinematics` and `timing` domains and the `platform` subject.
    `lidar_to_gnss` relates a sensor to the vehicle, not to a camera image
    plane, so it is not `geometry.camera.extrinsics`.
+8. **Resolved: trajectory poses.** KITTI-CARLA's `lidar_pose` gives each
+   sample the lidar-to-world pose at the start of its sweep, from the 1 ms
+   trajectory in `full_poses_lidar.txt`. It settles as
+   `kinematics.platform.pose`: where the vehicle-mounted sensor is in the
+   world at one time, which neither a sensor-to-camera mount
+   (`geometry.camera.extrinsics`) nor a sensor-to-vehicle mount
+   (`geometry.platform.extrinsics`) describes.
 
 ---
 

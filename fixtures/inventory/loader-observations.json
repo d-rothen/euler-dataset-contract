@@ -8,24 +8,26 @@
     "method": "AST literal extraction; no loader execution",
     "consumed_by_runtime": false,
     "catalog_path": "euler_loading/loaders/generate/loaders.json",
-    "catalog_sha256": "11375320ab7ec46a4f21d7fc0c242d72a9b4dc611534907cd02012206fa42591"
+    "catalog_sha256": "52aa8248d99d15813e26732f9fecdaa6e42af5e404ec60d37c4ddc972fba5c50"
   },
   "sources": {
-    "euler_loading/loaders/_annotations.py": "37637b835a90f6645ac3da7c7fd2964a4abc0c94ca4a62450e065d6834e00364",
-    "euler_loading/loaders/_princeton_dense.py": "47253412cc6a30d18b91fbad3dc35771e1368ef500f6bc7653aea6697cb800ab",
+    "euler_loading/loaders/_annotations.py": "239d0678fdd8f316b3b84cf85bff3314d5e59745e14deca28e8e016825e79a2b",
+    "euler_loading/loaders/_princeton_dense.py": "9f71febd3f8ef6d98f6f64703079d505660d6397132c5578ccafcc612dff61e0",
     "euler_loading/loaders/_sky.py": "6f9f7584cb5cba782f3350f35a6d82182d477926f50dcaa6ae6a82d7dda7d72b",
     "euler_loading/loaders/_writer_utils.py": "5221e86c8ca98439e144cab3f591ee993b8dac36bcedeb19a393693dcf851884",
     "euler_loading/loaders/cpu/generic.py": "0a6205069d1f0cff481f048ff8c50acad587f401158db705a067d4a90a084e75",
     "euler_loading/loaders/cpu/generic_dense_depth.py": "f6f3f90f5a1776e56933495599575af0c79c75b2f27efe0f11a9965a38c44973",
+    "euler_loading/loaders/cpu/kitti_carla.py": "415401dad87020b2940ad69d602554fa4fb758343738b93ec8e3a7537882d403",
     "euler_loading/loaders/cpu/muses.py": "82d06fca7bbec7bc361eed49527d4ddeac5cfcd4669f05cd33a277b519a698c0",
-    "euler_loading/loaders/cpu/princeton_dense.py": "c12c1a9c3a9dae57bca8347156fd8dd323e46c6bdfb4b3193f3f4ddf228ab323",
+    "euler_loading/loaders/cpu/princeton_dense.py": "3e941da7af2e30fd4f4ec5c9fb3d51b7b4dabe760ce1a24c0bc4b1db30b59cf8",
     "euler_loading/loaders/cpu/real_drive_sim.py": "0dda77ce3a596bc164af3292b838dabdc8a3cef8263c45cbbde7275251a36e0b",
     "euler_loading/loaders/cpu/synscapes.py": "f3bbd53bc6f90edf68d2473dc142dc33faaedf45498a94becbd4f19e38817fcb",
     "euler_loading/loaders/cpu/vkitti2.py": "17291eb010d6409032108075170d485aea6ba6f575e6505e1f2c25bb9fa73403",
     "euler_loading/loaders/gpu/generic.py": "44953ba25e72692445c4e7f4a5ac7fccd4ec4cd4847b5862fa9b633f1475521d",
     "euler_loading/loaders/gpu/generic_dense_depth.py": "ac6d422f06ace5c7ae60767f7c2ada56e4f33206a69e3f55561154471c01cd47",
+    "euler_loading/loaders/gpu/kitti_carla.py": "6bd18668518da3a17502b041aedd57ea2e66664e967c0fa546c1bf9e9bc5e4d6",
     "euler_loading/loaders/gpu/muses.py": "ae05a1de27b8c15918adfd65be1262777b5defdf16a062dde1e5998fe03bebe4",
-    "euler_loading/loaders/gpu/princeton_dense.py": "2564cbef1c98c7a31a700b16a24ffca1ffd2cb860c3ce6857caf6288dd18be0b",
+    "euler_loading/loaders/gpu/princeton_dense.py": "75bb3a040802c1f9ac0908b0e95f0ecf3d2335ba7d9cd61adf18d7e401ac776e",
     "euler_loading/loaders/gpu/real_drive_sim.py": "e6c88b978aed10433c4e2e94204c61684719cc681f498539ce3d1f3fb7d32998",
     "euler_loading/loaders/gpu/synscapes.py": "a3521cda47bf46e694661658281de8def4a6c675cdfb5c4796f94fa70d065cc4",
     "euler_loading/loaders/gpu/vkitti2.py": "0bad62e263013b95fd8b59f965e16b26cf3d2162e9fca8e580017829162887bd"
@@ -295,6 +297,268 @@
         "requires_meta": [
           "intrinsics"
         ]
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 281,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 315,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1000.0
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "encoding": "carla_rgb24",
+          "decode": "(R + 256 * G + 65536 * B) / (2**24 - 1) * 1000",
+          "raw_range": [
+            0,
+            16777215
+          ],
+          "scale_to_meters": 5.9604648328104514e-05,
+          "radial_depth": false,
+          "far_plane_m": 1000.0
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "class_segmentation",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 372,
+      "declared": {
+        "modality_type": "semantic_segmentation",
+        "dtype": "int64",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0,
+          22
+        ],
+        "meta": {
+          "encoding": "carla_palette",
+          "label_ids": "carla_0.9.10",
+          "label_names": [
+            "unlabeled",
+            "building",
+            "fence",
+            "other",
+            "pedestrian",
+            "pole",
+            "road_line",
+            "road",
+            "sidewalk",
+            "vegetation",
+            "vehicles",
+            "wall",
+            "traffic_sign",
+            "sky",
+            "ground",
+            "bridge",
+            "rail_track",
+            "guard_rail",
+            "traffic_light",
+            "static",
+            "dynamic",
+            "water",
+            "terrain"
+          ],
+          "skyclass": [
+            70,
+            130,
+            180
+          ]
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "sky_mask",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 399,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "skyclass": [
+            70,
+            130,
+            180
+          ]
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "lidar_point_cloud",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 509,
+      "declared": {
+        "modality_type": "point_cloud",
+        "dtype": "float64",
+        "shape": "NC",
+        "file_formats": [
+          ".ply"
+        ],
+        "meta": {
+          "columns": [
+            "x",
+            "y",
+            "z",
+            "cos_angle_lidar_surface",
+            "timestamp",
+            "instance",
+            "semantic"
+          ],
+          "coordinate_frame": "lidar",
+          "axes": "x_forward_y_left_z_up",
+          "coordinate_unit": "meters",
+          "timestamp_unit": "seconds",
+          "semantic_ids": "carla_0.9.10",
+          "motion_compensated": false
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "sparse_depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 534,
+      "declared": {
+        "modality_type": "sparse_depth",
+        "dtype": "float64",
+        "shape": "NC",
+        "file_formats": [
+          ".ply"
+        ],
+        "meta": {
+          "representation": "point_cloud",
+          "columns": [
+            "x",
+            "y",
+            "z",
+            "cos_angle_lidar_surface",
+            "timestamp",
+            "instance",
+            "semantic"
+          ],
+          "coordinate_frame": "lidar",
+          "axes": "x_forward_y_left_z_up",
+          "coordinate_unit": "meters",
+          "timestamp_unit": "seconds",
+          "semantic_ids": "carla_0.9.10",
+          "motion_compensated": false
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 569,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "width": 1392,
+          "height": 1024,
+          "horizontal_fov_deg": 72.0,
+          "source": "camera model from the KITTI-CARLA paper"
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "read_extrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 637,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "source": "lidar_to_cam<N>.txt",
+          "translation_unit": "meters",
+          "stored_transform": "lidar_to_camera",
+          "stored_axes": "x_forward_y_left_z_up",
+          "default_transform_direction": "lidar_to_camera",
+          "default_camera_axes": "optical",
+          "optical_axes": "x_right_y_down_z_forward"
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "lidar_pose",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/kitti_carla.py",
+      "line": 780,
+      "declared": {
+        "modality_type": "lidar_pose",
+        "dtype": "float64",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "source": "full_poses_lidar.txt",
+          "transform": "lidar_to_world",
+          "axes": "x_forward_y_left_z_up",
+          "translation_unit": "meters",
+          "rate_hz": 1000,
+          "selected_at": "camera frame time, the start of the lidar sweep",
+          "matched_by": "frame number in the sample's file names"
+        }
       }
     },
     {
@@ -583,7 +847,7 @@
       "function": "rccb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 62,
+      "line": 64,
       "declared": {
         "modality_type": "rccb",
         "dtype": "float32",
@@ -609,7 +873,7 @@
       "function": "rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 79,
+      "line": 81,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -628,7 +892,7 @@
       "function": "sparse_depth",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 113,
+      "line": 115,
       "declared": {
         "modality_type": "sparse_depth",
         "dtype": "float32",
@@ -655,7 +919,7 @@
       "function": "read_intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 157,
+      "line": 159,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -678,7 +942,7 @@
       "function": "read_extrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/princeton_dense.py",
-      "line": 186,
+      "line": 188,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -1430,6 +1694,268 @@
       }
     },
     {
+      "loader": "kitti_carla",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 74,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 89,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1000.0
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "encoding": "carla_rgb24",
+          "decode": "(R + 256 * G + 65536 * B) / (2**24 - 1) * 1000",
+          "raw_range": [
+            0,
+            16777215
+          ],
+          "scale_to_meters": 5.9604648328104514e-05,
+          "radial_depth": false,
+          "far_plane_m": 1000.0
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "class_segmentation",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 107,
+      "declared": {
+        "modality_type": "semantic_segmentation",
+        "dtype": "int64",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0,
+          22
+        ],
+        "meta": {
+          "encoding": "carla_palette",
+          "label_ids": "carla_0.9.10",
+          "label_names": [
+            "unlabeled",
+            "building",
+            "fence",
+            "other",
+            "pedestrian",
+            "pole",
+            "road_line",
+            "road",
+            "sidewalk",
+            "vegetation",
+            "vehicles",
+            "wall",
+            "traffic_sign",
+            "sky",
+            "ground",
+            "bridge",
+            "rail_track",
+            "guard_rail",
+            "traffic_light",
+            "static",
+            "dynamic",
+            "water",
+            "terrain"
+          ],
+          "skyclass": [
+            70,
+            130,
+            180
+          ]
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "sky_mask",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 120,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "skyclass": [
+            70,
+            130,
+            180
+          ]
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "lidar_point_cloud",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 134,
+      "declared": {
+        "modality_type": "point_cloud",
+        "dtype": "float64",
+        "shape": "NC",
+        "file_formats": [
+          ".ply"
+        ],
+        "meta": {
+          "columns": [
+            "x",
+            "y",
+            "z",
+            "cos_angle_lidar_surface",
+            "timestamp",
+            "instance",
+            "semantic"
+          ],
+          "coordinate_frame": "lidar",
+          "axes": "x_forward_y_left_z_up",
+          "coordinate_unit": "meters",
+          "timestamp_unit": "seconds",
+          "semantic_ids": "carla_0.9.10",
+          "motion_compensated": false
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "sparse_depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 152,
+      "declared": {
+        "modality_type": "sparse_depth",
+        "dtype": "float64",
+        "shape": "NC",
+        "file_formats": [
+          ".ply"
+        ],
+        "meta": {
+          "representation": "point_cloud",
+          "columns": [
+            "x",
+            "y",
+            "z",
+            "cos_angle_lidar_surface",
+            "timestamp",
+            "instance",
+            "semantic"
+          ],
+          "coordinate_frame": "lidar",
+          "axes": "x_forward_y_left_z_up",
+          "coordinate_unit": "meters",
+          "timestamp_unit": "seconds",
+          "semantic_ids": "carla_0.9.10",
+          "motion_compensated": false
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 165,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "width": 1392,
+          "height": 1024,
+          "horizontal_fov_deg": 72.0,
+          "source": "camera model from the KITTI-CARLA paper"
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "read_extrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 180,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "source": "lidar_to_cam<N>.txt",
+          "translation_unit": "meters",
+          "stored_transform": "lidar_to_camera",
+          "stored_axes": "x_forward_y_left_z_up",
+          "default_transform_direction": "lidar_to_camera",
+          "default_camera_axes": "optical",
+          "optical_axes": "x_right_y_down_z_forward"
+        }
+      }
+    },
+    {
+      "loader": "kitti_carla",
+      "function": "lidar_pose",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/kitti_carla.py",
+      "line": 200,
+      "declared": {
+        "modality_type": "lidar_pose",
+        "dtype": "float64",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "source": "full_poses_lidar.txt",
+          "transform": "lidar_to_world",
+          "axes": "x_forward_y_left_z_up",
+          "translation_unit": "meters",
+          "rate_hz": 1000,
+          "selected_at": "camera frame time, the start of the lidar sweep",
+          "matched_by": "frame number in the sample's file names"
+        }
+      }
+    },
+    {
       "loader": "muses",
       "function": "rgb",
       "backend": "gpu",
@@ -1715,7 +2241,7 @@
       "function": "rccb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 63,
+      "line": 65,
       "declared": {
         "modality_type": "rccb",
         "dtype": "float32",
@@ -1741,7 +2267,7 @@
       "function": "rgb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 81,
+      "line": 83,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -1760,7 +2286,7 @@
       "function": "sparse_depth",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 116,
+      "line": 118,
       "declared": {
         "modality_type": "sparse_depth",
         "dtype": "float32",
@@ -1787,7 +2313,7 @@
       "function": "read_intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 160,
+      "line": 162,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -1810,7 +2336,7 @@
       "function": "read_extrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/princeton_dense.py",
-      "line": 189,
+      "line": 191,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -2583,6 +3109,279 @@
           },
           "gpu": {
             "shape": "1HW"
+          }
+        }
+      ]
+    },
+    {
+      "name": "kitti_carla",
+      "modalities": [
+        {
+          "type": "semantic_segmentation",
+          "function": "class_segmentation",
+          "hierarchical": false,
+          "dtype": "int64",
+          "access": "key",
+          "output_range": [
+            0,
+            22
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "carla_palette",
+            "label_ids": "carla_0.9.10",
+            "label_names": [
+              "unlabeled",
+              "building",
+              "fence",
+              "other",
+              "pedestrian",
+              "pole",
+              "road_line",
+              "road",
+              "sidewalk",
+              "vegetation",
+              "vehicles",
+              "wall",
+              "traffic_sign",
+              "sky",
+              "ground",
+              "bridge",
+              "rail_track",
+              "guard_rail",
+              "traffic_light",
+              "static",
+              "dynamic",
+              "water",
+              "terrain"
+            ],
+            "skyclass": [
+              70,
+              130,
+              180
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1000.0
+          ],
+          "output_unit": "meters",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "carla_rgb24",
+            "decode": "(R + 256 * G + 65536 * B) / (2**24 - 1) * 1000",
+            "raw_range": [
+              0,
+              16777215
+            ],
+            "scale_to_meters": 5.9604648328104514e-05,
+            "radial_depth": false,
+            "far_plane_m": 1000.0
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "point_cloud",
+          "function": "lidar_point_cloud",
+          "hierarchical": false,
+          "dtype": "float64",
+          "access": "key",
+          "file_formats": [
+            ".ply"
+          ],
+          "meta": {
+            "columns": [
+              "x",
+              "y",
+              "z",
+              "cos_angle_lidar_surface",
+              "timestamp",
+              "instance",
+              "semantic"
+            ],
+            "coordinate_frame": "lidar",
+            "axes": "x_forward_y_left_z_up",
+            "coordinate_unit": "meters",
+            "timestamp_unit": "seconds",
+            "semantic_ids": "carla_0.9.10",
+            "motion_compensated": false
+          },
+          "cpu": {
+            "shape": "NC"
+          },
+          "gpu": {
+            "shape": "NC"
+          }
+        },
+        {
+          "type": "lidar_pose",
+          "function": "lidar_pose",
+          "hierarchical": true,
+          "dtype": "float64",
+          "access": "key",
+          "file_formats": [
+            ".txt"
+          ],
+          "meta": {
+            "source": "full_poses_lidar.txt",
+            "transform": "lidar_to_world",
+            "axes": "x_forward_y_left_z_up",
+            "translation_unit": "meters",
+            "rate_hz": 1000,
+            "selected_at": "camera frame time, the start of the lidar sweep",
+            "matched_by": "frame number in the sample's file names"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "camera_extrinsics",
+          "function": "read_extrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".txt"
+          ],
+          "meta": {
+            "source": "lidar_to_cam<N>.txt",
+            "translation_unit": "meters",
+            "stored_transform": "lidar_to_camera",
+            "stored_axes": "x_forward_y_left_z_up",
+            "default_transform_direction": "lidar_to_camera",
+            "default_camera_axes": "optical",
+            "optical_axes": "x_right_y_down_z_forward"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".txt"
+          ],
+          "meta": {
+            "width": 1392,
+            "height": 1024,
+            "horizontal_fov_deg": 72.0,
+            "source": "camera model from the KITTI-CARLA paper"
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        },
+        {
+          "type": "sky_mask",
+          "function": "sky_mask",
+          "hierarchical": false,
+          "dtype": "bool",
+          "access": "key",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "skyclass": [
+              70,
+              130,
+              180
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "sparse_depth",
+          "function": "sparse_depth",
+          "hierarchical": false,
+          "dtype": "float64",
+          "access": "key",
+          "file_formats": [
+            ".ply"
+          ],
+          "meta": {
+            "representation": "point_cloud",
+            "columns": [
+              "x",
+              "y",
+              "z",
+              "cos_angle_lidar_surface",
+              "timestamp",
+              "instance",
+              "semantic"
+            ],
+            "coordinate_frame": "lidar",
+            "axes": "x_forward_y_left_z_up",
+            "coordinate_unit": "meters",
+            "timestamp_unit": "seconds",
+            "semantic_ids": "carla_0.9.10",
+            "motion_compensated": false
+          },
+          "cpu": {
+            "shape": "NC"
+          },
+          "gpu": {
+            "shape": "NC"
           }
         }
       ]

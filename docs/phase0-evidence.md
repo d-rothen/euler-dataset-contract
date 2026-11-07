@@ -72,7 +72,7 @@ label independent reference answers separately from observed legacy behavior.
 | `invalid-depth` | Bilinear resize blends an invalid zero with three valid depth values: observed 3, valid-only reference 4. |
 | `pinhole-projections` | Half-pixel camera scaling, odd center crops, nonuniform scaling, explicit offsets, skew, and invalid crop bounds. |
 | `depth-projection` | Known planar meters → organized XYZ → projected radial depth; shared with the actual radial producer. |
-| `hierarchy-selection` | Lexical `reduce="first"`, wrong-camera ambiguity, source immutability, and preprocess's literal `intrinsics` file-ID convention. |
+| `hierarchy-selection` | Lexical `reduce="first"`, wrong-camera ambiguity, source immutability, and preprocess's calibration lookup: the `intrinsics` file ID or the only matched file, with several files refused. |
 | `legacy-spatial-alignment` | Equal shapes, multiple-of-eight top-left crop heuristic, resize sampling, crop-origin ambiguity, and legacy depth fallback. |
 | `known-values` | Raw uint16 PNG depth, normalized RGB, palette/class-ID distinctions, scalar maps, arbitrary channels, intrinsics, point maps, and cloud values. |
 | `source-backed` | Opaque addons, source/variant IDs and attributes, relocated storage, scoped metadata, and stale output dimensions. |

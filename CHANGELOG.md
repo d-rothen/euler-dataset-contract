@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+- Register KITTI-CARLA's `lidar_pose` (the lidar-to-world pose along the
+  trajectory) as `kinematics.platform.pose`, recorded as resolved plan
+  question 8.
+- Refresh the vendored euler-loading evidence for the `kitti_carla` loader: 130
+  declarations (from 112), and the vocabulary gains `lidar_pose`.
+- The opt-in preprocess check of `hierarchy-selection` follows euler-preprocess's
+  calibration lookup (coherent-cropping): one matched file is used whatever its
+  ID, and two files for one sample raise instead of yielding no intrinsics.
+- `scripts/refresh_loader_observations.py` also folds arithmetic on numeric
+  constants (`2**24 - 1`, `_FAR / _MAX`; large exponents and division by zero
+  are refused), `len(...)` of a literal, `{**mapping}` unpacking, and an
+  imported loader's `_cpu.func._modality_meta[...]`, resolved from that
+  function's own declaration. The 130 extracted declarations equal the runtime
+  annotations. It still never executes loader code.
+
 - Register the ego-motion modality types euler-loading emits:
   - `gnss` → `kinematics.platform.state`;
   - `sensor_timing` → `timing.platform.acquisition`;

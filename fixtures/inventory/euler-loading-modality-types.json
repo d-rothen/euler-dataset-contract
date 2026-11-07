@@ -6,7 +6,7 @@
   "provenance": {
     "repository": "euler-loading",
     "path": "euler_loading/loaders/generate/loaders.json",
-    "sha256": "11375320ab7ec46a4f21d7fc0c242d72a9b4dc611534907cd02012206fa42591",
+    "sha256": "52aa8248d99d15813e26732f9fecdaa6e42af5e404ec60d37c4ddc972fba5c50",
     "description": "Vendored copy of the modality vocabulary euler-loading emits, so that euler-dataset-contract can assert against it without taking a dependency on euler-loading. Refresh this file when loaders.json changes: the drift test in tests/test_modality_inventory.py fails when a type recorded here has no inventory entry.",
     "notes": [
       "modality_types holds the distinct values of the type field, each with the loader.function pairs that emit it.",
@@ -16,6 +16,7 @@
   "loaders": [
     "generic",
     "generic_dense_depth",
+    "kitti_carla",
     "muses",
     "princeton_dense",
     "real_drive_sim",
@@ -33,6 +34,7 @@
       "real_drive_sim.calibration"
     ],
     "camera_extrinsics": [
+      "kitti_carla.read_extrinsics",
       "muses.read_extrinsics",
       "princeton_dense.read_extrinsics",
       "real_drive_sim.read_extrinsics",
@@ -40,6 +42,7 @@
     ],
     "depth": [
       "generic_dense_depth.depth",
+      "kitti_carla.depth",
       "real_drive_sim.depth",
       "synscapes.depth",
       "vkitti2.depth"
@@ -58,11 +61,15 @@
     "intrinsics": [
       "generic.intrinsics",
       "generic_dense_depth.read_intrinsics",
+      "kitti_carla.read_intrinsics",
       "muses.read_intrinsics",
       "princeton_dense.read_intrinsics",
       "real_drive_sim.read_intrinsics",
       "synscapes.read_intrinsics",
       "vkitti2.read_intrinsics"
+    ],
+    "lidar_pose": [
+      "kitti_carla.lidar_pose"
     ],
     "lidar_to_gnss": [
       "muses.read_lidar_to_gnss"
@@ -77,6 +84,7 @@
       "muses.panoptic_segmentation"
     ],
     "point_cloud": [
+      "kitti_carla.lidar_point_cloud",
       "muses.lidar_point_cloud"
     ],
     "points_3d": [
@@ -87,6 +95,7 @@
     ],
     "rgb": [
       "generic_dense_depth.rgb",
+      "kitti_carla.rgb",
       "muses.reference_rgb",
       "muses.rgb",
       "princeton_dense.rgb",
@@ -102,6 +111,7 @@
     ],
     "semantic_segmentation": [
       "generic.semantic_segmentation",
+      "kitti_carla.class_segmentation",
       "muses.semantic_segmentation",
       "real_drive_sim.class_segmentation",
       "synscapes.class_segmentation",
@@ -119,12 +129,14 @@
     "sky_mask": [
       "generic.sky_mask",
       "generic_dense_depth.sky_mask",
+      "kitti_carla.sky_mask",
       "muses.sky_mask",
       "real_drive_sim.sky_mask",
       "synscapes.sky_mask",
       "vkitti2.sky_mask"
     ],
     "sparse_depth": [
+      "kitti_carla.sparse_depth",
       "muses.sparse_depth",
       "princeton_dense.sparse_depth"
     ],
@@ -142,6 +154,7 @@
     "instance_segmentation",
     "intrinsics",
     "lidar_point_cloud",
+    "lidar_pose",
     "map_2d",
     "map_3d",
     "panoptic_segmentation",
