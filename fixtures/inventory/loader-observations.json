@@ -8,7 +8,7 @@
     "method": "AST literal extraction; no loader execution",
     "consumed_by_runtime": false,
     "catalog_path": "euler_loading/loaders/generate/loaders.json",
-    "catalog_sha256": "0e063c65740182651b8902f41bf34b575af8909532a127814580dc77380039a4"
+    "catalog_sha256": "8ebe4232c084bba2dfc6c04ec0ad6ad253467c1ac5291b46ae966aa5cb56cdc3"
   },
   "sources": {
     "euler_loading/loaders/_annotations.py": "239d0678fdd8f316b3b84cf85bff3314d5e59745e14deca28e8e016825e79a2b",
@@ -20,6 +20,7 @@
     "euler_loading/loaders/cpu/generic_dense_depth.py": "f6f3f90f5a1776e56933495599575af0c79c75b2f27efe0f11a9965a38c44973",
     "euler_loading/loaders/cpu/kitti_carla.py": "415401dad87020b2940ad69d602554fa4fb758343738b93ec8e3a7537882d403",
     "euler_loading/loaders/cpu/muses.py": "9d3c935906724f63badcbb60c90545057b30ece628343695d4ef959dbfb28829",
+    "euler_loading/loaders/cpu/nuscenes.py": "060c0870bb9ba4f7f36e2cf223496b73f258464c5b4c5794c9f9833a8741606a",
     "euler_loading/loaders/cpu/princeton_dense.py": "3e941da7af2e30fd4f4ec5c9fb3d51b7b4dabe760ce1a24c0bc4b1db30b59cf8",
     "euler_loading/loaders/cpu/real_drive_sim.py": "0dda77ce3a596bc164af3292b838dabdc8a3cef8263c45cbbde7275251a36e0b",
     "euler_loading/loaders/cpu/synscapes.py": "f3bbd53bc6f90edf68d2473dc142dc33faaedf45498a94becbd4f19e38817fcb",
@@ -29,6 +30,7 @@
     "euler_loading/loaders/gpu/generic_dense_depth.py": "ac6d422f06ace5c7ae60767f7c2ada56e4f33206a69e3f55561154471c01cd47",
     "euler_loading/loaders/gpu/kitti_carla.py": "6bd18668518da3a17502b041aedd57ea2e66664e967c0fa546c1bf9e9bc5e4d6",
     "euler_loading/loaders/gpu/muses.py": "f61e76b635ea1f32be966f8df3645074ecc05cbeae8bf073f4f4d3e8c601b5cd",
+    "euler_loading/loaders/gpu/nuscenes.py": "961c81ef984d9c6c99302c295ead919e5d872b9f0947089191d66d07a132b9e1",
     "euler_loading/loaders/gpu/princeton_dense.py": "75bb3a040802c1f9ac0908b0e95f0ecf3d2335ba7d9cd61adf18d7e401ac776e",
     "euler_loading/loaders/gpu/real_drive_sim.py": "e6c88b978aed10433c4e2e94204c61684719cc681f498539ce3d1f3fb7d32998",
     "euler_loading/loaders/gpu/synscapes.py": "a3521cda47bf46e694661658281de8def4a6c675cdfb5c4796f94fa70d065cc4",
@@ -1040,6 +1042,132 @@
         "meta": {
           "transform": "lidar2gnss",
           "transform_direction": "lidar_to_gnss"
+        }
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/nuscenes.py",
+      "line": 205,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".jpg"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "lidar_point_cloud",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/nuscenes.py",
+      "line": 229,
+      "declared": {
+        "modality_type": "point_cloud",
+        "dtype": "float32",
+        "shape": "NC",
+        "file_formats": [
+          ".bin"
+        ],
+        "meta": {
+          "columns": [
+            "x",
+            "y",
+            "z",
+            "intensity",
+            "ring"
+          ],
+          "coordinate_frame": "LIDAR_TOP",
+          "axes": "x right, y forward, z up",
+          "coordinate_unit": "meters"
+        }
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "sparse_depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/nuscenes.py",
+      "line": 252,
+      "declared": {
+        "modality_type": "sparse_depth",
+        "dtype": "float32",
+        "shape": "NC",
+        "file_formats": [
+          ".bin"
+        ],
+        "meta": {
+          "representation": "point_cloud",
+          "columns": [
+            "x",
+            "y",
+            "z",
+            "intensity",
+            "ring"
+          ],
+          "coordinate_frame": "LIDAR_TOP",
+          "axes": "x right, y forward, z up",
+          "coordinate_unit": "meters"
+        }
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/nuscenes.py",
+      "line": 265,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "model": "pinhole",
+          "distortion": null,
+          "source": "calibration/<scene>/<camera>.json"
+        }
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "read_extrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/nuscenes.py",
+      "line": 325,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "transform": "lidar_to_camera",
+          "source_frame": "LIDAR_TOP",
+          "target_frame": "camera",
+          "camera_axes": "optical: x right, y down, z forward",
+          "translation_unit": "meters",
+          "selected_at": "the sample's camera frame",
+          "matched_by": "sample ID (the camera timestamp)",
+          "options": {
+            "transform_direction": [
+              "lidar_to_camera",
+              "camera_to_lidar"
+            ]
+          }
         }
       }
     },
@@ -2633,6 +2761,132 @@
         "meta": {
           "transform": "lidar2gnss",
           "transform_direction": "lidar_to_gnss"
+        }
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/nuscenes.py",
+      "line": 55,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".jpg"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "lidar_point_cloud",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/nuscenes.py",
+      "line": 67,
+      "declared": {
+        "modality_type": "point_cloud",
+        "dtype": "float32",
+        "shape": "NC",
+        "file_formats": [
+          ".bin"
+        ],
+        "meta": {
+          "columns": [
+            "x",
+            "y",
+            "z",
+            "intensity",
+            "ring"
+          ],
+          "coordinate_frame": "LIDAR_TOP",
+          "axes": "x right, y forward, z up",
+          "coordinate_unit": "meters"
+        }
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "sparse_depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/nuscenes.py",
+      "line": 85,
+      "declared": {
+        "modality_type": "sparse_depth",
+        "dtype": "float32",
+        "shape": "NC",
+        "file_formats": [
+          ".bin"
+        ],
+        "meta": {
+          "representation": "point_cloud",
+          "columns": [
+            "x",
+            "y",
+            "z",
+            "intensity",
+            "ring"
+          ],
+          "coordinate_frame": "LIDAR_TOP",
+          "axes": "x right, y forward, z up",
+          "coordinate_unit": "meters"
+        }
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/nuscenes.py",
+      "line": 98,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "model": "pinhole",
+          "distortion": null,
+          "source": "calibration/<scene>/<camera>.json"
+        }
+      }
+    },
+    {
+      "loader": "nuscenes",
+      "function": "read_extrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/nuscenes.py",
+      "line": 117,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "transform": "lidar_to_camera",
+          "source_frame": "LIDAR_TOP",
+          "target_frame": "camera",
+          "camera_axes": "optical: x right, y down, z forward",
+          "translation_unit": "meters",
+          "selected_at": "the sample's camera frame",
+          "matched_by": "sample ID (the camera timestamp)",
+          "options": {
+            "transform_direction": [
+              "lidar_to_camera",
+              "camera_to_lidar"
+            ]
+          }
         }
       }
     },
@@ -4280,6 +4534,140 @@
             ],
             "coordinate_unit": "meters",
             "timestamp_unit": "seconds"
+          },
+          "cpu": {
+            "shape": "NC"
+          },
+          "gpu": {
+            "shape": "NC"
+          }
+        }
+      ]
+    },
+    {
+      "name": "nuscenes",
+      "modalities": [
+        {
+          "type": "point_cloud",
+          "function": "lidar_point_cloud",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".bin"
+          ],
+          "meta": {
+            "columns": [
+              "x",
+              "y",
+              "z",
+              "intensity",
+              "ring"
+            ],
+            "coordinate_frame": "LIDAR_TOP",
+            "axes": "x right, y forward, z up",
+            "coordinate_unit": "meters"
+          },
+          "cpu": {
+            "shape": "NC"
+          },
+          "gpu": {
+            "shape": "NC"
+          }
+        },
+        {
+          "type": "camera_extrinsics",
+          "function": "read_extrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "transform": "lidar_to_camera",
+            "source_frame": "LIDAR_TOP",
+            "target_frame": "camera",
+            "camera_axes": "optical: x right, y down, z forward",
+            "translation_unit": "meters",
+            "selected_at": "the sample's camera frame",
+            "matched_by": "sample ID (the camera timestamp)",
+            "options": {
+              "transform_direction": [
+                "lidar_to_camera",
+                "camera_to_lidar"
+              ]
+            }
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "model": "pinhole",
+            "distortion": null,
+            "source": "calibration/<scene>/<camera>.json"
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".jpg"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        },
+        {
+          "type": "sparse_depth",
+          "function": "sparse_depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".bin"
+          ],
+          "meta": {
+            "representation": "point_cloud",
+            "columns": [
+              "x",
+              "y",
+              "z",
+              "intensity",
+              "ring"
+            ],
+            "coordinate_frame": "LIDAR_TOP",
+            "axes": "x right, y forward, z up",
+            "coordinate_unit": "meters"
           },
           "cpu": {
             "shape": "NC"

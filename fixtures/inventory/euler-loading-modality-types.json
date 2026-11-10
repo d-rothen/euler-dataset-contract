@@ -6,7 +6,7 @@
   "provenance": {
     "repository": "euler-loading",
     "path": "euler_loading/loaders/generate/loaders.json",
-    "sha256": "0e063c65740182651b8902f41bf34b575af8909532a127814580dc77380039a4",
+    "sha256": "8ebe4232c084bba2dfc6c04ec0ad6ad253467c1ac5291b46ae966aa5cb56cdc3",
     "description": "Vendored copy of the modality vocabulary euler-loading emits, so that euler-dataset-contract can assert against it without taking a dependency on euler-loading. Refresh this file when loaders.json changes: the drift test in tests/test_modality_inventory.py fails when a type recorded here has no inventory entry.",
     "notes": [
       "modality_types holds the distinct values of the type field, each with the loader.function pairs that emit it.",
@@ -19,6 +19,7 @@
     "generic_dense_depth",
     "kitti_carla",
     "muses",
+    "nuscenes",
     "princeton_dense",
     "real_drive_sim",
     "synscapes",
@@ -37,6 +38,7 @@
     "camera_extrinsics": [
       "kitti_carla.read_extrinsics",
       "muses.read_extrinsics",
+      "nuscenes.read_extrinsics",
       "princeton_dense.read_extrinsics",
       "real_drive_sim.read_extrinsics",
       "synscapes.read_extrinsics"
@@ -71,6 +73,7 @@
       "generic_dense_depth.read_intrinsics",
       "kitti_carla.read_intrinsics",
       "muses.read_intrinsics",
+      "nuscenes.read_intrinsics",
       "princeton_dense.read_intrinsics",
       "real_drive_sim.read_intrinsics",
       "synscapes.read_intrinsics",
@@ -93,7 +96,8 @@
     ],
     "point_cloud": [
       "kitti_carla.lidar_point_cloud",
-      "muses.lidar_point_cloud"
+      "muses.lidar_point_cloud",
+      "nuscenes.lidar_point_cloud"
     ],
     "points_3d": [
       "generic.points_3d"
@@ -107,6 +111,7 @@
       "kitti_carla.rgb",
       "muses.reference_rgb",
       "muses.rgb",
+      "nuscenes.rgb",
       "princeton_dense.rgb",
       "real_drive_sim.rgb",
       "synscapes.rgb",
@@ -147,6 +152,7 @@
     "sparse_depth": [
       "kitti_carla.sparse_depth",
       "muses.sparse_depth",
+      "nuscenes.sparse_depth",
       "princeton_dense.sparse_depth"
     ],
     "spherical_map": [
