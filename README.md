@@ -115,6 +115,11 @@ Addon validators are process-wide. Register them during package import or
 application startup, and pass `overwrite=True` only when intentionally
 replacing an existing validator.
 
+The ecosystem's own `euler_loading` addon, which names a dataset's decoder,
+ships its rules here. Call `register_euler_loading_addon_validator()` to apply
+them; ds-crawler and euler-loading do so on import. See the
+[contract reference](docs/contract-reference.md#the-euler_loading-addon).
+
 ## JSON Schema
 
 Generate Draft 2020-12 schemas from the same registry used by runtime

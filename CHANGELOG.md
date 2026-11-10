@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- The rules of the `euler_loading` head addon move here from euler-loading:
+  `validate_euler_loading_addon`, the shared role checks
+  `validate_addon_roles` (`used_as`, `slot`, `task`, `hierarchy_scope`,
+  `applies_to`, reusable by `euler_train`), and the explicit, idempotent
+  `register_euler_loading_addon_validator()`. Registration never replaces an
+  existing `euler_loading` validator. Until now the rules were registered only
+  when euler-loading was imported, so ds-crawler accepted heads that
+  euler-loading then rejected, e.g. `hierarchy_scope` without
+  `used_as: condition`. ds-crawler and euler-loading register them on import.
+  The rules are unchanged; only where they live moves.
 - Add the shared, optional `invalid` meta field: how pixels without a valid
   value are marked in the values the loader returns,
   `{"non_finite": boolean, "sentinel": number | null}`, the shape and meaning

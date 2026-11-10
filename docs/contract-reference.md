@@ -90,6 +90,33 @@ two-argument payload validator. Overwriting a registration replaces both callbac
 omitting `head_validator` removes any earlier head callback for that registration.
 `get_registered_addon_head_validators()` returns the registered head callbacks.
 
+### The `euler_loading` addon
+
+`addons.euler_loading` names the euler-loading decoder of a dataset and,
+optionally, the modality's experiment role. Its rules live in this package
+(`validate_euler_loading_addon`), so every producer and consumer checks heads
+the same way:
+
+| Field | Rule |
+|---|---|
+| `version` | Required, like every addon version. |
+| `loader`, `function` | Tokens, set together: the decoder module and the callable in it. |
+| `writer_function` | Optional token naming the writer when the naming conventions do not apply. |
+| `used_as` | One of `condition`, `input`, `output`, `target`. |
+| `slot` | Dotted slot name, e.g. `dehaze.input.rgb`. |
+| `task` | Token. |
+| `hierarchy_scope`, `applies_to` | Token, and a list of tokens or `"*"`; only with `used_as: condition`. |
+
+Any other key is rejected. The role fields (`used_as`, `slot`, `task`,
+`hierarchy_scope`, `applies_to`) are checked by `validate_addon_roles`, which
+other ecosystem addons such as `euler_train` can reuse.
+
+Registration is explicit, like the descriptor validators:
+`register_euler_loading_addon_validator()` registers the rules once per
+process and returns whether it did. It never replaces a validator already
+registered for `euler_loading`, so an euler-loading release that extends its
+addon keeps its own rules. ds-crawler and euler-loading call it on import.
+
 ## Shared metadata
 
 `dimensions`

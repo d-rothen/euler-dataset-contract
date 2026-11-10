@@ -1,5 +1,13 @@
 """Shared dataset contract processing for Euler packages."""
 
+from .addons import (
+    EULER_LOADING_ADDON,
+    ROLE_KEYS,
+    USED_AS_VALUES,
+    register_euler_loading_addon_validator,
+    validate_addon_roles,
+    validate_euler_loading_addon,
+)
 from .contract import DatasetHeadContract
 from .descriptors import (
     CalibrationBinding,
@@ -67,6 +75,12 @@ from .validation import (
 )
 
 __all__ = [
+    'EULER_LOADING_ADDON',
+    'ROLE_KEYS',
+    'USED_AS_VALUES',
+    'register_euler_loading_addon_validator',
+    'validate_addon_roles',
+    'validate_euler_loading_addon',
     'ArtifactReceipt',
     'ExecutionReceipt',
     'MaterializedTransforms',
