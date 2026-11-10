@@ -1,0 +1,45 @@
+{
+  "description": "source_grid records crops and resizes only; a sheared or rotated affine is rejected.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.source_grid must be an object whose 'affine' is [[sx, 0, tx], [0, sy, ty]]",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "foggy_depth_prediction",
+      "name": "Foggy Depth Prediction"
+    },
+    "modality": {
+      "key": "depth",
+      "meta": {
+        "radial_depth": false,
+        "scale_to_meters": 1.0,
+        "range": [
+          0,
+          200
+        ],
+        "source_grid": {
+          "source": "rgb",
+          "size": [
+            400,
+            879
+          ],
+          "affine": [
+            [
+              1,
+              0.1,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

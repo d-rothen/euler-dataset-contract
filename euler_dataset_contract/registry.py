@@ -7,6 +7,8 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Any, Callable, Optional
 
+from .source_grid import SOURCE_GRID_JSON_SCHEMA, check_source_grid
+
 # This alias is evaluated at import time even with postponed annotations.
 # Optional keeps the package importable on the declared Python 3.9 minimum.
 Validator = Callable[[Any], Optional[str]]
@@ -68,6 +70,34 @@ def _validate_numeric_range(value: Any) -> str | None:
 def _validate_positive_int(value: Any) -> str | None:
     if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
         return "a positive integer"
+    return None
+
+
+def _validate_boolean(value: Any) -> str | None:
+    return None if isinstance(value, bool) else "a boolean"
+
+
+def _is_finite_number(value: Any) -> bool:
+    return (
+        not isinstance(value, bool)
+        and isinstance(value, (int, float))
+        and value == value
+        and value not in (float("inf"), float("-inf"))
+    )
+
+
+def _validate_invalid(value: Any) -> str | None:
+    if (
+        not isinstance(value, dict)
+        or set(value) != {"non_finite", "sentinel"}
+        or not isinstance(value["non_finite"], bool)
+    ):
+        return "an object {'non_finite': boolean, 'sentinel': number or null}"
+    if value["sentinel"] is not None and not _is_finite_number(value["sentinel"]):
+        return (
+            "an object {'non_finite': boolean, 'sentinel': number or null} "
+            "with a finite sentinel"
+        )
     return None
 
 
@@ -164,6 +194,66 @@ SHARED_META_FIELD_DEFINITIONS: dict[str, MetaFieldDefinition] = {
             "uniqueItems": True,
             "examples": [["png"], ["jpg", "png"], ["npy"]],
         },
+    ),
+    "invalid": MetaFieldDefinition(
+        accepted_type=dict,
+        type_label="an object {'non_finite': boolean, 'sentinel': number or null}",
+        description=(
+            "How pixels without a valid value are marked in the values the "
+            "loader returns: 'sentinel' is the finite value that marks them "
+            "(null: none), and 'non_finite' whether NaN or infinite values can "
+            "appear, which then mark invalid pixels too. The same shape and "
+            "meaning as a representation profile's 'invalid'. Omitted: not "
+            "declared, so consumers apply their own rule (for depth, a value "
+            "that is non-finite or not positive is invalid)."
+        ),
+        validator=_validate_invalid,
+        json_schema={
+            "type": "object",
+            "properties": {
+                "non_finite": {
+                    "type": "boolean",
+                    "description": "Whether NaN or infinite values can appear; they mark invalid pixels.",
+                },
+                "sentinel": {
+                    "type": ["number", "null"],
+                    "description": "The finite value that marks invalid pixels, or null for none.",
+                },
+            },
+            "required": ["non_finite", "sentinel"],
+            "additionalProperties": False,
+            "examples": [
+                {"non_finite": False, "sentinel": 0},
+                {"non_finite": True, "sentinel": None},
+            ],
+        },
+    ),
+    "sparse": MetaFieldDefinition(
+        accepted_type=bool,
+        type_label="a boolean",
+        description=(
+            "Whether the raster holds measurements at only some of its pixels, "
+            "the rest invalid as 'invalid' declares (without it, consumers "
+            "take 0 for depth), as in lidar-derived depth or disparity. "
+            "Consumers must not interpolate between samples: a resize moves each "
+            "measurement to its nearest target pixel, keeping the nearest "
+            "surface, and evaluation scores the measured pixels. Default false."
+        ),
+        validator=_validate_boolean,
+        json_schema={"type": "boolean", "default": False},
+    ),
+    "source_grid": MetaFieldDefinition(
+        accepted_type=dict,
+        type_label="an object with 'size' and 'affine'",
+        description=(
+            "How this dataset's pixel grid derives from the grid of the images "
+            "it was computed from, such as a prediction from its model input: "
+            "the source [height, width] and the affine [[sx, 0, tx], [0, sy, ty]] "
+            "mapping source pixel centres to this grid (K_out = T @ K_in). A "
+            "file's attributes.source_grid overrides it for that sample."
+        ),
+        validator=check_source_grid,
+        json_schema=SOURCE_GRID_JSON_SCHEMA,
     ),
 }
 

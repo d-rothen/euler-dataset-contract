@@ -2,6 +2,29 @@
 
 ## Unreleased
 
+- Add the shared, optional `invalid` meta field: how pixels without a valid
+  value are marked in the values the loader returns,
+  `{"non_finite": boolean, "sentinel": number | null}`, the shape and meaning
+  of a representation profile's `invalid` (a test keeps the two in step).
+  euler-loading's preprocessor already reads `invalid.sentinel` to resize depth
+  and disparity without blending invalid pixels in. The corpus covers it in
+  `depth-sparse` (`sentinel: 0`) and `depth-source-grid` (NaN holes), and
+  rejects `invalid-missing-non-finite`.
+- Add the shared, optional boolean `sparse` meta field (default `false`): the
+  raster holds measurements at only some pixels, the rest invalid, as in
+  lidar-derived depth. euler-loading's preprocessor and euler-eval already
+  read it to resample such maps without interpolating between samples; the
+  contract now defines and validates it. The corpus gains `depth-sparse`
+  (DrivingStereo-style) and the invalid `sparse-not-boolean`.
+- Add the shared, optional `source_grid` meta field: how a dataset's pixel
+  grid derives from the grid of the images it was computed from, as the
+  source `size` and an axis-aligned `affine` `[[sx, 0, tx], [0, sy, ty]]` in
+  the pixel-centre convention of `K_out = T @ K_in`. Per-sample values go in a
+  file's `attributes.source_grid`, which overrides the head. The schemas, the
+  conformance corpus (`depth-source-grid`, two invalid cases) and the new
+  pure-Python helpers `check_source_grid`, `validate_source_grid`,
+  `source_grid_from_rule` (rules `identity`, `resize`, `crop_top_left`,
+  `crop_center`), `resolve_source_grid` and `source_grid_matrix` cover it.
 - Refresh the vendored euler-loading evidence for the `driving_stereo` loader
   (euler-loading after 2.36.0, whose GPU `driving_stereo` annotations are
   spelled out so the snapshot can read them): 142 declarations (from 130).

@@ -1,0 +1,37 @@
+{
+  "description": "invalid declares both keys of a representation profile's invalid: whether non-finite values can appear, and the sentinel.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.invalid must be an object {'non_finite': boolean, 'sentinel': number or null}",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "drivingstereo_foggy_depth",
+      "name": "DrivingStereo Foggy Depth"
+    },
+    "modality": {
+      "key": "depth",
+      "meta": {
+        "radial_depth": false,
+        "scale_to_meters": 0.00390625,
+        "range": [
+          0,
+          65535
+        ],
+        "invalid": {
+          "sentinel": 0
+        },
+        "sparse": true
+      }
+    },
+    "addons": {
+      "euler_loading": {
+        "version": "1.0",
+        "loader": "driving_stereo",
+        "function": "depth"
+      }
+    }
+  }
+}

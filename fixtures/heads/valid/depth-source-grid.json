@@ -1,0 +1,48 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "foggy_depth_prediction",
+    "name": "Foggy Depth Prediction"
+  },
+  "modality": {
+    "key": "depth",
+    "meta": {
+      "radial_depth": false,
+      "scale_to_meters": 1.0,
+      "range": [
+        0,
+        200
+      ],
+      "invalid": {
+        "non_finite": true,
+        "sentinel": null
+      },
+      "source_grid": {
+        "source": "rgb",
+        "size": [
+          400,
+          879
+        ],
+        "affine": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      },
+      "dimensions": {
+        "height": 400,
+        "width": 872
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "description": "sparse is a boolean flag, not a string.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.sparse must be a boolean",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "drivingstereo_foggy_depth",
+      "name": "DrivingStereo Foggy Depth"
+    },
+    "modality": {
+      "key": "depth",
+      "meta": {
+        "radial_depth": false,
+        "scale_to_meters": 0.00390625,
+        "range": [
+          0,
+          65535
+        ],
+        "invalid": {
+          "non_finite": false,
+          "sentinel": 0
+        },
+        "sparse": "yes"
+      }
+    },
+    "addons": {
+      "euler_loading": {
+        "version": "1.0",
+        "loader": "driving_stereo",
+        "function": "depth"
+      }
+    }
+  }
+}

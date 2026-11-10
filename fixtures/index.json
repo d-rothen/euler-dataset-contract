@@ -233,6 +233,29 @@
         "section:addons",
         "modality_key:rgb"
       ]
+    },
+    {
+      "name": "depth-source-grid",
+      "head": "heads/valid/depth-source-grid.json",
+      "canonical": "heads/canonical/depth-source-grid.json",
+      "description": "A depth prediction with NaN holes recording that it covers the top-left 400x872 of its 400x879 input image.",
+      "covers": [
+        "modality_key:depth",
+        "shared_meta:source_grid",
+        "shared_meta:invalid"
+      ]
+    },
+    {
+      "name": "depth-sparse",
+      "head": "heads/valid/depth-sparse.json",
+      "canonical": "heads/canonical/depth-sparse.json",
+      "description": "Lidar-derived depth (DrivingStereo) declaring that only some pixels hold a measurement, 0 marking the rest.",
+      "covers": [
+        "modality_key:depth",
+        "shared_meta:invalid",
+        "shared_meta:sparse",
+        "section:addons"
+      ]
     }
   ],
   "invalid_heads": [
@@ -311,6 +334,22 @@
     {
       "name": "modality-key-required-with-id",
       "case": "heads/invalid/modality-key-required-with-id.json"
+    },
+    {
+      "name": "source-grid-shear",
+      "case": "heads/invalid/source-grid-shear.json"
+    },
+    {
+      "name": "source-grid-size-not-pair",
+      "case": "heads/invalid/source-grid-size-not-pair.json"
+    },
+    {
+      "name": "sparse-not-boolean",
+      "case": "heads/invalid/sparse-not-boolean.json"
+    },
+    {
+      "name": "invalid-missing-non-finite",
+      "case": "heads/invalid/invalid-missing-non-finite.json"
     }
   ],
   "inventory": [

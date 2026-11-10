@@ -143,8 +143,13 @@ sibling `modality.key`; custom modality keys accept optional custom metadata.
 | `segmentation` | `skyclass` |
 | `semantic_segmentation` | `skyclass` |
 
-All registered modalities may additionally use the shared `dimensions` and
-`file_types` fields. `build_default_meta(key)` returns authoring defaults;
+All registered modalities may additionally use the shared `dimensions`,
+`file_types`, `invalid`, `sparse` and `source_grid` fields. `invalid` says how
+pixels without a valid value are marked (a sentinel, non-finite values);
+`sparse` marks rasters such as lidar depth that hold measurements at only some
+pixels; `source_grid` records how a dataset's
+pixel grid was cropped or resized from the images it was computed from (see
+the [contract reference](docs/contract-reference.md#shared-metadata)). `build_default_meta(key)` returns authoring defaults;
 parsing never silently fills missing required fields. Producer tooling such as
 `ds-crawler` may merge defaults before it validates and writes a head.
 

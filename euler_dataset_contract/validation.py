@@ -13,6 +13,7 @@ from .registry import (
     SHARED_META_FIELD_DEFINITIONS,
     get_modality_meta_fields,
 )
+from .source_grid import validate_source_grid
 
 if TYPE_CHECKING:
     from .contract import DatasetHeadContract
@@ -191,6 +192,16 @@ def normalize_meta_dict(
     if "file_types" in normalized:
         normalized["file_types"] = _normalize_file_types(
             normalized["file_types"], f"{context}.file_types"
+        )
+    if "invalid" in normalized:
+        err = SHARED_META_FIELD_DEFINITIONS["invalid"].validator(normalized["invalid"])
+        if err is not None:
+            raise ValueError(f"{context}.invalid must be {err}")
+    if "sparse" in normalized and not isinstance(normalized["sparse"], bool):
+        raise ValueError(f"{context}.sparse must be a boolean")
+    if "source_grid" in normalized:
+        normalized["source_grid"] = validate_source_grid(
+            normalized["source_grid"], f"{context}.source_grid"
         )
 
     if schema is not None:

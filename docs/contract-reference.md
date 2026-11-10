@@ -103,6 +103,75 @@ omitting `head_validator` removes any earlier head callback for that registratio
   surrounding whitespace, and a leading dot, then sorts and normalizes values.
   The legacy input spelling `fileTypes` is also normalized to `file_types`.
 
+`invalid`
+: Optional. How pixels without a valid value are marked in the values the
+  loader returns: `{"non_finite": boolean, "sentinel": number | null}`, the
+  shape and meaning of a representation profile's `invalid`. `sentinel` is the
+  finite value that marks an invalid pixel (`null`: none); `non_finite` says
+  whether NaN or infinite values can appear, which then mark invalid pixels
+  too. Both keys are required.
+
+  | Data | `invalid` |
+  |---|---|
+  | lidar depth stored with `0` for "no return" | `{"non_finite": false, "sentinel": 0}` |
+  | a prediction with NaN holes | `{"non_finite": true, "sentinel": null}` |
+  | dense data with no invalid pixels | `{"non_finite": false, "sentinel": null}` |
+
+  Omitting it declares nothing; consumers then apply their own rule (for
+  depth, a non-finite or non-positive value is invalid). euler-loading's
+  preprocessor resizes a depth or disparity field with a `sentinel` without
+  blending invalid pixels into valid ones.
+
+`sparse`
+: Optional boolean, default `false`. `true` declares that the raster holds
+  measurements at only some of its pixels, as lidar-derived depth or disparity
+  does; the rest are invalid as `invalid` declares (without it, consumers take
+  `0` for depth).
+  Consumers must not interpolate between samples. euler-loading resizes such a
+  map by moving each measurement to its nearest target pixel (the nearer
+  surface wins), and euler-eval scores predictions on the measured grid.
+
+  ```json
+  "meta": {"radial_depth": false, "scale_to_meters": 0.00390625, "range": [0, 65535],
+           "invalid": {"non_finite": false, "sentinel": 0}, "sparse": true}
+  ```
+
+  A dense map with holes (sky, missing returns) is not sparse; declaring only
+  its `invalid.sentinel` keeps the holes out of interpolation without the
+  sample-by-sample resize.
+
+`source_grid`
+: Optional. How this dataset's pixel grid derives from the grid of the images
+  it was computed from: a model's prediction from its input, or a crop or
+  resize of a source dataset. Evaluators use it to compare a prediction with
+  ground truth on the source grid without guessing whether it was cropped or
+  resized.
+
+  ```json
+  "source_grid": {"source": "rgb", "size": [400, 879], "affine": [[1, 0, 0], [0, 1, 0]]}
+  ```
+
+  `size` is the source `[height, width]`. `affine` maps a source pixel position
+  to this grid, with pixel centres at integer coordinates:
+  `x' = sx * x + tx`, `y' = sy * y + ty` for `[[sx, 0, tx], [0, sy, ty]]`. It
+  is the pixel-grid transform `T` of `K_out = T @ K_in`, so it moves the
+  camera too. Only crops and resizes are expressible (positive scales, zero
+  off-diagonal terms):
+
+  | Relation | `affine` |
+  |---|---|
+  | Same grid, or a top-left crop | `[[1, 0, 0], [0, 1, 0]]` |
+  | Crop at `(top, left)` | `[[1, 0, -left], [0, 1, -top]]` |
+  | Resize `W x H` to `w x h` | `[[w/W, 0, 0.5*w/W - 0.5], [0, h/H, 0.5*h/H - 0.5]]` |
+  | Resize, then crop | the crop's matrix times the resize's |
+
+  `source` optionally names what the grid derives from. When the relation
+  varies per sample, write it to each file's `attributes.source_grid` instead;
+  a file's value overrides the head's. `source_grid_from_rule(rule,
+  source_size, size)` builds the matrix for the rules `identity`, `resize`,
+  `crop_top_left` and `crop_center`; `resolve_source_grid(head_meta,
+  attributes)` reads a sample's grid with that precedence.
+
 Generated schemas describe the canonical serialized form. Compatibility input
 aliases such as `fileTypes` are accepted by the Python parser but are not
 included in that form.

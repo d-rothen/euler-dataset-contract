@@ -19,7 +19,7 @@ from euler_dataset_contract.testing import fixtures_root
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 REGISTERED_MODALITY_KEYS = ("rgb", "depth", "segmentation", "semantic_segmentation")
-SHARED_META_FIELDS = ("dimensions", "file_types")
+SHARED_META_FIELDS = ("dimensions", "file_types", "invalid", "source_grid", "sparse")
 
 
 def test_corpus_resolves_to_the_checked_out_files() -> None:
@@ -161,3 +161,22 @@ def test_dotted_modality_keys_stay_invalid_in_contract_1_0(invalid_heads) -> Non
     assert "." in case.head["modality"]["key"]
     with pytest.raises(ValueError, match="must contain only letters"):
         parse_dataset_head(case.head)
+
+
+def test_head_invalid_matches_the_representation_profile() -> None:
+    """A head's modality.meta.invalid and a profile's invalid are one shape."""
+    from euler_dataset_contract import SHARED_META_FIELD_DEFINITIONS
+    from euler_dataset_contract._descriptor_definitions import INVALID
+
+    def shape(schema):
+        return {
+            "type": schema["type"],
+            "required": sorted(schema["required"]),
+            "additionalProperties": schema["additionalProperties"],
+            "properties": {
+                name: {"type": prop["type"]} for name, prop in schema["properties"].items()
+            },
+        }
+
+    head_schema = SHARED_META_FIELD_DEFINITIONS["invalid"].json_schema
+    assert shape(head_schema) == shape(INVALID)
