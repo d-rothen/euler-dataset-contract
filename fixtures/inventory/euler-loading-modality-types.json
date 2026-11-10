@@ -6,7 +6,7 @@
   "provenance": {
     "repository": "euler-loading",
     "path": "euler_loading/loaders/generate/loaders.json",
-    "sha256": "52aa8248d99d15813e26732f9fecdaa6e42af5e404ec60d37c4ddc972fba5c50",
+    "sha256": "0e063c65740182651b8902f41bf34b575af8909532a127814580dc77380039a4",
     "description": "Vendored copy of the modality vocabulary euler-loading emits, so that euler-dataset-contract can assert against it without taking a dependency on euler-loading. Refresh this file when loaders.json changes: the drift test in tests/test_modality_inventory.py fails when a type recorded here has no inventory entry.",
     "notes": [
       "modality_types holds the distinct values of the type field, each with the loader.function pairs that emit it.",
@@ -14,6 +14,7 @@
     ]
   },
   "loaders": [
+    "driving_stereo",
     "generic",
     "generic_dense_depth",
     "kitti_carla",
@@ -41,11 +42,17 @@
       "synscapes.read_extrinsics"
     ],
     "depth": [
+      "driving_stereo.depth",
+      "driving_stereo.depth_full_size",
       "generic_dense_depth.depth",
       "kitti_carla.depth",
       "real_drive_sim.depth",
       "synscapes.depth",
       "vkitti2.depth"
+    ],
+    "disparity": [
+      "driving_stereo.disparity",
+      "driving_stereo.disparity_full_size"
     ],
     "extrinsics": [
       "vkitti2.read_extrinsics"
@@ -59,6 +66,7 @@
       "vkitti2.instance_segmentation"
     ],
     "intrinsics": [
+      "driving_stereo.read_intrinsics",
       "generic.intrinsics",
       "generic_dense_depth.read_intrinsics",
       "kitti_carla.read_intrinsics",
@@ -94,6 +102,7 @@
       "princeton_dense.rccb"
     ],
     "rgb": [
+      "driving_stereo.rgb",
       "generic_dense_depth.rgb",
       "kitti_carla.rgb",
       "muses.reference_rgb",
@@ -150,6 +159,9 @@
     "calibration",
     "class_segmentation",
     "depth",
+    "depth_full_size",
+    "disparity",
+    "disparity_full_size",
     "gnss",
     "instance_segmentation",
     "intrinsics",

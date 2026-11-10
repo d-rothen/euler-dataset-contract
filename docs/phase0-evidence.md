@@ -68,12 +68,12 @@ label independent reference answers separately from observed legacy behavior.
 |---|---|
 | `tiny-five-field` | Exact RGB/depth/mask pixels and transformed K for 4×8 → 2×4 → 2×2; ray normalization. |
 | `documented-five-field` | RGB, depth, mask, intrinsics, and rays for 480×960 → 384×768 → center crop 320×640, with analytic pixel probes. |
-| `backend-resize` | Different bilinear filters and nearest-neighbor choices in Torch and Pillow, even for NumPy input. |
-| `invalid-depth` | Bilinear resize blends an invalid zero with three valid depth values: observed 3, valid-only reference 4. |
+| `backend-resize` | Different bilinear filters in Torch and Pillow, even for NumPy input. Nearest neighbors agree since euler-loading 2.36.0, which samples pixel centres on both. |
+| `invalid-depth` | Bilinear resize without a declared invalid-pixel policy blends an invalid zero with three valid depth values: observed 3, valid-only reference 4. |
 | `pinhole-projections` | Half-pixel camera scaling, odd center crops, nonuniform scaling, explicit offsets, skew, and invalid crop bounds. |
 | `depth-projection` | Known planar meters → organized XYZ → projected radial depth; shared with the actual radial producer. |
 | `hierarchy-selection` | Lexical `reduce="first"`, wrong-camera ambiguity, source immutability, and preprocess's calibration lookup: the `intrinsics` file ID or the only matched file, with several files refused. |
-| `legacy-spatial-alignment` | Equal shapes, multiple-of-eight top-left crop heuristic, resize sampling, crop-origin ambiguity, and legacy depth fallback. |
+| `legacy-spatial-alignment` | Equal shapes, multiple-of-eight top-left crop heuristic, resize sampling (invalid GT depth excluded, masks by nearest pixel centre, since euler-eval 2.40.0), crop-origin ambiguity, and legacy depth fallback. |
 | `known-values` | Raw uint16 PNG depth, normalized RGB, palette/class-ID distinctions, scalar maps, arbitrary channels, intrinsics, point maps, and cloud values. |
 | `source-backed` | Opaque addons, source/variant IDs and attributes, relocated storage, scoped metadata, and stale output dimensions. |
 
@@ -100,7 +100,7 @@ numeric tolerances; it does not claim byte equality across arbitrary backends.
 | `loader-ignores-head-scale` | VKITTI divides depth PNG values by 100 regardless of head scale; generic dense depth preserves raw values. A millimeter head therefore does not guarantee meter output. The generic per-file scale override does work. |
 | `eval-crop-origin` | A centered 10×10 → 8×8 crop needs principal point 3.5; the shape heuristic leaves 4.5. The documented resize-then-crop sequence also differs numerically from resizing directly to the final shape. |
 | `writer-copies-source-dimensions` | Loading writes and reloads actual 2×4 RGB bytes while preserving source 4×8 dimensions. The opaque annotation survives, but no transformation history is captured. |
-| Backend and validity policies | Torch/Pillow filtering and nearest neighbors differ; depth interpolation blends invalid values. Homogeneous ray magnitude changes when resized as `ray_map`. |
+| Backend and validity policies | Torch/Pillow bilinear filtering differs; depth interpolation without a declared invalid-pixel policy blends invalid values. Homogeneous ray magnitude changes when resized as `ray_map`. |
 | Calibration selection | Stable lexical reduction can select the wrong camera. The producer's named-file lookup differs from loading's reduction. Cached source matrices remain unchanged in the checked paths. |
 | Producer wiring | A `preprocessing` config is currently ignored by the dataset builder. Adding `preprocessors` to the existing loading addon is rejected. Radial conversion does correctly write its `radial_depth=True` override. |
 | Legacy depth default | Core metadata construction defaults to planar; evaluator fallback defaults to radial. This fallback test uses an unchecked metadata provider: valid canonical depth heads already require the field. |

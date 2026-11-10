@@ -33,10 +33,12 @@ def test_current_resize_sampling_and_mask_dtype():
     entry = evidence("legacy-spatial-alignment")["small_resize"]
     gt = np.array(entry["gt"], dtype=np.float32)
     pred = np.zeros(entry["pred_size"], dtype=np.float32)
-    np.testing.assert_array_equal(align_to_prediction(gt, pred), entry["observed"])
+    np.testing.assert_allclose(
+        align_to_prediction(gt, pred), entry["observed"], rtol=0, atol=1e-6
+    )
     mask = gt % 4 == 0
     aligned = align_to_prediction(mask, pred)
-    np.testing.assert_array_equal(aligned, mask[::2, ::2])
+    np.testing.assert_array_equal(aligned, entry["observed_mask"])
     assert aligned.dtype == np.bool_
 
 

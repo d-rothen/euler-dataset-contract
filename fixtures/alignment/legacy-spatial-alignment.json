@@ -95,11 +95,17 @@
     ],
     "observed": [
       [
-        5,
+        6.666666507720947,
         9
       ]
     ],
-    "policy": "cv2.INTER_AREA for non-boolean downsampling"
+    "observed_mask": [
+      [
+        false,
+        false
+      ]
+    ],
+    "policy": "Depth: cv2.INTER_AREA over valid (finite, > 0) pixels only, so the invalid 0 carries no weight: (2 + 8 + 10) / 3. Boolean masks: cv2.INTER_NEAREST_EXACT, the source pixel whose centre is nearest (rows and columns 1 and 3 here)."
   },
   "center_crop_ambiguity": {
     "gt_size": [

@@ -279,7 +279,7 @@ integer precision refusal applies when the resolved chain actually resizes.
 | Policy | `torch_cpu` | `pillow_cpu` |
 |---|---|---|
 | Bilinear sampling | half pixel, align_corners=False, antialias=False | Pillow float-plane bilinear, antialiasing enabled |
-| Nearest | floor convention | Pillow half-pixel convention |
+| Nearest | `execution.nearest` as recorded: `half_pixel` (pixel centres, `nearest-exact`) since euler-loading 2.37; `floor` (legacy `nearest`) for descriptors that recorded it | Pillow half-pixel convention; `half_pixel` only |
 | Working spatial dtype / output | float32 / preserve input | float32 / preserve input |
 | Integer conversion | ties to even | named legacy cast-before-round truncation |
 | Ray epsilon | 1e-12 | 1e-8 |

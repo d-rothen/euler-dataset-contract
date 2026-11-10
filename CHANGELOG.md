@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+- Refresh the vendored euler-loading evidence for the `driving_stereo` loader
+  (euler-loading after 2.36.0, whose GPU `driving_stereo` annotations are
+  spelled out so the snapshot can read them): 142 declarations (from 130).
+- Register euler-loading's `disparity` (DrivingStereo) as
+  `geometry.camera.stereo_disparity`, recorded as resolved plan question 9.
+  The id names the stereo pair, since monocular depth models call relative
+  inverse depth "disparity"; such outputs must not use the alias.
+- Update the phase-0 evidence the euler-loading 2.36.0 and euler-eval 2.40.0
+  resampling fixes move:
+  - `backend-resize`: Torch's nearest resize samples pixel centres like
+    Pillow, so the mask reads `[[true, true]]` on both backends; the bilinear
+    filters still differ. Since euler-loading 2.37 the `torch_cpu` execution
+    profile records `nearest: half_pixel` to match, and descriptors that
+    recorded `floor` replay with it (`docs/phase1.md`);
+  - `invalid-depth`: the 2×2 → 1×1 nearest mask takes the bottom-right pixel
+    (`[[true]]`). Depth without a declared invalid policy still blends to 3;
+  - `legacy-spatial-alignment`: the evaluator shrinks GT depth over valid
+    pixels only (`[[6.67, 9]]`, from `[[5, 9]]`) and masks by nearest pixel
+    centre, recorded as the new `observed_mask` that the eval check reads
+    instead of a hard-coded `[::2, ::2]`.
+
 - Register KITTI-CARLA's `lidar_pose` (the lidar-to-world pose along the
   trajectory) as `kinematics.platform.pose`, recorded as resolved plan
   question 8.

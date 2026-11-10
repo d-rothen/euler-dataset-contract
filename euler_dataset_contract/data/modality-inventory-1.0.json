@@ -82,6 +82,22 @@
         ]
       }
     },
+    "geometry.camera.stereo_disparity": {
+      "domain": "geometry",
+      "subject": "camera",
+      "quantity": "stereo_disparity",
+      "status": "settled",
+      "description": "Per-pixel horizontal offset between corresponding pixels of a rectified stereo pair, on the reference camera's image plane and in its pixels; depth is focal length times baseline over disparity. Not the relative inverse depth monocular models also call disparity.",
+      "aliases": [
+        "disparity"
+      ],
+      "representation_fields": [
+        "unit",
+        "image_plane",
+        "reference_camera",
+        "invalid"
+      ]
+    },
     "geometry.camera.intrinsics": {
       "domain": "geometry",
       "subject": "camera",
@@ -423,6 +439,14 @@
         "dataset.modality_key"
       ]
     },
+    "disparity": {
+      "id": "geometry.camera.stereo_disparity",
+      "status": "settled",
+      "note": "euler-loading's driving_stereo emits it for rectified stereo disparity in half-size pixels. Relative inverse depth that monocular models call disparity is a different quantity and must not use this alias.",
+      "sources": [
+        "euler_loading.modality_type"
+      ]
+    },
     "intrinsics": {
       "id": "geometry.camera.intrinsics",
       "status": "settled",
@@ -720,6 +744,10 @@
     {
       "number": 8,
       "resolution": "kitti_carla's lidar_pose, the lidar-to-world pose each sample takes from the 1 ms trajectory, settles as kinematics.platform.pose: the pose of the vehicle-mounted sensor in the world, not a sensor-to-camera mount."
+    },
+    {
+      "number": 9,
+      "resolution": "driving_stereo's disparity, the horizontal pixel offset of a rectified stereo pair on the left camera's image plane, settles as geometry.camera.stereo_disparity. The id names the stereo pair because monocular depth models use 'disparity' for relative inverse depth, which is not convertible to metres with fx and baseline."
     }
   ]
 }

@@ -5,7 +5,7 @@
   },
   "name": "backend-resize",
   "kind": "backend",
-  "description": "NumPy preprocessing changes backend when Torch is installed; Pillow and Torch also choose different nearest neighbors.",
+  "description": "NumPy preprocessing changes backend when Torch is installed, and Pillow and Torch use different bilinear filters. Their nearest neighbors agree: since euler-loading 2.36.0 both sample pixel centres.",
   "config": {
     "resize": [
       1,
@@ -52,8 +52,8 @@
       ],
       "mask": [
         [
-          false,
-          false
+          true,
+          true
         ]
       ]
     },

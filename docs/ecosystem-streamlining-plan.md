@@ -764,6 +764,14 @@ leaving them marked.
    world at one time, which neither a sensor-to-camera mount
    (`geometry.camera.extrinsics`) nor a sensor-to-vehicle mount
    (`geometry.platform.extrinsics`) describes.
+9. **Resolved: stereo disparity.** DrivingStereo's `disparity` is the
+   horizontal offset between corresponding pixels of the rectified stereo
+   pair, on the left camera's image plane and in its pixels, so
+   `depth = fx × baseline / disparity`. It settles as
+   `geometry.camera.stereo_disparity`, with `disparity` as an alias. The id
+   names the stereo pair because monocular depth models use "disparity" for
+   relative inverse depth, which has no pixel unit and cannot be converted to
+   metres with `fx` and a baseline; such outputs must not use the alias.
 
 ---
 

@@ -8,31 +8,232 @@
     "method": "AST literal extraction; no loader execution",
     "consumed_by_runtime": false,
     "catalog_path": "euler_loading/loaders/generate/loaders.json",
-    "catalog_sha256": "52aa8248d99d15813e26732f9fecdaa6e42af5e404ec60d37c4ddc972fba5c50"
+    "catalog_sha256": "0e063c65740182651b8902f41bf34b575af8909532a127814580dc77380039a4"
   },
   "sources": {
     "euler_loading/loaders/_annotations.py": "239d0678fdd8f316b3b84cf85bff3314d5e59745e14deca28e8e016825e79a2b",
-    "euler_loading/loaders/_princeton_dense.py": "9f71febd3f8ef6d98f6f64703079d505660d6397132c5578ccafcc612dff61e0",
+    "euler_loading/loaders/_princeton_dense.py": "708f881eeda6021a5ee879d15ecab782c64779bbd7a0f324ae3bfc82c0257cb9",
     "euler_loading/loaders/_sky.py": "6f9f7584cb5cba782f3350f35a6d82182d477926f50dcaa6ae6a82d7dda7d72b",
-    "euler_loading/loaders/_writer_utils.py": "5221e86c8ca98439e144cab3f591ee993b8dac36bcedeb19a393693dcf851884",
+    "euler_loading/loaders/_writer_utils.py": "16f75ad3dc9e4345509cefe36484cc1811611e4b49af18efa8aae7dbb2788807",
+    "euler_loading/loaders/cpu/driving_stereo.py": "9512c75bd62b3bac1c895856336cfe1a6bb7b48c751651e6408a9d225f3f63bc",
     "euler_loading/loaders/cpu/generic.py": "0a6205069d1f0cff481f048ff8c50acad587f401158db705a067d4a90a084e75",
     "euler_loading/loaders/cpu/generic_dense_depth.py": "f6f3f90f5a1776e56933495599575af0c79c75b2f27efe0f11a9965a38c44973",
     "euler_loading/loaders/cpu/kitti_carla.py": "415401dad87020b2940ad69d602554fa4fb758343738b93ec8e3a7537882d403",
-    "euler_loading/loaders/cpu/muses.py": "82d06fca7bbec7bc361eed49527d4ddeac5cfcd4669f05cd33a277b519a698c0",
+    "euler_loading/loaders/cpu/muses.py": "9d3c935906724f63badcbb60c90545057b30ece628343695d4ef959dbfb28829",
     "euler_loading/loaders/cpu/princeton_dense.py": "3e941da7af2e30fd4f4ec5c9fb3d51b7b4dabe760ce1a24c0bc4b1db30b59cf8",
     "euler_loading/loaders/cpu/real_drive_sim.py": "0dda77ce3a596bc164af3292b838dabdc8a3cef8263c45cbbde7275251a36e0b",
     "euler_loading/loaders/cpu/synscapes.py": "f3bbd53bc6f90edf68d2473dc142dc33faaedf45498a94becbd4f19e38817fcb",
     "euler_loading/loaders/cpu/vkitti2.py": "17291eb010d6409032108075170d485aea6ba6f575e6505e1f2c25bb9fa73403",
+    "euler_loading/loaders/gpu/driving_stereo.py": "9f713031fa4563aaa065fdcf3ead34a3c042bb3cf126e3cbd6502d20c433f627",
     "euler_loading/loaders/gpu/generic.py": "44953ba25e72692445c4e7f4a5ac7fccd4ec4cd4847b5862fa9b633f1475521d",
     "euler_loading/loaders/gpu/generic_dense_depth.py": "ac6d422f06ace5c7ae60767f7c2ada56e4f33206a69e3f55561154471c01cd47",
     "euler_loading/loaders/gpu/kitti_carla.py": "6bd18668518da3a17502b041aedd57ea2e66664e967c0fa546c1bf9e9bc5e4d6",
-    "euler_loading/loaders/gpu/muses.py": "ae05a1de27b8c15918adfd65be1262777b5defdf16a062dde1e5998fe03bebe4",
+    "euler_loading/loaders/gpu/muses.py": "f61e76b635ea1f32be966f8df3645074ecc05cbeae8bf073f4f4d3e8c601b5cd",
     "euler_loading/loaders/gpu/princeton_dense.py": "75bb3a040802c1f9ac0908b0e95f0ecf3d2335ba7d9cd61adf18d7e401ac776e",
     "euler_loading/loaders/gpu/real_drive_sim.py": "e6c88b978aed10433c4e2e94204c61684719cc681f498539ce3d1f3fb7d32998",
     "euler_loading/loaders/gpu/synscapes.py": "a3521cda47bf46e694661658281de8def4a6c675cdfb5c4796f94fa70d065cc4",
     "euler_loading/loaders/gpu/vkitti2.py": "0bad62e263013b95fd8b59f965e16b26cf3d2162e9fca8e580017829162887bd"
   },
   "observations": [
+    {
+      "loader": "driving_stereo",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/driving_stereo.py",
+      "line": 286,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".jpg",
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/driving_stereo.py",
+      "line": 320,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          255.99609375
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "encoding": "uint16_png",
+          "decode": "value / 256",
+          "raw_range": [
+            0,
+            65535
+          ],
+          "scale_to_meters": 0.00390625,
+          "radial_depth": false,
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "sparse": true,
+          "camera": "rectified_left",
+          "resolution": "half"
+        }
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "depth_full_size",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/driving_stereo.py",
+      "line": 344,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          255.99609375
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "encoding": "uint16_png",
+          "decode": "value / 256",
+          "raw_range": [
+            0,
+            65535
+          ],
+          "scale_to_meters": 0.00390625,
+          "radial_depth": false,
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "sparse": true,
+          "camera": "rectified_left",
+          "resolution": "full",
+          "aligned_to": "left_image_half_size",
+          "full_size_resampling": [
+            "nearest",
+            "subsample"
+          ]
+        }
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "disparity",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/driving_stereo.py",
+      "line": 388,
+      "declared": {
+        "modality_type": "disparity",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          255.99609375
+        ],
+        "output_unit": "pixels",
+        "meta": {
+          "encoding": "uint16_png",
+          "raw_range": [
+            0,
+            65535
+          ],
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "sparse": true,
+          "camera": "rectified_left",
+          "disparity_unit": "half_size_pixels",
+          "decode": "value / 256",
+          "resolution": "half"
+        }
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "disparity_full_size",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/driving_stereo.py",
+      "line": 412,
+      "declared": {
+        "modality_type": "disparity",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          255.99609375
+        ],
+        "output_unit": "pixels",
+        "meta": {
+          "encoding": "uint16_png",
+          "raw_range": [
+            0,
+            65535
+          ],
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "sparse": true,
+          "camera": "rectified_left",
+          "disparity_unit": "half_size_pixels",
+          "decode": "value / 128 / 2",
+          "resolution": "full",
+          "aligned_to": "left_image_half_size",
+          "full_size_resampling": [
+            "nearest",
+            "subsample"
+          ]
+        }
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/driving_stereo.py",
+      "line": 480,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "matrix": "P_rect[:, :3]",
+          "camera": [
+            "left",
+            "right"
+          ]
+        }
+      }
+    },
     {
       "loader": "generic",
       "function": "map_2d",
@@ -566,7 +767,7 @@
       "function": "rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 285,
+      "line": 317,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -585,7 +786,7 @@
       "function": "reference_rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 298,
+      "line": 330,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -607,7 +808,7 @@
       "function": "semantic_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 313,
+      "line": 345,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "int64",
@@ -629,7 +830,7 @@
       "function": "sky_mask",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 330,
+      "line": 362,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -654,7 +855,7 @@
       "function": "semantic_segmentation_color",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 351,
+      "line": 383,
       "declared": {
         "modality_type": "semantic_segmentation_color",
         "dtype": "uint8",
@@ -675,7 +876,7 @@
       "function": "panoptic_segmentation",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 363,
+      "line": 395,
       "declared": {
         "modality_type": "panoptic_segmentation",
         "dtype": "int64",
@@ -693,7 +894,7 @@
       "function": "lidar_point_cloud",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 379,
+      "line": 411,
       "declared": {
         "modality_type": "point_cloud",
         "dtype": "float64",
@@ -720,7 +921,7 @@
       "function": "sparse_depth",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 401,
+      "line": 433,
       "declared": {
         "modality_type": "sparse_depth",
         "dtype": "float64",
@@ -748,7 +949,7 @@
       "function": "read_intrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 414,
+      "line": 446,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -767,7 +968,7 @@
       "function": "read_extrinsics",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 435,
+      "line": 467,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -787,7 +988,7 @@
       "function": "gnss",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 501,
+      "line": 533,
       "declared": {
         "modality_type": "gnss",
         "dtype": "dict",
@@ -806,7 +1007,7 @@
       "function": "sensor_timing",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 620,
+      "line": 652,
       "declared": {
         "modality_type": "sensor_timing",
         "dtype": "dict",
@@ -827,7 +1028,7 @@
       "function": "read_lidar_to_gnss",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/muses.py",
-      "line": 666,
+      "line": 698,
       "declared": {
         "modality_type": "lidar_to_gnss",
         "dtype": "float32",
@@ -1428,6 +1629,205 @@
       }
     },
     {
+      "loader": "driving_stereo",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/driving_stereo.py",
+      "line": 66,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".jpg",
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/driving_stereo.py",
+      "line": 81,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          255.99609375
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "encoding": "uint16_png",
+          "decode": "value / 256",
+          "raw_range": [
+            0,
+            65535
+          ],
+          "scale_to_meters": 0.00390625,
+          "radial_depth": false,
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "sparse": true,
+          "camera": "rectified_left",
+          "resolution": "half"
+        }
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "depth_full_size",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/driving_stereo.py",
+      "line": 96,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          255.99609375
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "encoding": "uint16_png",
+          "decode": "value / 256",
+          "raw_range": [
+            0,
+            65535
+          ],
+          "scale_to_meters": 0.00390625,
+          "radial_depth": false,
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "sparse": true,
+          "camera": "rectified_left",
+          "resolution": "full",
+          "aligned_to": "left_image_half_size",
+          "full_size_resampling": [
+            "nearest",
+            "subsample"
+          ]
+        }
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "disparity",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/driving_stereo.py",
+      "line": 112,
+      "declared": {
+        "modality_type": "disparity",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          255.99609375
+        ],
+        "output_unit": "pixels",
+        "meta": {
+          "encoding": "uint16_png",
+          "raw_range": [
+            0,
+            65535
+          ],
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "sparse": true,
+          "camera": "rectified_left",
+          "disparity_unit": "half_size_pixels",
+          "decode": "value / 256",
+          "resolution": "half"
+        }
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "disparity_full_size",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/driving_stereo.py",
+      "line": 127,
+      "declared": {
+        "modality_type": "disparity",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          255.99609375
+        ],
+        "output_unit": "pixels",
+        "meta": {
+          "encoding": "uint16_png",
+          "raw_range": [
+            0,
+            65535
+          ],
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "sparse": true,
+          "camera": "rectified_left",
+          "disparity_unit": "half_size_pixels",
+          "decode": "value / 128 / 2",
+          "resolution": "full",
+          "aligned_to": "left_image_half_size",
+          "full_size_resampling": [
+            "nearest",
+            "subsample"
+          ]
+        }
+      }
+    },
+    {
+      "loader": "driving_stereo",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/driving_stereo.py",
+      "line": 142,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "matrix": "P_rect[:, :3]",
+          "camera": [
+            "left",
+            "right"
+          ]
+        }
+      }
+    },
+    {
       "loader": "generic",
       "function": "map_2d",
       "backend": "gpu",
@@ -1960,7 +2360,7 @@
       "function": "rgb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 229,
+      "line": 233,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -1979,7 +2379,7 @@
       "function": "reference_rgb",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 243,
+      "line": 247,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -2001,7 +2401,7 @@
       "function": "semantic_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 259,
+      "line": 263,
       "declared": {
         "modality_type": "semantic_segmentation",
         "dtype": "int64",
@@ -2023,7 +2423,7 @@
       "function": "sky_mask",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 277,
+      "line": 281,
       "declared": {
         "modality_type": "sky_mask",
         "dtype": "bool",
@@ -2048,7 +2448,7 @@
       "function": "semantic_segmentation_color",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 294,
+      "line": 298,
       "declared": {
         "modality_type": "semantic_segmentation_color",
         "dtype": "uint8",
@@ -2069,7 +2469,7 @@
       "function": "panoptic_segmentation",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 307,
+      "line": 311,
       "declared": {
         "modality_type": "panoptic_segmentation",
         "dtype": "int64",
@@ -2087,7 +2487,7 @@
       "function": "lidar_point_cloud",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 324,
+      "line": 328,
       "declared": {
         "modality_type": "point_cloud",
         "dtype": "float64",
@@ -2114,7 +2514,7 @@
       "function": "sparse_depth",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 346,
+      "line": 350,
       "declared": {
         "modality_type": "sparse_depth",
         "dtype": "float64",
@@ -2142,7 +2542,7 @@
       "function": "read_intrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 359,
+      "line": 363,
       "declared": {
         "modality_type": "intrinsics",
         "dtype": "float32",
@@ -2161,7 +2561,7 @@
       "function": "read_extrinsics",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 380,
+      "line": 384,
       "declared": {
         "modality_type": "camera_extrinsics",
         "dtype": "float32",
@@ -2181,7 +2581,7 @@
       "function": "gnss",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 410,
+      "line": 414,
       "declared": {
         "modality_type": "gnss",
         "dtype": "dict",
@@ -2200,7 +2600,7 @@
       "function": "sensor_timing",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 424,
+      "line": 428,
       "declared": {
         "modality_type": "sensor_timing",
         "dtype": "dict",
@@ -2221,7 +2621,7 @@
       "function": "read_lidar_to_gnss",
       "backend": "gpu",
       "source": "euler_loading/loaders/gpu/muses.py",
-      "line": 437,
+      "line": 441,
       "declared": {
         "modality_type": "lidar_to_gnss",
         "dtype": "float32",
@@ -2823,6 +3223,215 @@
     }
   ],
   "catalog": [
+    {
+      "name": "driving_stereo",
+      "modalities": [
+        {
+          "type": "depth",
+          "function": "depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            255.99609375
+          ],
+          "output_unit": "meters",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "uint16_png",
+            "decode": "value / 256",
+            "raw_range": [
+              0,
+              65535
+            ],
+            "scale_to_meters": 0.00390625,
+            "radial_depth": false,
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            },
+            "sparse": true,
+            "camera": "rectified_left",
+            "resolution": "half"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "depth_full_size",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            255.99609375
+          ],
+          "output_unit": "meters",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "uint16_png",
+            "decode": "value / 256",
+            "raw_range": [
+              0,
+              65535
+            ],
+            "scale_to_meters": 0.00390625,
+            "radial_depth": false,
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            },
+            "sparse": true,
+            "camera": "rectified_left",
+            "resolution": "full",
+            "aligned_to": "left_image_half_size",
+            "full_size_resampling": [
+              "nearest",
+              "subsample"
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "disparity",
+          "function": "disparity",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            255.99609375
+          ],
+          "output_unit": "pixels",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "uint16_png",
+            "raw_range": [
+              0,
+              65535
+            ],
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            },
+            "sparse": true,
+            "camera": "rectified_left",
+            "disparity_unit": "half_size_pixels",
+            "decode": "value / 256",
+            "resolution": "half"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "disparity",
+          "function": "disparity_full_size",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            255.99609375
+          ],
+          "output_unit": "pixels",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "uint16_png",
+            "raw_range": [
+              0,
+              65535
+            ],
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            },
+            "sparse": true,
+            "camera": "rectified_left",
+            "disparity_unit": "half_size_pixels",
+            "decode": "value / 128 / 2",
+            "resolution": "full",
+            "aligned_to": "left_image_half_size",
+            "full_size_resampling": [
+              "nearest",
+              "subsample"
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".txt"
+          ],
+          "meta": {
+            "matrix": "P_rect[:, :3]",
+            "camera": [
+              "left",
+              "right"
+            ]
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".jpg",
+            ".png"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        }
+      ]
+    },
     {
       "name": "generic",
       "modalities": [
