@@ -8,13 +8,14 @@
     "method": "AST literal extraction; no loader execution",
     "consumed_by_runtime": false,
     "catalog_path": "euler_loading/loaders/generate/loaders.json",
-    "catalog_sha256": "8ebe4232c084bba2dfc6c04ec0ad6ad253467c1ac5291b46ae966aa5cb56cdc3"
+    "catalog_sha256": "b4b7114af995728efb50aa7297de3924f8773a8bd1f7c64c3285f871865c5798"
   },
   "sources": {
     "euler_loading/loaders/_annotations.py": "239d0678fdd8f316b3b84cf85bff3314d5e59745e14deca28e8e016825e79a2b",
     "euler_loading/loaders/_princeton_dense.py": "708f881eeda6021a5ee879d15ecab782c64779bbd7a0f324ae3bfc82c0257cb9",
     "euler_loading/loaders/_sky.py": "6f9f7584cb5cba782f3350f35a6d82182d477926f50dcaa6ae6a82d7dda7d72b",
     "euler_loading/loaders/_writer_utils.py": "16f75ad3dc9e4345509cefe36484cc1811611e4b49af18efa8aae7dbb2788807",
+    "euler_loading/loaders/cpu/cerema.py": "686ad1880726fd98e5f36db6347375f9907c5fb24633925b50d85a831f1f16d3",
     "euler_loading/loaders/cpu/driving_stereo.py": "9512c75bd62b3bac1c895856336cfe1a6bb7b48c751651e6408a9d225f3f63bc",
     "euler_loading/loaders/cpu/generic.py": "0a6205069d1f0cff481f048ff8c50acad587f401158db705a067d4a90a084e75",
     "euler_loading/loaders/cpu/generic_dense_depth.py": "f6f3f90f5a1776e56933495599575af0c79c75b2f27efe0f11a9965a38c44973",
@@ -23,8 +24,10 @@
     "euler_loading/loaders/cpu/nuscenes.py": "060c0870bb9ba4f7f36e2cf223496b73f258464c5b4c5794c9f9833a8741606a",
     "euler_loading/loaders/cpu/princeton_dense.py": "3e941da7af2e30fd4f4ec5c9fb3d51b7b4dabe760ce1a24c0bc4b1db30b59cf8",
     "euler_loading/loaders/cpu/real_drive_sim.py": "0dda77ce3a596bc164af3292b838dabdc8a3cef8263c45cbbde7275251a36e0b",
+    "euler_loading/loaders/cpu/scatternerf.py": "008180bfea03d39ed20845dfda5e35dc5b3201a70d361698307aa56c8ad88b9b",
     "euler_loading/loaders/cpu/synscapes.py": "f3bbd53bc6f90edf68d2473dc142dc33faaedf45498a94becbd4f19e38817fcb",
     "euler_loading/loaders/cpu/vkitti2.py": "17291eb010d6409032108075170d485aea6ba6f575e6505e1f2c25bb9fa73403",
+    "euler_loading/loaders/gpu/cerema.py": "d02cdfd9c2093ac58b815191266c94b34eca3870fb188e78a8e166659ae9519d",
     "euler_loading/loaders/gpu/driving_stereo.py": "9f713031fa4563aaa065fdcf3ead34a3c042bb3cf126e3cbd6502d20c433f627",
     "euler_loading/loaders/gpu/generic.py": "44953ba25e72692445c4e7f4a5ac7fccd4ec4cd4847b5862fa9b633f1475521d",
     "euler_loading/loaders/gpu/generic_dense_depth.py": "ac6d422f06ace5c7ae60767f7c2ada56e4f33206a69e3f55561154471c01cd47",
@@ -33,10 +36,187 @@
     "euler_loading/loaders/gpu/nuscenes.py": "961c81ef984d9c6c99302c295ead919e5d872b9f0947089191d66d07a132b9e1",
     "euler_loading/loaders/gpu/princeton_dense.py": "75bb3a040802c1f9ac0908b0e95f0ecf3d2335ba7d9cd61adf18d7e401ac776e",
     "euler_loading/loaders/gpu/real_drive_sim.py": "e6c88b978aed10433c4e2e94204c61684719cc681f498539ce3d1f3fb7d32998",
+    "euler_loading/loaders/gpu/scatternerf.py": "45108b7af463d831c23e3207d4c7e4d52d7f994833b0aa9aacf080f74868c773",
     "euler_loading/loaders/gpu/synscapes.py": "a3521cda47bf46e694661658281de8def4a6c675cdfb5c4796f94fa70d065cc4",
     "euler_loading/loaders/gpu/vkitti2.py": "0bad62e263013b95fd8b59f965e16b26cf3d2162e9fca8e580017829162887bd"
   },
   "observations": [
+    {
+      "loader": "cerema",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/cerema.py",
+      "line": 181,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "gated",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/cerema.py",
+      "line": 195,
+      "declared": {
+        "modality_type": "gated",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ],
+        "meta": {
+          "bit_depth": 10,
+          "dark_level": 87
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/cerema.py",
+      "line": 219,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".npz"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "unit": "meters",
+          "depth": "z (planar)",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          }
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "sgm_depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/cerema.py",
+      "line": 240,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".npz"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "unit": "meters",
+          "depth": "z (planar)",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "grid": "rgb_left 1920x1024",
+          "baseline_m": 0.202993,
+          "focal_px": 2355.722801,
+          "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+          "method": "SGM",
+          "stored": "half-resolution disparity of rows 70-893"
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "psmnet_depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/cerema.py",
+      "line": 264,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".npz"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "unit": "meters",
+          "depth": "z (planar)",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "grid": "rgb_left 1920x1024",
+          "baseline_m": 0.202993,
+          "focal_px": 2355.722801,
+          "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+          "method": "PSMNet",
+          "stored": "disparity in pixels of a 960-wide image"
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "monodepth_depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/cerema.py",
+      "line": 284,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".npz"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "unit": "meters",
+          "depth": "z (planar)",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "grid": "rgb_left 1920x1024",
+          "baseline_m": 0.202993,
+          "focal_px": 2355.722801,
+          "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+          "method": "Monodepth",
+          "stored": "disparity relative to the image width"
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/cerema.py",
+      "line": 306,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "camera_model": "pinhole",
+          "intrinsics_matrix": "P"
+        }
+      }
+    },
     {
       "loader": "driving_stereo",
       "function": "rgb",
@@ -1457,6 +1637,92 @@
       }
     },
     {
+      "loader": "scatternerf",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/scatternerf.py",
+      "line": 117,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "scatternerf",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/scatternerf.py",
+      "line": 130,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "shape": "3x3",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "model": "pinhole",
+          "distortion": null,
+          "stored_as": "4x4 NSVF intrinsics, row-major"
+        }
+      }
+    },
+    {
+      "loader": "scatternerf",
+      "function": "camera_pose",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/scatternerf.py",
+      "line": 174,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float64",
+        "shape": "4x4",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "transform": "camera_to_world",
+          "source_frame": "camera",
+          "target_frame": "world",
+          "camera_axes": "optical: x right, y down, z forward",
+          "world": "per sequence",
+          "translation_unit": "per-sequence normalized units, as stored"
+        }
+      }
+    },
+    {
+      "loader": "scatternerf",
+      "function": "camera_pose_metric",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/scatternerf.py",
+      "line": 191,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float64",
+        "shape": "4x4",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "transform": "camera_to_world",
+          "source_frame": "camera",
+          "target_frame": "world",
+          "camera_axes": "optical: x right, y down, z forward",
+          "world": "per sequence",
+          "translation_unit": "meters",
+          "requires": "scale_to_meters"
+        }
+      }
+    },
+    {
       "loader": "synscapes",
       "function": "rgb",
       "backend": "cpu",
@@ -1754,6 +2020,182 @@
         "file_formats": [
           ".txt"
         ]
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/cerema.py",
+      "line": 51,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "gated",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/cerema.py",
+      "line": 64,
+      "declared": {
+        "modality_type": "gated",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ],
+        "meta": {
+          "bit_depth": 10,
+          "dark_level": 87
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/cerema.py",
+      "line": 78,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".npz"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "unit": "meters",
+          "depth": "z (planar)",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          }
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "sgm_depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/cerema.py",
+      "line": 92,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".npz"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "unit": "meters",
+          "depth": "z (planar)",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "grid": "rgb_left 1920x1024",
+          "baseline_m": 0.202993,
+          "focal_px": 2355.722801,
+          "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+          "method": "SGM",
+          "stored": "half-resolution disparity of rows 70-893"
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "psmnet_depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/cerema.py",
+      "line": 106,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".npz"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "unit": "meters",
+          "depth": "z (planar)",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "grid": "rgb_left 1920x1024",
+          "baseline_m": 0.202993,
+          "focal_px": 2355.722801,
+          "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+          "method": "PSMNet",
+          "stored": "disparity in pixels of a 960-wide image"
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "monodepth_depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/cerema.py",
+      "line": 120,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".npz"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "unit": "meters",
+          "depth": "z (planar)",
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          },
+          "grid": "rgb_left 1920x1024",
+          "baseline_m": 0.202993,
+          "focal_px": 2355.722801,
+          "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+          "method": "Monodepth",
+          "stored": "disparity relative to the image width"
+        }
+      }
+    },
+    {
+      "loader": "cerema",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/cerema.py",
+      "line": 134,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "camera_model": "pinhole",
+          "intrinsics_matrix": "P"
+        }
       }
     },
     {
@@ -3176,6 +3618,92 @@
       }
     },
     {
+      "loader": "scatternerf",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/scatternerf.py",
+      "line": 41,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "scatternerf",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/scatternerf.py",
+      "line": 53,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "shape": "3x3",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "model": "pinhole",
+          "distortion": null,
+          "stored_as": "4x4 NSVF intrinsics, row-major"
+        }
+      }
+    },
+    {
+      "loader": "scatternerf",
+      "function": "camera_pose",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/scatternerf.py",
+      "line": 66,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float64",
+        "shape": "4x4",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "transform": "camera_to_world",
+          "source_frame": "camera",
+          "target_frame": "world",
+          "camera_axes": "optical: x right, y down, z forward",
+          "world": "per sequence",
+          "translation_unit": "per-sequence normalized units, as stored"
+        }
+      }
+    },
+    {
+      "loader": "scatternerf",
+      "function": "camera_pose_metric",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/scatternerf.py",
+      "line": 79,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float64",
+        "shape": "4x4",
+        "file_formats": [
+          ".txt"
+        ],
+        "meta": {
+          "transform": "camera_to_world",
+          "source_frame": "camera",
+          "target_frame": "world",
+          "camera_axes": "optical: x right, y down, z forward",
+          "world": "per sequence",
+          "translation_unit": "meters",
+          "requires": "scale_to_meters"
+        }
+      }
+    },
+    {
       "loader": "synscapes",
       "function": "rgb",
       "backend": "gpu",
@@ -3477,6 +4005,193 @@
     }
   ],
   "catalog": [
+    {
+      "name": "cerema",
+      "modalities": [
+        {
+          "type": "depth",
+          "function": "depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".npz"
+          ],
+          "meta": {
+            "unit": "meters",
+            "depth": "z (planar)",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            }
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "gated",
+          "function": "gated",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "bit_depth": 10,
+            "dark_level": 87
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "monodepth_depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".npz"
+          ],
+          "meta": {
+            "unit": "meters",
+            "depth": "z (planar)",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            },
+            "grid": "rgb_left 1920x1024",
+            "baseline_m": 0.202993,
+            "focal_px": 2355.722801,
+            "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+            "method": "Monodepth",
+            "stored": "disparity relative to the image width"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "psmnet_depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".npz"
+          ],
+          "meta": {
+            "unit": "meters",
+            "depth": "z (planar)",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            },
+            "grid": "rgb_left 1920x1024",
+            "baseline_m": 0.202993,
+            "focal_px": 2355.722801,
+            "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+            "method": "PSMNet",
+            "stored": "disparity in pixels of a 960-wide image"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "camera_model": "pinhole",
+            "intrinsics_matrix": "P"
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "sgm_depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".npz"
+          ],
+          "meta": {
+            "unit": "meters",
+            "depth": "z (planar)",
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            },
+            "grid": "rgb_left 1920x1024",
+            "baseline_m": 0.202993,
+            "focal_px": 2355.722801,
+            "missing_pixels": "0, not nearest-neighbour filled as the benchmark's evaluation does",
+            "method": "SGM",
+            "stored": "half-resolution disparity of rows 70-893"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        }
+      ]
+    },
     {
       "name": "driving_stereo",
       "modalities": [
@@ -4976,6 +5691,101 @@
           },
           "gpu": {
             "shape": "1HW"
+          }
+        }
+      ]
+    },
+    {
+      "name": "scatternerf",
+      "modalities": [
+        {
+          "type": "camera_extrinsics",
+          "function": "camera_pose",
+          "hierarchical": false,
+          "dtype": "float64",
+          "access": "key",
+          "file_formats": [
+            ".txt"
+          ],
+          "meta": {
+            "transform": "camera_to_world",
+            "source_frame": "camera",
+            "target_frame": "world",
+            "camera_axes": "optical: x right, y down, z forward",
+            "world": "per sequence",
+            "translation_unit": "per-sequence normalized units, as stored"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "camera_extrinsics",
+          "function": "camera_pose_metric",
+          "hierarchical": false,
+          "dtype": "float64",
+          "access": "key",
+          "file_formats": [
+            ".txt"
+          ],
+          "meta": {
+            "transform": "camera_to_world",
+            "source_frame": "camera",
+            "target_frame": "world",
+            "camera_axes": "optical: x right, y down, z forward",
+            "world": "per sequence",
+            "translation_unit": "meters",
+            "requires": "scale_to_meters"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".txt"
+          ],
+          "meta": {
+            "model": "pinhole",
+            "distortion": null,
+            "stored_as": "4x4 NSVF intrinsics, row-major"
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
           }
         }
       ]

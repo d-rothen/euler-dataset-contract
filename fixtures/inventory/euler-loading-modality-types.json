@@ -6,7 +6,7 @@
   "provenance": {
     "repository": "euler-loading",
     "path": "euler_loading/loaders/generate/loaders.json",
-    "sha256": "8ebe4232c084bba2dfc6c04ec0ad6ad253467c1ac5291b46ae966aa5cb56cdc3",
+    "sha256": "b4b7114af995728efb50aa7297de3924f8773a8bd1f7c64c3285f871865c5798",
     "description": "Vendored copy of the modality vocabulary euler-loading emits, so that euler-dataset-contract can assert against it without taking a dependency on euler-loading. Refresh this file when loaders.json changes: the drift test in tests/test_modality_inventory.py fails when a type recorded here has no inventory entry.",
     "notes": [
       "modality_types holds the distinct values of the type field, each with the loader.function pairs that emit it.",
@@ -14,6 +14,7 @@
     ]
   },
   "loaders": [
+    "cerema",
     "driving_stereo",
     "generic",
     "generic_dense_depth",
@@ -22,6 +23,7 @@
     "nuscenes",
     "princeton_dense",
     "real_drive_sim",
+    "scatternerf",
     "synscapes",
     "vkitti2"
   ],
@@ -41,9 +43,15 @@
       "nuscenes.read_extrinsics",
       "princeton_dense.read_extrinsics",
       "real_drive_sim.read_extrinsics",
+      "scatternerf.camera_pose",
+      "scatternerf.camera_pose_metric",
       "synscapes.read_extrinsics"
     ],
     "depth": [
+      "cerema.depth",
+      "cerema.monodepth_depth",
+      "cerema.psmnet_depth",
+      "cerema.sgm_depth",
       "driving_stereo.depth",
       "driving_stereo.depth_full_size",
       "generic_dense_depth.depth",
@@ -59,6 +67,9 @@
     "extrinsics": [
       "vkitti2.read_extrinsics"
     ],
+    "gated": [
+      "cerema.gated"
+    ],
     "gnss": [
       "muses.gnss"
     ],
@@ -68,6 +79,7 @@
       "vkitti2.instance_segmentation"
     ],
     "intrinsics": [
+      "cerema.read_intrinsics",
       "driving_stereo.read_intrinsics",
       "generic.intrinsics",
       "generic_dense_depth.read_intrinsics",
@@ -76,6 +88,7 @@
       "nuscenes.read_intrinsics",
       "princeton_dense.read_intrinsics",
       "real_drive_sim.read_intrinsics",
+      "scatternerf.read_intrinsics",
       "synscapes.read_intrinsics",
       "vkitti2.read_intrinsics"
     ],
@@ -106,6 +119,7 @@
       "princeton_dense.rccb"
     ],
     "rgb": [
+      "cerema.rgb",
       "driving_stereo.rgb",
       "generic_dense_depth.rgb",
       "kitti_carla.rgb",
@@ -114,6 +128,7 @@
       "nuscenes.rgb",
       "princeton_dense.rgb",
       "real_drive_sim.rgb",
+      "scatternerf.rgb",
       "synscapes.rgb",
       "vkitti2.rgb"
     ],
@@ -163,11 +178,14 @@
     "all_intrinsics",
     "atmospheric_light",
     "calibration",
+    "camera_pose",
+    "camera_pose_metric",
     "class_segmentation",
     "depth",
     "depth_full_size",
     "disparity",
     "disparity_full_size",
+    "gated",
     "gnss",
     "instance_segmentation",
     "intrinsics",
@@ -175,8 +193,10 @@
     "lidar_pose",
     "map_2d",
     "map_3d",
+    "monodepth_depth",
     "panoptic_segmentation",
     "points_3d",
+    "psmnet_depth",
     "rccb",
     "read_extrinsics",
     "read_intrinsics",
@@ -188,6 +208,7 @@
     "semantic_segmentation",
     "semantic_segmentation_color",
     "sensor_timing",
+    "sgm_depth",
     "sh_coeffs",
     "sky_mask",
     "sparse_depth",

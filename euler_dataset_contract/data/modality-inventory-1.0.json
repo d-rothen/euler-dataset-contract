@@ -61,6 +61,21 @@
         "channels"
       ]
     },
+    "appearance.camera.gated_intensity": {
+      "domain": "appearance",
+      "subject": "camera",
+      "quantity": "gated_intensity",
+      "status": "settled",
+      "description": "Intensity a range-gated camera records in one slice: the return of its own pulsed illumination from a band of distances, plus ambient light. Slices with different delays together encode depth.",
+      "aliases": [
+        "gated"
+      ],
+      "representation_fields": [
+        "layout",
+        "value_domain",
+        "slice"
+      ]
+    },
     "geometry.camera.depth": {
       "domain": "geometry",
       "subject": "camera",
@@ -429,6 +444,15 @@
       "representation": {
         "filter_array": "rccb"
       }
+    },
+    "gated": {
+      "id": "appearance.camera.gated_intensity",
+      "status": "settled",
+      "sources": [
+        "euler_loading.modality_type",
+        "dataset.modality_key"
+      ],
+      "note": "euler-loading's cerema emits it for the CEREMA Pixel-Accurate Depth Benchmark's gated slices, and euler-known-datasets heads use it as their modality key."
     },
     "depth": {
       "id": "geometry.camera.depth",
