@@ -8,14 +8,15 @@
     "method": "AST literal extraction; no loader execution",
     "consumed_by_runtime": false,
     "catalog_path": "euler_loading/loaders/generate/loaders.json",
-    "catalog_sha256": "b4b7114af995728efb50aa7297de3924f8773a8bd1f7c64c3285f871865c5798"
+    "catalog_sha256": "24d006748ce2693050efc5113ae44f1e8d5836775530536f46589c9b3cafe4c7"
   },
   "sources": {
     "euler_loading/loaders/_annotations.py": "239d0678fdd8f316b3b84cf85bff3314d5e59745e14deca28e8e016825e79a2b",
     "euler_loading/loaders/_princeton_dense.py": "708f881eeda6021a5ee879d15ecab782c64779bbd7a0f324ae3bfc82c0257cb9",
     "euler_loading/loaders/_sky.py": "6f9f7584cb5cba782f3350f35a6d82182d477926f50dcaa6ae6a82d7dda7d72b",
     "euler_loading/loaders/_writer_utils.py": "16f75ad3dc9e4345509cefe36484cc1811611e4b49af18efa8aae7dbb2788807",
-    "euler_loading/loaders/cpu/cerema.py": "686ad1880726fd98e5f36db6347375f9907c5fb24633925b50d85a831f1f16d3",
+    "euler_loading/loaders/cpu/acdc.py": "c043f05597486e3bae7e41f5e90dbcb53b764c92444923e3dd8cf0fbd4b8d46d",
+    "euler_loading/loaders/cpu/cerema.py": "471707e153205996272fea35453ed5845f4595ab3a219344c9dcf54f4626ac7a",
     "euler_loading/loaders/cpu/driving_stereo.py": "9512c75bd62b3bac1c895856336cfe1a6bb7b48c751651e6408a9d225f3f63bc",
     "euler_loading/loaders/cpu/generic.py": "0a6205069d1f0cff481f048ff8c50acad587f401158db705a067d4a90a084e75",
     "euler_loading/loaders/cpu/generic_dense_depth.py": "f6f3f90f5a1776e56933495599575af0c79c75b2f27efe0f11a9965a38c44973",
@@ -27,6 +28,7 @@
     "euler_loading/loaders/cpu/scatternerf.py": "008180bfea03d39ed20845dfda5e35dc5b3201a70d361698307aa56c8ad88b9b",
     "euler_loading/loaders/cpu/synscapes.py": "f3bbd53bc6f90edf68d2473dc142dc33faaedf45498a94becbd4f19e38817fcb",
     "euler_loading/loaders/cpu/vkitti2.py": "17291eb010d6409032108075170d485aea6ba6f575e6505e1f2c25bb9fa73403",
+    "euler_loading/loaders/gpu/acdc.py": "e0653eed32ae172076e7efb50142e2fc9e06df681cda2e2d45f6f6895a397a98",
     "euler_loading/loaders/gpu/cerema.py": "d02cdfd9c2093ac58b815191266c94b34eca3870fb188e78a8e166659ae9519d",
     "euler_loading/loaders/gpu/driving_stereo.py": "9f713031fa4563aaa065fdcf3ead34a3c042bb3cf126e3cbd6502d20c433f627",
     "euler_loading/loaders/gpu/generic.py": "44953ba25e72692445c4e7f4a5ac7fccd4ec4cd4847b5862fa9b633f1475521d",
@@ -41,6 +43,48 @@
     "euler_loading/loaders/gpu/vkitti2.py": "0bad62e263013b95fd8b59f965e16b26cf3d2162e9fca8e580017829162887bd"
   },
   "observations": [
+    {
+      "loader": "acdc",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/acdc.py",
+      "line": 60,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "acdc",
+      "function": "reference_rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/acdc.py",
+      "line": 73,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ],
+        "meta": {
+          "source": "reference_frames",
+          "condition": "normal"
+        }
+      }
+    },
     {
       "loader": "cerema",
       "function": "rgb",
@@ -2020,6 +2064,48 @@
         "file_formats": [
           ".txt"
         ]
+      }
+    },
+    {
+      "loader": "acdc",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/acdc.py",
+      "line": 34,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "acdc",
+      "function": "reference_rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/acdc.py",
+      "line": 47,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ],
+        "meta": {
+          "source": "reference_frames",
+          "condition": "normal"
+        }
       }
     },
     {
@@ -4005,6 +4091,55 @@
     }
   ],
   "catalog": [
+    {
+      "name": "acdc",
+      "modalities": [
+        {
+          "type": "rgb",
+          "function": "reference_rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "source": "reference_frames",
+            "condition": "normal"
+          },
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        }
+      ]
+    },
     {
       "name": "cerema",
       "modalities": [

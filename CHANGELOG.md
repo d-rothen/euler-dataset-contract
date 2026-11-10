@@ -2,8 +2,8 @@
 
 ## Unreleased
 
-- Loader evidence refreshed for euler-loading's new `scatternerf` and `cerema`
-  modules (174 declarations), adding the `gated` modality type.
+- Loader evidence refreshed for euler-loading's new `scatternerf`, `cerema` and
+  `acdc` modules (178 declarations), adding the `gated` modality type.
 - Modality inventory: `appearance.camera.gated_intensity`, the slices a
   range-gated camera records, with the alias `gated` (euler-loading's
   `cerema` loaders and the CEREMA heads).
