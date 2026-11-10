@@ -1,0 +1,18 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_extrinsics",
+    "name": "Synthetic extrinsics"
+  },
+  "modality": {
+    "key": "extrinsics",
+    "meta": {
+      "source_frame": "camera_0",
+      "target_frame": "vehicle",
+      "direction": "source_from_target"
+    }
+  }
+}

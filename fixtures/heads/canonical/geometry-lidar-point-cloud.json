@@ -1,0 +1,33 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "nuscenes_lidar",
+    "name": "nuScenes LIDAR_TOP sweeps"
+  },
+  "modality": {
+    "key": "lidar_point_cloud",
+    "meta": {
+      "representation": "point_cloud",
+      "columns": [
+        "x",
+        "y",
+        "z",
+        "intensity",
+        "ring"
+      ],
+      "coordinate_unit": "meters",
+      "frame": "LIDAR_TOP",
+      "axes": "x right, y forward, z up"
+    }
+  },
+  "addons": {
+    "euler_loading": {
+      "version": "1.0",
+      "loader": "nuscenes",
+      "function": "lidar_point_cloud"
+    }
+  }
+}

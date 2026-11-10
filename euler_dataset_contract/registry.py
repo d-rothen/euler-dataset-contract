@@ -12,7 +12,23 @@ from .source_grid import SOURCE_GRID_JSON_SCHEMA, check_source_grid
 # This alias is evaluated at import time even with postponed annotations.
 # Optional keeps the package importable on the declared Python 3.9 minimum.
 Validator = Callable[[Any], Optional[str]]
-_MISSING = object()
+
+
+class _Missing:
+    """Marks a field without a default. Copies stay the same object, so
+    ``has_default`` survives the deep copies the registry hands out."""
+
+    def __repr__(self) -> str:
+        return "<no default>"
+
+    def __copy__(self) -> "_Missing":
+        return self
+
+    def __deepcopy__(self, memo: dict) -> "_Missing":
+        return self
+
+
+_MISSING = _Missing()
 _TOKEN_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 DATASET_HEAD_KIND = "dataset_head"
@@ -27,6 +43,9 @@ class MetaFieldDefinition:
     validator: Validator | None = None
     default: Any = _MISSING
     json_schema: dict[str, Any] | None = None
+    #: A required field must be present in every head of its modality; an
+    #: optional one is validated only when a head declares it.
+    required: bool = True
 
     @property
     def has_default(self) -> bool:
@@ -257,6 +276,141 @@ SHARED_META_FIELD_DEFINITIONS: dict[str, MetaFieldDefinition] = {
     ),
 }
 
+def _validate_text(value: Any) -> str | None:
+    if not isinstance(value, str) or not value.strip():
+        return "a non-empty string"
+    return None
+
+
+def _validate_token(value: Any) -> str | None:
+    if not isinstance(value, str) or not _TOKEN_PATTERN.fullmatch(value):
+        return "a token (letters, digits, underscores; not starting with a digit)"
+    return None
+
+
+def _choice(*choices: str) -> Validator:
+    label = "one of " + ", ".join(repr(choice) for choice in choices)
+
+    def validate(value: Any) -> str | None:
+        return None if value in choices else label
+
+    return validate
+
+
+def _validate_columns(value: Any) -> str | None:
+    if (
+        not isinstance(value, list)
+        or not value
+        or not all(isinstance(item, str) and item.strip() for item in value)
+        or len(set(value)) != len(value)
+    ):
+        return "a non-empty array of unique non-empty strings"
+    return None
+
+
+def _text_field(description: str, examples: list[str]) -> MetaFieldDefinition:
+    return MetaFieldDefinition(
+        accepted_type=str,
+        type_label="a non-empty string",
+        description=description,
+        validator=_validate_text,
+        json_schema={"type": "string", "minLength": 1, "pattern": r"\S", "examples": examples},
+        required=False,
+    )
+
+
+def _choice_field(description: str, *choices: str) -> MetaFieldDefinition:
+    return MetaFieldDefinition(
+        accepted_type=str,
+        type_label="one of " + ", ".join(repr(choice) for choice in choices),
+        description=description,
+        validator=_choice(*choices),
+        json_schema={"type": "string", "enum": list(choices)},
+        required=False,
+    )
+
+
+# Geometry fields are optional: heads written before the contract defined them
+# stay valid, while a head that declares one must use the shared vocabulary.
+# The values match the euler_representation profiles (camera_model, direction)
+# and the phase-0 reference heads under fixtures/heads.
+_TRANSFORM_FIELDS: dict[str, MetaFieldDefinition] = {
+    "source_frame": _text_field(
+        "Frame the transform maps points from, e.g. a sensor name such as "
+        "'LIDAR_TOP' or 'HDL_64E'.",
+        ["LIDAR_TOP", "camera_0", "lidar"],
+    ),
+    "target_frame": _text_field(
+        "Frame the transform maps points into, e.g. 'camera_optical' or 'world'.",
+        ["camera_optical", "world", "CS_FRONT"],
+    ),
+    "direction": _choice_field(
+        "How the stored 4x4 matrix relates the two frames: 'target_from_source' "
+        "maps points from source_frame into target_frame (p_target = T @ "
+        "p_source); 'source_from_target' is its inverse.",
+        "target_from_source",
+        "source_from_target",
+    ),
+}
+
+_INTRINSICS_FIELDS: dict[str, MetaFieldDefinition] = {
+    "camera_model": _choice_field(
+        "Projection model of the camera matrix. 'pinhole' is an ideal "
+        "pinhole without distortion coefficients.",
+        "pinhole",
+        "fisheye",
+        "other",
+    ),
+    "image_plane": MetaFieldDefinition(
+        accepted_type=str,
+        type_label="a token",
+        description=(
+            "Identifier of the image grid the matrix describes, shared with the "
+            "image modalities it applies to (e.g. 'camera_0')."
+        ),
+        validator=_validate_token,
+        json_schema={"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"},
+        required=False,
+    ),
+}
+
+_POINT_FIELDS: dict[str, MetaFieldDefinition] = {
+    "representation": _choice_field(
+        "Layout of the points: 'point_cloud' is an unordered (N, C) list, "
+        "'point_map' one point per pixel.",
+        "point_cloud",
+        "point_map",
+    ),
+    "columns": MetaFieldDefinition(
+        accepted_type=list,
+        type_label="a non-empty array of unique non-empty strings",
+        description=(
+            "Names of a point cloud's columns in order, starting with the "
+            "coordinates (e.g. ['x', 'y', 'z', 'intensity', 'ring'])."
+        ),
+        validator=_validate_columns,
+        json_schema={
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "minItems": 1,
+            "uniqueItems": True,
+        },
+        required=False,
+    ),
+    "coordinate_unit": _text_field(
+        "Unit of the point coordinates, e.g. 'meters'.", ["meters"]
+    ),
+    "frame": _text_field(
+        "Coordinate frame the points are expressed in, e.g. 'LIDAR_TOP'.",
+        ["LIDAR_TOP", "lidar", "camera_0_optical"],
+    ),
+    "axes": _text_field(
+        "Axis convention of the frame, e.g. 'x forward, y left, z up'.",
+        ["x forward, y left, z up", "x right, y forward, z up"],
+    ),
+}
+
+
 _SEMANTIC_SEGMENTATION_FIELDS: dict[str, MetaFieldDefinition] = {
     "skyclass": MetaFieldDefinition(
         accepted_type=(list, type(None)),
@@ -342,6 +496,16 @@ _DEFAULT_MODALITY_META_FIELD_DEFINITIONS: dict[str, dict[str, MetaFieldDefinitio
     },
     "segmentation": deepcopy(_SEMANTIC_SEGMENTATION_FIELDS),
     "semantic_segmentation": deepcopy(_SEMANTIC_SEGMENTATION_FIELDS),
+    # Every key that names one of these concepts in the modality inventory.
+    "intrinsics": deepcopy(_INTRINSICS_FIELDS),
+    "camera_extrinsics": deepcopy(_TRANSFORM_FIELDS),
+    "extrinsics": deepcopy(_TRANSFORM_FIELDS),
+    "lidar_to_gnss": deepcopy(_TRANSFORM_FIELDS),
+    "lidar_pose": deepcopy(_TRANSFORM_FIELDS),
+    "points_3d": deepcopy(_POINT_FIELDS),
+    "point_cloud": deepcopy(_POINT_FIELDS),
+    "lidar_point_cloud": deepcopy(_POINT_FIELDS),
+    "sparse_depth": deepcopy(_POINT_FIELDS),
 }
 _MODALITY_META_FIELD_DEFINITIONS = deepcopy(_DEFAULT_MODALITY_META_FIELD_DEFINITIONS)
 
@@ -408,6 +572,9 @@ def legacy_modality_meta_schemas() -> dict[str, dict[str, tuple]]:
     for modality_key, fields in _MODALITY_META_FIELD_DEFINITIONS.items():
         result[modality_key] = {}
         for name, definition in fields.items():
+            # The legacy view lists the fields a head must carry.
+            if not definition.required:
+                continue
             entry: tuple[Any, ...]
             if definition.has_default:
                 entry = (

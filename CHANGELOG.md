@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+- Optional geometry meta fields. They are validated when a head declares them,
+  so heads without them stay valid:
+  - `intrinsics`: `camera_model`, `image_plane`;
+  - `camera_extrinsics`, `extrinsics`, `lidar_to_gnss`, `lidar_pose`:
+    `source_frame`, `target_frame`, `direction` (`target_from_source` or
+    `source_from_target`);
+  - `points_3d`, `point_cloud`, `lidar_point_cloud`, `sparse_depth`:
+    `representation` (`point_cloud` or `point_map`), `columns`,
+    `coordinate_unit`, `frame`, `axes`.
+
+  The vocabulary is the `euler_representation` profiles' and the phase-0
+  reference heads'. The corpus gains seven valid heads and four invalid cases;
+  the phase-0 geometry heads no longer count as unregistered.
+- `MetaFieldDefinition(required=False)` registers an optional field. A
+  modality whose fields are all optional no longer requires `meta`, in the
+  parser and in the generated head schema. `MODALITY_META_SCHEMAS` lists only
+  required fields.
+- **Fixed:** a registered field without a default reported a default after the
+  registry's deep copies, because the `_MISSING` sentinel was copied into a new
+  object. `build_default_meta` would have put sentinel objects into heads. No
+  released field was affected, since all of them had defaults.
 - The rules of the `euler_loading` head addon move here from euler-loading:
   `validate_euler_loading_addon`, the shared role checks
   `validate_addon_roles` (`used_as`, `slot`, `task`, `hierarchy_scope`,

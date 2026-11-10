@@ -1,0 +1,21 @@
+{
+  "description": "representation is point_cloud or point_map.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.representation must be one of 'point_cloud', 'point_map'",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "example_points",
+      "name": "Synthetic points"
+    },
+    "modality": {
+      "key": "points_3d",
+      "meta": {
+        "representation": "mesh"
+      }
+    }
+  }
+}

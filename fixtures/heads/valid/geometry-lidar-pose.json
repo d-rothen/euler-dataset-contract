@@ -1,0 +1,29 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "kitti_carla_lidar_pose",
+    "name": "KITTI-CARLA lidar poses"
+  },
+  "modality": {
+    "key": "lidar_pose",
+    "meta": {
+      "source_frame": "lidar",
+      "target_frame": "world",
+      "direction": "target_from_source",
+      "dimensions": {
+        "rows": 4,
+        "columns": 4
+      }
+    }
+  },
+  "addons": {
+    "euler_loading": {
+      "version": "1.0",
+      "loader": "kitti_carla",
+      "function": "lidar_pose"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "muses_lidar_to_gnss",
+    "name": "MUSES lidar-to-GNSS/IMU mount"
+  },
+  "modality": {
+    "key": "lidar_to_gnss",
+    "meta": {
+      "source_frame": "lidar",
+      "target_frame": "gnss",
+      "direction": "target_from_source",
+      "dimensions": {
+        "rows": 4,
+        "columns": 4
+      }
+    }
+  },
+  "addons": {
+    "euler_loading": {
+      "version": "1.0",
+      "loader": "muses",
+      "function": "read_lidar_to_gnss"
+    }
+  }
+}

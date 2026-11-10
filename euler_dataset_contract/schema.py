@@ -69,12 +69,15 @@ def build_meta_schema() -> dict[str, Any]:
             if definition.has_default:
                 prop["default"] = deepcopy(definition.default)
             properties[field_name] = prop
-            required.append(field_name)
+            if definition.required:
+                required.append(field_name)
 
         modality_schemas[modality_key] = {
             "type": "object",
             "description": (
                 f"Required meta fields when modality.key is {modality_key!r}."
+                if required
+                else f"Optional meta fields when modality.key is {modality_key!r}."
             ),
             "properties": properties,
             "required": required,
@@ -200,7 +203,12 @@ def build_dataset_head_schema() -> dict[str, Any]:
                                 "$ref": f"#/$defs/modalityMeta/{modality_key}"
                             }
                         },
-                        "required": ["meta"],
+                        # Only modalities with required fields require meta.
+                        **(
+                            {"required": ["meta"]}
+                            if modality_meta_schemas[modality_key]["required"]
+                            else {}
+                        ),
                     }
                 }
             },

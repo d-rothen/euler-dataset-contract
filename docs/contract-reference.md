@@ -69,7 +69,7 @@ proposed compatibility policy.
 | Field | Rule |
 |---|---|
 | `key` | Required token matching `[A-Za-z_][A-Za-z0-9_]*`. |
-| `meta` | Required for a modality with registered fields; optional and open for an unregistered modality. |
+| `meta` | Required for a modality with registered required fields; optional otherwise. Always open: extra keys are kept. |
 
 Registered metadata is extensible: extra keys are preserved. This lets a
 producer carry dataset-specific details while the registry enforces the shared
@@ -250,6 +250,38 @@ the field, and a triple there would read as a declared sky. `[0, 0, 0]` is
 always taken literally, as label 0 or black. Earlier releases defaulted to
 `[0, 0, 0]`, so heads written before this change can carry it without anyone
 having declared it; replace it with the dataset's sky or `null`.
+
+### Geometry: intrinsics, transforms and points
+
+These fields are **optional**. A head may omit them, or omit `meta` entirely,
+but a head that declares one must use the shared vocabulary. Their values
+match the `euler_representation` profiles and the phase-0 reference heads.
+
+| Keys | Field | Rule |
+|---|---|---|
+| `intrinsics` | `camera_model` | `pinhole`, `fisheye` or `other`. `pinhole` is an ideal pinhole without distortion coefficients. |
+| | `image_plane` | Token naming the image grid the matrix describes, shared with the image modalities it applies to. |
+| `camera_extrinsics`, `extrinsics`, `lidar_to_gnss`, `lidar_pose` | `source_frame`, `target_frame` | Non-empty strings naming the frames, e.g. sensor names. |
+| | `direction` | `target_from_source` (the matrix maps points from `source_frame` into `target_frame`) or `source_from_target`. |
+| `points_3d`, `point_cloud`, `lidar_point_cloud`, `sparse_depth` | `representation` | `point_cloud` (unordered `(N, C)`) or `point_map` (one point per pixel). |
+| | `columns` | Non-empty array of unique column names, coordinates first. |
+| | `coordinate_unit`, `frame`, `axes` | Non-empty strings, e.g. `meters`, `LIDAR_TOP`, `x right, y forward, z up`. |
+
+The shared `dimensions` field gives a transform's or a matrix's shape, e.g.
+`{"rows": 4, "columns": 4}`.
+
+A lidar-to-camera transform, for example:
+
+```json
+"modality": {"key": "camera_extrinsics", "meta": {
+  "source_frame": "LIDAR_TOP", "target_frame": "camera_optical",
+  "direction": "target_from_source", "dimensions": {"rows": 4, "columns": 4}
+}}
+```
+
+Optional fields are a `MetaFieldDefinition(..., required=False)`. Required fields
+remain the default, and the compatibility mapping `MODALITY_META_SCHEMAS` lists
+only required ones.
 
 ## Normalization and copying
 

@@ -1,0 +1,27 @@
+{
+  "description": "Point cloud columns are unique names.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.columns must be a non-empty array of unique non-empty strings",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "example_points",
+      "name": "Synthetic points"
+    },
+    "modality": {
+      "key": "sparse_depth",
+      "meta": {
+        "representation": "point_cloud",
+        "columns": [
+          "x",
+          "y",
+          "z",
+          "z"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "description": "direction names how the matrix relates its frames, not the frames themselves.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.direction must be one of 'target_from_source', 'source_from_target'",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "example_camera_extrinsics",
+      "name": "Synthetic camera_extrinsics"
+    },
+    "modality": {
+      "key": "camera_extrinsics",
+      "meta": {
+        "source_frame": "lidar",
+        "target_frame": "camera",
+        "direction": "lidar_to_camera"
+      }
+    }
+  }
+}

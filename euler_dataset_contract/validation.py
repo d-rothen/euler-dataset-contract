@@ -167,13 +167,15 @@ def normalize_meta_dict(
 ) -> dict[str, Any] | None:
     schema = get_modality_meta_fields(modality_key)
 
+    required = sorted(
+        key for key, definition in (schema or {}).items() if definition.required
+    )
     if value is None:
-        if schema is None:
+        if not required:
             return None
-        required_keys = ", ".join(sorted(schema))
         raise ValueError(
             f"{context} is required for modality.key={modality_key!r} "
-            f"and must contain: {required_keys}"
+            f"and must contain: {', '.join(required)}"
         )
     if not isinstance(value, dict):
         raise ValueError(f"{context} must be an object")
@@ -207,6 +209,8 @@ def normalize_meta_dict(
     if schema is not None:
         for key, definition in schema.items():
             if key not in normalized:
+                if not definition.required:
+                    continue
                 raise ValueError(
                     f"{context}.{key} is required for modality.key={modality_key!r}"
                 )

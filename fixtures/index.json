@@ -168,8 +168,7 @@
       "canonical": "heads/canonical/phase0-sparse-depth.json",
       "description": "Synthetic metadata-only example preserving the sparse_depth key. No loader or actual dataset encoding is implied.",
       "covers": [
-        "modality_key:sparse_depth",
-        "modality_key:unregistered"
+        "modality_key:sparse_depth"
       ]
     },
     {
@@ -178,8 +177,7 @@
       "canonical": "heads/canonical/phase0-intrinsics.json",
       "description": "Synthetic metadata-only example preserving the intrinsics key. No loader or actual dataset encoding is implied.",
       "covers": [
-        "modality_key:intrinsics",
-        "modality_key:unregistered"
+        "modality_key:intrinsics"
       ]
     },
     {
@@ -188,8 +186,7 @@
       "canonical": "heads/canonical/phase0-camera-extrinsics.json",
       "description": "Synthetic metadata-only example preserving the camera_extrinsics key. No loader or actual dataset encoding is implied.",
       "covers": [
-        "modality_key:camera_extrinsics",
-        "modality_key:unregistered"
+        "modality_key:camera_extrinsics"
       ]
     },
     {
@@ -198,8 +195,7 @@
       "canonical": "heads/canonical/phase0-points-3d.json",
       "description": "Synthetic metadata-only example preserving the points_3d key. No loader or actual dataset encoding is implied.",
       "covers": [
-        "modality_key:points_3d",
-        "modality_key:unregistered"
+        "modality_key:points_3d"
       ]
     },
     {
@@ -255,6 +251,73 @@
         "shared_meta:invalid",
         "shared_meta:sparse",
         "section:addons"
+      ]
+    },
+    {
+      "name": "geometry-lidar-point-cloud",
+      "head": "heads/valid/geometry-lidar-point-cloud.json",
+      "canonical": "heads/canonical/geometry-lidar-point-cloud.json",
+      "description": "A lidar point cloud declaring every optional point field, as euler-known-datasets writes for nuScenes.",
+      "covers": [
+        "modality_key:lidar_point_cloud"
+      ]
+    },
+    {
+      "name": "geometry-point-cloud-without-meta",
+      "head": "heads/valid/geometry-point-cloud-without-meta.json",
+      "canonical": "heads/canonical/geometry-point-cloud-without-meta.json",
+      "description": "Geometry fields are optional: a point_cloud head without meta stays valid.",
+      "covers": [
+        "modality_key:point_cloud"
+      ]
+    },
+    {
+      "name": "geometry-intrinsics-pinhole",
+      "head": "heads/valid/geometry-intrinsics-pinhole.json",
+      "canonical": "heads/canonical/geometry-intrinsics-pinhole.json",
+      "description": "Pinhole intrinsics without an image_plane, applying to every camera below it in the hierarchy.",
+      "covers": [
+        "modality_key:intrinsics",
+        "shared_meta:dimensions"
+      ]
+    },
+    {
+      "name": "geometry-camera-extrinsics-lidar",
+      "head": "heads/valid/geometry-camera-extrinsics-lidar.json",
+      "canonical": "heads/canonical/geometry-camera-extrinsics-lidar.json",
+      "description": "Per-frame lidar-to-camera transforms with source, target and direction.",
+      "covers": [
+        "modality_key:camera_extrinsics",
+        "shared_meta:dimensions"
+      ]
+    },
+    {
+      "name": "geometry-extrinsics",
+      "head": "heads/valid/geometry-extrinsics.json",
+      "canonical": "heads/canonical/geometry-extrinsics.json",
+      "description": "The extrinsics key takes the same transform fields; source_from_target is the inverse direction.",
+      "covers": [
+        "modality_key:extrinsics"
+      ]
+    },
+    {
+      "name": "geometry-lidar-to-gnss",
+      "head": "heads/valid/geometry-lidar-to-gnss.json",
+      "canonical": "heads/canonical/geometry-lidar-to-gnss.json",
+      "description": "A platform extrinsic between two sensors.",
+      "covers": [
+        "modality_key:lidar_to_gnss",
+        "shared_meta:dimensions"
+      ]
+    },
+    {
+      "name": "geometry-lidar-pose",
+      "head": "heads/valid/geometry-lidar-pose.json",
+      "canonical": "heads/canonical/geometry-lidar-pose.json",
+      "description": "A pose trajectory: the lidar's pose in the world frame.",
+      "covers": [
+        "modality_key:lidar_pose",
+        "shared_meta:dimensions"
       ]
     }
   ],
@@ -350,6 +413,22 @@
     {
       "name": "invalid-missing-non-finite",
       "case": "heads/invalid/invalid-missing-non-finite.json"
+    },
+    {
+      "name": "extrinsics-direction-unknown",
+      "case": "heads/invalid/extrinsics-direction-unknown.json"
+    },
+    {
+      "name": "intrinsics-camera-model-unknown",
+      "case": "heads/invalid/intrinsics-camera-model-unknown.json"
+    },
+    {
+      "name": "points-columns-duplicate",
+      "case": "heads/invalid/points-columns-duplicate.json"
+    },
+    {
+      "name": "points-representation-unknown",
+      "case": "heads/invalid/points-representation-unknown.json"
     }
   ],
   "inventory": [

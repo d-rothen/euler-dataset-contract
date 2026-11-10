@@ -34,7 +34,7 @@ no repository-local paths.
 | `decoding/` | Known raw arrays with expected scaling, dtypes, layouts, and label/cloud representations. |
 | `persistence/` | Opaque addon and variant-origin probes, storage scopes, and stale output metadata. |
 
-The manifest contains 19 valid heads, 19 invalid cases, three inventories, and
+The manifest contains 30 valid heads, 27 invalid cases, three inventories, and
 ten evidence cases. `phase0-*` heads are synthetic metadata examples; none
 asserts that a real dataset or built-in loader uses that exact encoding.
 

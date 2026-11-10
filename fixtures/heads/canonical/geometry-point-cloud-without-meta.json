@@ -1,0 +1,13 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "example_point_cloud",
+    "name": "Synthetic point cloud"
+  },
+  "modality": {
+    "key": "point_cloud"
+  }
+}

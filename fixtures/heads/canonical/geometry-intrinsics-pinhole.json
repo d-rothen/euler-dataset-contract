@@ -1,0 +1,27 @@
+{
+  "contract": {
+    "kind": "dataset_head",
+    "version": "1.0"
+  },
+  "dataset": {
+    "id": "nuscenes_intrinsics",
+    "name": "nuScenes camera intrinsics"
+  },
+  "modality": {
+    "key": "intrinsics",
+    "meta": {
+      "camera_model": "pinhole",
+      "dimensions": {
+        "rows": 3,
+        "columns": 3
+      }
+    }
+  },
+  "addons": {
+    "euler_loading": {
+      "version": "1.0",
+      "loader": "nuscenes",
+      "function": "read_intrinsics"
+    }
+  }
+}

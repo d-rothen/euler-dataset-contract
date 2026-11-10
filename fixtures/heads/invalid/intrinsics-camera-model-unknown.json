@@ -1,0 +1,21 @@
+{
+  "description": "camera_model is one of the profile's camera models.",
+  "expected_exception": "ValueError",
+  "expected_error": "dataset_head.modality.meta.camera_model must be one of 'pinhole', 'fisheye', 'other'",
+  "head": {
+    "contract": {
+      "kind": "dataset_head",
+      "version": "1.0"
+    },
+    "dataset": {
+      "id": "example_intrinsics",
+      "name": "Synthetic intrinsics"
+    },
+    "modality": {
+      "key": "intrinsics",
+      "meta": {
+        "camera_model": "perspective"
+      }
+    }
+  }
+}
