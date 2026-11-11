@@ -17,6 +17,17 @@ def _inventory() -> dict[str, Any]:
     )
 
 
+def inventory() -> dict[str, Any]:
+    """The whole shipped modality inventory, as a detached mapping.
+
+    For consumers that mirror the vocabulary (e.g. euler-view through
+    ds-crawler-api): ``contract`` (kind and version), ``modalities`` (canonical
+    ids), ``aliases`` (persisted legacy keys and their ids, status, conditions),
+    ``non_modalities``, ``unused_names`` and ``open_questions``.
+    """
+    return deepcopy(_inventory())
+
+
 def lookup_modality(identity: str) -> dict[str, Any] | None:
     """Return a detached registry record, or None. No axes/decoder are inferred."""
     return deepcopy(_inventory()["modalities"].get(identity))

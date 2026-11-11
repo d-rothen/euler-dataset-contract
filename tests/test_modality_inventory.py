@@ -327,3 +327,27 @@ def test_radial_depth_default_is_pinned_to_false() -> None:
     """
 
     assert build_default_meta("depth")["radial_depth"] is False
+
+
+# --- euler-view's dataset types (operator decisions) ---
+
+
+def test_euler_view_normals_are_surface_normals(modality_inventory) -> None:
+    aliases = modality_inventory["aliases"]
+    assert aliases["normals"]["id"] == "geometry.camera.surface_normals"
+    assert aliases["normals"]["status"] == "settled"
+    assert aliases["normals"]["sources"] == ["euler_view.dataset_type"]
+
+
+def test_euler_view_flow_is_optical_flow_not_scene_flow(modality_inventory) -> None:
+    aliases = modality_inventory["aliases"]
+    assert aliases["flow"]["id"] == "geometry.camera.optical_flow"
+    assert aliases["flow"]["id"] != aliases["scene_flow"]["id"]
+    assert aliases["flow"]["sources"] == ["euler_view.dataset_type"]
+
+
+def test_euler_view_calibration_stays_a_bundle(modality_inventory) -> None:
+    """euler-view keeps calibration as an euler-view-only dataset type."""
+
+    assert modality_inventory["non_modalities"]["calibration"]["reason"] == "bundle"
+    assert "calibration" not in modality_inventory["aliases"]

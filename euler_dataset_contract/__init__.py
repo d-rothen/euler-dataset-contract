@@ -30,6 +30,7 @@ from .descriptors import (
 )
 from .modalities import (
     ModalityResolution,
+    inventory,
     lookup_alias,
     lookup_modality,
     resolve_modality,
@@ -45,6 +46,7 @@ from .registry import (
     iter_modality_meta_fields,
     register_modality_meta_fields,
 )
+from .report import modality_report
 from .schema import build_dataset_head_schema, build_meta_schema
 from .source_grid import (
     SOURCE_GRID_RULES,
@@ -105,6 +107,7 @@ __all__ = [
     'TransformsAddon',
     'bound_derivation_digest',
     'build_descriptor_schema',
+    'inventory',
     'lookup_alias',
     'lookup_modality',
     'recipe_digest',
@@ -122,6 +125,7 @@ __all__ = [
     'build_dataset_head_schema',
     'build_default_meta',
     'build_meta_schema',
+    'modality_report',
     'get_modality_meta_fields',
     'get_registered_addon_validators',
     'get_registered_addon_head_validators',

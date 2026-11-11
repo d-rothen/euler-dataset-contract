@@ -41,6 +41,26 @@ known aliases cannot be overridden by a conflicting `declared_id`. Provisional
 identities are returned with their caveat. No lookup supplies units, axes,
 camera frames, a decoder, or evidence of actual dataset contents.
 
+### Whole-inventory reads and the command line
+
+`inventory()` returns the whole shipped inventory as a detached mapping, for
+consumers that mirror the vocabulary (euler-view syncs its dataset types from
+it through ds-crawler-api). `modality_report()` wraps it in a versioned,
+JSON-ready payload (`contract.kind: "modality_vocabulary_report"`, version
+`1.0`):
+- the installed package version;
+- the inventory;
+- `modality_meta_schema`, which is `build_meta_schema()` of the running process.
+  It includes meta fields other installed packages registered on import.
+
+```sh
+python -m euler_dataset_contract inventory [--no-meta-schema] [--indent 2]
+python -m euler_dataset_contract resolve normals flow calibration
+```
+
+`inventory` prints the report; euler-view's cluster compatibility check runs it
+in a cluster environment. `resolve` prints `resolve_modality` for each key.
+
 ## Wire records and Python models
 
 The checked-in [five-field addon](../fixtures/descriptors/five-field.json) and

@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+- Modality inventory: euler-view's dataset types. A new alias source,
+  `euler_view.dataset_type`, marks names from euler-view's catalog whose meaning
+  the operator fixed. No loader emits them yet.
+  - `geometry.camera.surface_normals`, alias `normals`. Representation fields
+    `frame`, `axes`, `encoding` (`unit_vector` or `rgb_packed`), `invalid`.
+  - `geometry.camera.optical_flow`, alias `flow`: 2D optical flow on one
+    camera's image plane, distinct from `geometry.scene.flow` (`scene_flow`).
+    Representation fields `unit`, `direction` (`forward` or `backward`),
+    `frame_offset`, `invalid`.
+  - `calibration` stays a non-modality (a bundle). euler-view keeps it as its
+    own dataset type, not as a modality.
+- `inventory()`: the whole modality inventory as a detached mapping.
+- `modality_report()`: a versioned, JSON-ready payload with the inventory, the
+  registered `modality.meta` schema and the installed version. ds-crawler-api
+  serves it to euler-view.
+- `python -m euler_dataset_contract inventory | resolve KEY…`: the report
+  as JSON, and key resolution on the command line.
+
 - Loader evidence refreshed for euler-loading's new `scatternerf` and `cerema`
   modules (174 declarations), adding the `gated` modality type.
 - Modality inventory: `appearance.camera.gated_intensity`, the slices a

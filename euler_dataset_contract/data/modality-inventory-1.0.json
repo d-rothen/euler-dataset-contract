@@ -19,7 +19,8 @@
       "contract.modality_key": "A modality.key with registered meta fields in euler-dataset-contract today.",
       "euler_loading.modality_type": "A value of the type field in euler-loading's generated loaders.json.",
       "euler_loading.loader_function": "A loader function name in euler-loading that is not itself a modality type.",
-      "dataset.modality_key": "A name reported by the operator for the current datasets; separate from emitted loader types."
+      "dataset.modality_key": "A name reported by the operator for the current datasets; separate from emitted loader types.",
+      "euler_view.dataset_type": "A dataset type in euler-view's modality catalog, whose meaning the operator fixed."
     },
     "non_modality_reason": {
       "bundle": "Several distinct quantities carried under one name.",
@@ -112,6 +113,50 @@
         "reference_camera",
         "invalid"
       ]
+    },
+    "geometry.camera.surface_normals": {
+      "domain": "geometry",
+      "subject": "camera",
+      "quantity": "surface_normals",
+      "status": "settled",
+      "description": "Per-pixel unit normal of the surface seen at that pixel, as a 3-vector in a stated frame (usually the camera's).",
+      "aliases": [
+        "normals"
+      ],
+      "representation_fields": [
+        "frame",
+        "axes",
+        "encoding",
+        "invalid"
+      ],
+      "representation_enums": {
+        "encoding": [
+          "unit_vector",
+          "rgb_packed"
+        ]
+      }
+    },
+    "geometry.camera.optical_flow": {
+      "domain": "geometry",
+      "subject": "camera",
+      "quantity": "optical_flow",
+      "status": "settled",
+      "description": "Per-pixel apparent 2D motion on one camera's image plane between two of its frames, in image coordinates. Not the 3D scene flow (geometry.scene.flow).",
+      "aliases": [
+        "flow"
+      ],
+      "representation_fields": [
+        "unit",
+        "direction",
+        "frame_offset",
+        "invalid"
+      ],
+      "representation_enums": {
+        "direction": [
+          "forward",
+          "backward"
+        ]
+      }
     },
     "geometry.camera.intrinsics": {
       "domain": "geometry",
@@ -471,6 +516,14 @@
         "euler_loading.modality_type"
       ]
     },
+    "normals": {
+      "id": "geometry.camera.surface_normals",
+      "status": "settled",
+      "sources": [
+        "euler_view.dataset_type"
+      ],
+      "note": "euler-view's normals dataset type: per-pixel surface normals. No euler-loading loader emits it yet."
+    },
     "intrinsics": {
       "id": "geometry.camera.intrinsics",
       "status": "settled",
@@ -548,6 +601,14 @@
       "sources": [
         "euler_loading.modality_type"
       ]
+    },
+    "flow": {
+      "id": "geometry.camera.optical_flow",
+      "status": "settled",
+      "sources": [
+        "euler_view.dataset_type"
+      ],
+      "note": "euler-view's flow dataset type is 2D optical flow (operator decision). 3D scene flow is scene_flow; no euler-loading loader emits optical flow yet."
     },
     "segmentation": {
       "id": "semantics.camera.class_labels",
