@@ -6,7 +6,7 @@
   "provenance": {
     "repository": "euler-loading",
     "path": "euler_loading/loaders/generate/loaders.json",
-    "sha256": "24d006748ce2693050efc5113ae44f1e8d5836775530536f46589c9b3cafe4c7",
+    "sha256": "4b15ed9bcf3ae98a41bdc703c8e627f4a9607bcba7bd6871b85ac9f7df7a7832",
     "description": "Vendored copy of the modality vocabulary euler-loading emits, so that euler-dataset-contract can assert against it without taking a dependency on euler-loading. Refresh this file when loaders.json changes: the drift test in tests/test_modality_inventory.py fails when a type recorded here has no inventory entry.",
     "notes": [
       "modality_types holds the distinct values of the type field, each with the loader.function pairs that emit it.",
@@ -19,13 +19,16 @@
     "driving_stereo",
     "generic",
     "generic_dense_depth",
+    "hypersim",
     "kitti_carla",
     "muses",
     "nuscenes",
     "princeton_dense",
     "real_drive_sim",
     "scatternerf",
+    "shift",
     "synscapes",
+    "urbansyn",
     "vkitti2"
   ],
   "modality_types": {
@@ -39,6 +42,7 @@
       "real_drive_sim.calibration"
     ],
     "camera_extrinsics": [
+      "hypersim.camera_pose",
       "kitti_carla.read_extrinsics",
       "muses.read_extrinsics",
       "nuscenes.read_extrinsics",
@@ -46,7 +50,9 @@
       "real_drive_sim.read_extrinsics",
       "scatternerf.camera_pose",
       "scatternerf.camera_pose_metric",
-      "synscapes.read_extrinsics"
+      "shift.camera_pose",
+      "synscapes.read_extrinsics",
+      "urbansyn.camera_pose"
     ],
     "depth": [
       "cerema.depth",
@@ -56,9 +62,14 @@
       "driving_stereo.depth",
       "driving_stereo.depth_full_size",
       "generic_dense_depth.depth",
+      "hypersim.depth",
+      "hypersim.radial_distance",
       "kitti_carla.depth",
       "real_drive_sim.depth",
+      "shift.depth",
+      "shift.radial_distance",
       "synscapes.depth",
+      "urbansyn.depth",
       "vkitti2.depth"
     ],
     "disparity": [
@@ -84,13 +95,16 @@
       "driving_stereo.read_intrinsics",
       "generic.intrinsics",
       "generic_dense_depth.read_intrinsics",
+      "hypersim.read_intrinsics",
       "kitti_carla.read_intrinsics",
       "muses.read_intrinsics",
       "nuscenes.read_intrinsics",
       "princeton_dense.read_intrinsics",
       "real_drive_sim.read_intrinsics",
       "scatternerf.read_intrinsics",
+      "shift.read_intrinsics",
       "synscapes.read_intrinsics",
+      "urbansyn.read_intrinsics",
       "vkitti2.read_intrinsics"
     ],
     "lidar_pose": [
@@ -125,6 +139,7 @@
       "cerema.rgb",
       "driving_stereo.rgb",
       "generic_dense_depth.rgb",
+      "hypersim.rgb",
       "kitti_carla.rgb",
       "muses.reference_rgb",
       "muses.rgb",
@@ -132,7 +147,9 @@
       "princeton_dense.rgb",
       "real_drive_sim.rgb",
       "scatternerf.rgb",
+      "shift.rgb",
       "synscapes.rgb",
+      "urbansyn.rgb",
       "vkitti2.rgb"
     ],
     "scattering_coefficient": [
@@ -146,7 +163,9 @@
       "kitti_carla.class_segmentation",
       "muses.semantic_segmentation",
       "real_drive_sim.class_segmentation",
+      "shift.semantic_segmentation",
       "synscapes.class_segmentation",
+      "urbansyn.semantic_segmentation",
       "vkitti2.class_segmentation"
     ],
     "semantic_segmentation_color": [
@@ -164,7 +183,9 @@
       "kitti_carla.sky_mask",
       "muses.sky_mask",
       "real_drive_sim.sky_mask",
+      "shift.sky_mask",
       "synscapes.sky_mask",
+      "urbansyn.sky_mask",
       "vkitti2.sky_mask"
     ],
     "sparse_depth": [
@@ -200,6 +221,7 @@
     "panoptic_segmentation",
     "points_3d",
     "psmnet_depth",
+    "radial_distance",
     "rccb",
     "read_extrinsics",
     "read_intrinsics",

@@ -8,38 +8,44 @@
     "method": "AST literal extraction; no loader execution",
     "consumed_by_runtime": false,
     "catalog_path": "euler_loading/loaders/generate/loaders.json",
-    "catalog_sha256": "24d006748ce2693050efc5113ae44f1e8d5836775530536f46589c9b3cafe4c7"
+    "catalog_sha256": "4b15ed9bcf3ae98a41bdc703c8e627f4a9607bcba7bd6871b85ac9f7df7a7832"
   },
   "sources": {
     "euler_loading/loaders/_annotations.py": "239d0678fdd8f316b3b84cf85bff3314d5e59745e14deca28e8e016825e79a2b",
     "euler_loading/loaders/_princeton_dense.py": "708f881eeda6021a5ee879d15ecab782c64779bbd7a0f324ae3bfc82c0257cb9",
     "euler_loading/loaders/_sky.py": "6f9f7584cb5cba782f3350f35a6d82182d477926f50dcaa6ae6a82d7dda7d72b",
     "euler_loading/loaders/_writer_utils.py": "16f75ad3dc9e4345509cefe36484cc1811611e4b49af18efa8aae7dbb2788807",
-    "euler_loading/loaders/cpu/acdc.py": "c043f05597486e3bae7e41f5e90dbcb53b764c92444923e3dd8cf0fbd4b8d46d",
+    "euler_loading/loaders/cpu/acdc.py": "f45f71bb622d81876f5bf4a795ca781e121dff189352cb851ff19e98ce9b3c52",
     "euler_loading/loaders/cpu/cerema.py": "471707e153205996272fea35453ed5845f4595ab3a219344c9dcf54f4626ac7a",
     "euler_loading/loaders/cpu/driving_stereo.py": "9512c75bd62b3bac1c895856336cfe1a6bb7b48c751651e6408a9d225f3f63bc",
     "euler_loading/loaders/cpu/generic.py": "0a6205069d1f0cff481f048ff8c50acad587f401158db705a067d4a90a084e75",
     "euler_loading/loaders/cpu/generic_dense_depth.py": "f6f3f90f5a1776e56933495599575af0c79c75b2f27efe0f11a9965a38c44973",
+    "euler_loading/loaders/cpu/hypersim.py": "6ce79f65a446801d8dca971c7f5f1adc56b0097103620f6b5e118f4d1ac5f723",
     "euler_loading/loaders/cpu/kitti_carla.py": "415401dad87020b2940ad69d602554fa4fb758343738b93ec8e3a7537882d403",
     "euler_loading/loaders/cpu/muses.py": "9d3c935906724f63badcbb60c90545057b30ece628343695d4ef959dbfb28829",
     "euler_loading/loaders/cpu/nuscenes.py": "060c0870bb9ba4f7f36e2cf223496b73f258464c5b4c5794c9f9833a8741606a",
     "euler_loading/loaders/cpu/princeton_dense.py": "3e941da7af2e30fd4f4ec5c9fb3d51b7b4dabe760ce1a24c0bc4b1db30b59cf8",
     "euler_loading/loaders/cpu/real_drive_sim.py": "0dda77ce3a596bc164af3292b838dabdc8a3cef8263c45cbbde7275251a36e0b",
     "euler_loading/loaders/cpu/scatternerf.py": "008180bfea03d39ed20845dfda5e35dc5b3201a70d361698307aa56c8ad88b9b",
+    "euler_loading/loaders/cpu/shift.py": "2e5229e57d93a63934918b15e95846e2360eaa610b817a732e0e740408e99d16",
     "euler_loading/loaders/cpu/synscapes.py": "f3bbd53bc6f90edf68d2473dc142dc33faaedf45498a94becbd4f19e38817fcb",
+    "euler_loading/loaders/cpu/urbansyn.py": "ea6eb89e877d9abb23a2bb142240d6a2b2d7ad23eff5cc61f540d2c59454fca7",
     "euler_loading/loaders/cpu/vkitti2.py": "17291eb010d6409032108075170d485aea6ba6f575e6505e1f2c25bb9fa73403",
     "euler_loading/loaders/gpu/acdc.py": "e0653eed32ae172076e7efb50142e2fc9e06df681cda2e2d45f6f6895a397a98",
     "euler_loading/loaders/gpu/cerema.py": "d02cdfd9c2093ac58b815191266c94b34eca3870fb188e78a8e166659ae9519d",
     "euler_loading/loaders/gpu/driving_stereo.py": "9f713031fa4563aaa065fdcf3ead34a3c042bb3cf126e3cbd6502d20c433f627",
     "euler_loading/loaders/gpu/generic.py": "44953ba25e72692445c4e7f4a5ac7fccd4ec4cd4847b5862fa9b633f1475521d",
     "euler_loading/loaders/gpu/generic_dense_depth.py": "ac6d422f06ace5c7ae60767f7c2ada56e4f33206a69e3f55561154471c01cd47",
+    "euler_loading/loaders/gpu/hypersim.py": "a9044fecbd7dedd0ecc235ca7322465ca434e38d963d142c15183963de853e78",
     "euler_loading/loaders/gpu/kitti_carla.py": "6bd18668518da3a17502b041aedd57ea2e66664e967c0fa546c1bf9e9bc5e4d6",
     "euler_loading/loaders/gpu/muses.py": "f61e76b635ea1f32be966f8df3645074ecc05cbeae8bf073f4f4d3e8c601b5cd",
     "euler_loading/loaders/gpu/nuscenes.py": "961c81ef984d9c6c99302c295ead919e5d872b9f0947089191d66d07a132b9e1",
     "euler_loading/loaders/gpu/princeton_dense.py": "75bb3a040802c1f9ac0908b0e95f0ecf3d2335ba7d9cd61adf18d7e401ac776e",
     "euler_loading/loaders/gpu/real_drive_sim.py": "e6c88b978aed10433c4e2e94204c61684719cc681f498539ce3d1f3fb7d32998",
     "euler_loading/loaders/gpu/scatternerf.py": "45108b7af463d831c23e3207d4c7e4d52d7f994833b0aa9aacf080f74868c773",
+    "euler_loading/loaders/gpu/shift.py": "dca7ceb03908d4cc130d1dfdee14cf3ce1501aead7035ea050446c007cd351af",
     "euler_loading/loaders/gpu/synscapes.py": "a3521cda47bf46e694661658281de8def4a6c675cdfb5c4796f94fa70d065cc4",
+    "euler_loading/loaders/gpu/urbansyn.py": "6cc27e20ea8c0a6a662253f0761dd104224595ef8ebecf1fae767aefe3dc9891",
     "euler_loading/loaders/gpu/vkitti2.py": "0bad62e263013b95fd8b59f965e16b26cf3d2162e9fca8e580017829162887bd"
   },
   "observations": [
@@ -48,7 +54,7 @@
       "function": "rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/acdc.py",
-      "line": 60,
+      "line": 61,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -67,7 +73,7 @@
       "function": "reference_rgb",
       "backend": "cpu",
       "source": "euler_loading/loaders/cpu/acdc.py",
-      "line": 73,
+      "line": 74,
       "declared": {
         "modality_type": "rgb",
         "dtype": "float32",
@@ -724,6 +730,116 @@
         "requires_meta": [
           "intrinsics"
         ]
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/hypersim.py",
+      "line": 309,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".hdf5"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ],
+        "meta": {
+          "stored": "linear HDR colour",
+          "tonemap": "hypersim"
+        }
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/hypersim.py",
+      "line": 332,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".hdf5"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "radial_depth": false,
+          "scale_to_meters": 1.0,
+          "stored": "euclidean distance"
+        }
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "radial_distance",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/hypersim.py",
+      "line": 355,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".hdf5"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "radial_depth": true,
+          "scale_to_meters": 1.0,
+          "stored": "euclidean distance"
+        }
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/hypersim.py",
+      "line": 375,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "model": "pinhole",
+          "distortion": null,
+          "source": "calibration/<scene>/<camera>.json"
+        }
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "camera_pose",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/hypersim.py",
+      "line": 405,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "transform": "camera_to_world",
+          "source_frame": "camera_optical",
+          "target_frame": "world",
+          "camera_axes": "optical: x right, y down, z forward",
+          "translation_unit": "meters",
+          "matched_by": "sample ID (the frame number)"
+        }
       }
     },
     {
@@ -1767,6 +1883,169 @@
       }
     },
     {
+      "loader": "shift",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/shift.py",
+      "line": 268,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".png",
+          ".jpg"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/shift.py",
+      "line": 289,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1000.0
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "encoding": "carla_rgb24",
+          "decode": "(R + 256 * G + 65536 * B) / (2**24 - 1) * 1000",
+          "raw_range": [
+            0,
+            16777215
+          ],
+          "scale_to_meters": 5.9604648328104514e-05,
+          "radial_depth": false,
+          "far_plane_m": 1000.0
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "radial_distance",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/shift.py",
+      "line": 307,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "radial_depth": true,
+          "scale_to_meters": 1.0,
+          "stored": "planar depth, carla_rgb24"
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "semantic_segmentation",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/shift.py",
+      "line": 326,
+      "declared": {
+        "modality_type": "semantic_segmentation",
+        "dtype": "int64",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "encoding": "id_in_red",
+          "skyclass": [
+            13,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "sky_mask",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/shift.py",
+      "line": 343,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "skyclass": [
+            13,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/shift.py",
+      "line": 361,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "model": "pinhole",
+          "distortion": null,
+          "source": "calibration/<split>/<sequence>.json"
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "camera_pose",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/shift.py",
+      "line": 387,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "transform": "camera_to_world",
+          "source_frame": "camera_optical",
+          "target_frame": "world",
+          "camera_axes": "optical: x right, y down, z forward",
+          "world": "CARLA's world with y negated (right-handed, z up)",
+          "translation_unit": "meters",
+          "matched_by": "sample ID (the frame number)"
+        }
+      }
+    },
+    {
       "loader": "synscapes",
       "function": "rgb",
       "backend": "cpu",
@@ -1911,6 +2190,164 @@
           "rotation_order": "Rz(yaw) @ Ry(pitch) @ Rx(roll)",
           "default_transform_direction": "camera_to_ego",
           "default_camera_axes": "vehicle"
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "rgb",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/urbansyn.py",
+      "line": 243,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "HWC",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "depth",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/urbansyn.py",
+      "line": 257,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "HW",
+        "file_formats": [
+          ".exr"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "radial_depth": false,
+          "scale_to_meters": 100000.0,
+          "channel": "Y",
+          "no_hit_value": 1.0,
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          }
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "semantic_segmentation",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/urbansyn.py",
+      "line": 290,
+      "declared": {
+        "modality_type": "semantic_segmentation",
+        "dtype": "int64",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "encoding": "grey_rgb",
+          "label_ids": "cityscapes_train_ids",
+          "classes": [
+            "road",
+            "sidewalk",
+            "building",
+            "wall",
+            "fence",
+            "pole",
+            "traffic light",
+            "traffic sign",
+            "vegetation",
+            "terrain",
+            "sky",
+            "person",
+            "rider",
+            "car",
+            "truck",
+            "bus",
+            "train",
+            "motorcycle",
+            "bicycle"
+          ],
+          "other_id": 19,
+          "skyclass": [
+            10,
+            10,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "sky_mask",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/urbansyn.py",
+      "line": 307,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "skyclass": [
+            10,
+            10,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "read_intrinsics",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/urbansyn.py",
+      "line": 324,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "camera_model": "pinhole",
+          "principal_point": "image centre, (W - 1) / 2 and (H - 1) / 2"
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "camera_pose",
+      "backend": "cpu",
+      "source": "euler_loading/loaders/cpu/urbansyn.py",
+      "line": 357,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float64",
+        "shape": "4x4",
+        "file_formats": [
+          ".exr",
+          ".json"
+        ],
+        "meta": {
+          "source_frame": "camera_optical",
+          "target_frame": "world",
+          "direction": "target_from_source",
+          "camera_axes": "x right, y down, z forward",
+          "world_axes": "y up, per district",
+          "translation_unit": "meters",
+          "stored": "camera pos, target and up in the depth EXR header (attribute octane)"
         }
       }
     },
@@ -2747,6 +3184,116 @@
         "requires_meta": [
           "intrinsics"
         ]
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/hypersim.py",
+      "line": 54,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".hdf5"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ],
+        "meta": {
+          "stored": "linear HDR colour",
+          "tonemap": "hypersim"
+        }
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/hypersim.py",
+      "line": 68,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".hdf5"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "radial_depth": false,
+          "scale_to_meters": 1.0,
+          "stored": "euclidean distance"
+        }
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "radial_distance",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/hypersim.py",
+      "line": 82,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".hdf5"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "radial_depth": true,
+          "scale_to_meters": 1.0,
+          "stored": "euclidean distance"
+        }
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/hypersim.py",
+      "line": 96,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "model": "pinhole",
+          "distortion": null,
+          "source": "calibration/<scene>/<camera>.json"
+        }
+      }
+    },
+    {
+      "loader": "hypersim",
+      "function": "camera_pose",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/hypersim.py",
+      "line": 115,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "transform": "camera_to_world",
+          "source_frame": "camera_optical",
+          "target_frame": "world",
+          "camera_axes": "optical: x right, y down, z forward",
+          "translation_unit": "meters",
+          "matched_by": "sample ID (the frame number)"
+        }
       }
     },
     {
@@ -3790,6 +4337,169 @@
       }
     },
     {
+      "loader": "shift",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/shift.py",
+      "line": 60,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".png",
+          ".jpg"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/shift.py",
+      "line": 74,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1000.0
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "encoding": "carla_rgb24",
+          "decode": "(R + 256 * G + 65536 * B) / (2**24 - 1) * 1000",
+          "raw_range": [
+            0,
+            16777215
+          ],
+          "scale_to_meters": 5.9604648328104514e-05,
+          "radial_depth": false,
+          "far_plane_m": 1000.0
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "radial_distance",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/shift.py",
+      "line": 88,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "radial_depth": true,
+          "scale_to_meters": 1.0,
+          "stored": "planar depth, carla_rgb24"
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "semantic_segmentation",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/shift.py",
+      "line": 101,
+      "declared": {
+        "modality_type": "semantic_segmentation",
+        "dtype": "int64",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "encoding": "id_in_red",
+          "skyclass": [
+            13,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "sky_mask",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/shift.py",
+      "line": 114,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "skyclass": [
+            13,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/shift.py",
+      "line": 128,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "model": "pinhole",
+          "distortion": null,
+          "source": "calibration/<split>/<sequence>.json"
+        }
+      }
+    },
+    {
+      "loader": "shift",
+      "function": "camera_pose",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/shift.py",
+      "line": 147,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "4x4",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "transform": "camera_to_world",
+          "source_frame": "camera_optical",
+          "target_frame": "world",
+          "camera_axes": "optical: x right, y down, z forward",
+          "world": "CARLA's world with y negated (right-handed, z up)",
+          "translation_unit": "meters",
+          "matched_by": "sample ID (the frame number)"
+        }
+      }
+    },
+    {
       "loader": "synscapes",
       "function": "rgb",
       "backend": "gpu",
@@ -3934,6 +4644,164 @@
           "rotation_order": "Rz(yaw) @ Ry(pitch) @ Rx(roll)",
           "default_transform_direction": "camera_to_ego",
           "default_camera_axes": "vehicle"
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "rgb",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/urbansyn.py",
+      "line": 55,
+      "declared": {
+        "modality_type": "rgb",
+        "dtype": "float32",
+        "shape": "CHW",
+        "file_formats": [
+          ".png"
+        ],
+        "output_range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "depth",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/urbansyn.py",
+      "line": 68,
+      "declared": {
+        "modality_type": "depth",
+        "dtype": "float32",
+        "shape": "1HW",
+        "file_formats": [
+          ".exr"
+        ],
+        "output_unit": "meters",
+        "meta": {
+          "radial_depth": false,
+          "scale_to_meters": 100000.0,
+          "channel": "Y",
+          "no_hit_value": 1.0,
+          "invalid": {
+            "non_finite": false,
+            "sentinel": 0
+          }
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "semantic_segmentation",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/urbansyn.py",
+      "line": 81,
+      "declared": {
+        "modality_type": "semantic_segmentation",
+        "dtype": "int64",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "encoding": "grey_rgb",
+          "label_ids": "cityscapes_train_ids",
+          "classes": [
+            "road",
+            "sidewalk",
+            "building",
+            "wall",
+            "fence",
+            "pole",
+            "traffic light",
+            "traffic sign",
+            "vegetation",
+            "terrain",
+            "sky",
+            "person",
+            "rider",
+            "car",
+            "truck",
+            "bus",
+            "train",
+            "motorcycle",
+            "bicycle"
+          ],
+          "other_id": 19,
+          "skyclass": [
+            10,
+            10,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "sky_mask",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/urbansyn.py",
+      "line": 94,
+      "declared": {
+        "modality_type": "sky_mask",
+        "dtype": "bool",
+        "shape": "1HW",
+        "file_formats": [
+          ".png"
+        ],
+        "meta": {
+          "skyclass": [
+            10,
+            10,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "read_intrinsics",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/urbansyn.py",
+      "line": 108,
+      "declared": {
+        "modality_type": "intrinsics",
+        "dtype": "float32",
+        "hierarchical": true,
+        "shape": "3x3",
+        "file_formats": [
+          ".json"
+        ],
+        "meta": {
+          "camera_model": "pinhole",
+          "principal_point": "image centre, (W - 1) / 2 and (H - 1) / 2"
+        }
+      }
+    },
+    {
+      "loader": "urbansyn",
+      "function": "camera_pose",
+      "backend": "gpu",
+      "source": "euler_loading/loaders/gpu/urbansyn.py",
+      "line": 121,
+      "declared": {
+        "modality_type": "camera_extrinsics",
+        "dtype": "float64",
+        "shape": "4x4",
+        "file_formats": [
+          ".exr",
+          ".json"
+        ],
+        "meta": {
+          "source_frame": "camera_optical",
+          "target_frame": "world",
+          "direction": "target_from_source",
+          "camera_axes": "x right, y down, z forward",
+          "world_axes": "y up, per district",
+          "translation_unit": "meters",
+          "stored": "camera pos, target and up in the depth EXR header (attribute octane)"
         }
       }
     },
@@ -4822,6 +5690,124 @@
           },
           "gpu": {
             "shape": "1HW"
+          }
+        }
+      ]
+    },
+    {
+      "name": "hypersim",
+      "modalities": [
+        {
+          "type": "camera_extrinsics",
+          "function": "camera_pose",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "transform": "camera_to_world",
+            "source_frame": "camera_optical",
+            "target_frame": "world",
+            "camera_axes": "optical: x right, y down, z forward",
+            "translation_unit": "meters",
+            "matched_by": "sample ID (the frame number)"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".hdf5"
+          ],
+          "meta": {
+            "radial_depth": false,
+            "scale_to_meters": 1.0,
+            "stored": "euclidean distance"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "radial_distance",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".hdf5"
+          ],
+          "meta": {
+            "radial_depth": true,
+            "scale_to_meters": 1.0,
+            "stored": "euclidean distance"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "model": "pinhole",
+            "distortion": null,
+            "source": "calibration/<scene>/<camera>.json"
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".hdf5"
+          ],
+          "meta": {
+            "stored": "linear HDR colour",
+            "tonemap": "hypersim"
+          },
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
           }
         }
       ]
@@ -5926,6 +6912,179 @@
       ]
     },
     {
+      "name": "shift",
+      "modalities": [
+        {
+          "type": "camera_extrinsics",
+          "function": "camera_pose",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "transform": "camera_to_world",
+            "source_frame": "camera_optical",
+            "target_frame": "world",
+            "camera_axes": "optical: x right, y down, z forward",
+            "world": "CARLA's world with y negated (right-handed, z up)",
+            "translation_unit": "meters",
+            "matched_by": "sample ID (the frame number)"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1000.0
+          ],
+          "output_unit": "meters",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "carla_rgb24",
+            "decode": "(R + 256 * G + 65536 * B) / (2**24 - 1) * 1000",
+            "raw_range": [
+              0,
+              16777215
+            ],
+            "scale_to_meters": 5.9604648328104514e-05,
+            "radial_depth": false,
+            "far_plane_m": 1000.0
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "radial_distance",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "radial_depth": true,
+            "scale_to_meters": 1.0,
+            "stored": "planar depth, carla_rgb24"
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "model": "pinhole",
+            "distortion": null,
+            "source": "calibration/<split>/<sequence>.json"
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png",
+            ".jpg"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        },
+        {
+          "type": "semantic_segmentation",
+          "function": "semantic_segmentation",
+          "hierarchical": false,
+          "dtype": "int64",
+          "access": "key",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "id_in_red",
+            "skyclass": [
+              13,
+              0,
+              0
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "sky_mask",
+          "function": "sky_mask",
+          "hierarchical": false,
+          "dtype": "bool",
+          "access": "key",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "skyclass": [
+              13,
+              0,
+              0
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        }
+      ]
+    },
+    {
       "name": "synscapes",
       "modalities": [
         {
@@ -6074,6 +7233,174 @@
               23,
               23,
               23
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        }
+      ]
+    },
+    {
+      "name": "urbansyn",
+      "modalities": [
+        {
+          "type": "camera_extrinsics",
+          "function": "camera_pose",
+          "hierarchical": false,
+          "dtype": "float64",
+          "access": "key",
+          "file_formats": [
+            ".exr",
+            ".json"
+          ],
+          "meta": {
+            "source_frame": "camera_optical",
+            "target_frame": "world",
+            "direction": "target_from_source",
+            "camera_axes": "x right, y down, z forward",
+            "world_axes": "y up, per district",
+            "translation_unit": "meters",
+            "stored": "camera pos, target and up in the depth EXR header (attribute octane)"
+          },
+          "cpu": {
+            "shape": "4x4"
+          },
+          "gpu": {
+            "shape": "4x4"
+          }
+        },
+        {
+          "type": "depth",
+          "function": "depth",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_unit": "meters",
+          "file_formats": [
+            ".exr"
+          ],
+          "meta": {
+            "radial_depth": false,
+            "scale_to_meters": 100000.0,
+            "channel": "Y",
+            "no_hit_value": 1.0,
+            "invalid": {
+              "non_finite": false,
+              "sentinel": 0
+            }
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "intrinsics",
+          "function": "read_intrinsics",
+          "hierarchical": true,
+          "dtype": "float32",
+          "access": "key",
+          "file_formats": [
+            ".json"
+          ],
+          "meta": {
+            "camera_model": "pinhole",
+            "principal_point": "image centre, (W - 1) / 2 and (H - 1) / 2"
+          },
+          "cpu": {
+            "shape": "3x3"
+          },
+          "gpu": {
+            "shape": "3x3"
+          }
+        },
+        {
+          "type": "rgb",
+          "function": "rgb",
+          "hierarchical": false,
+          "dtype": "float32",
+          "access": "key",
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "file_formats": [
+            ".png"
+          ],
+          "cpu": {
+            "shape": "HWC"
+          },
+          "gpu": {
+            "shape": "CHW"
+          }
+        },
+        {
+          "type": "semantic_segmentation",
+          "function": "semantic_segmentation",
+          "hierarchical": false,
+          "dtype": "int64",
+          "access": "key",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "encoding": "grey_rgb",
+            "label_ids": "cityscapes_train_ids",
+            "classes": [
+              "road",
+              "sidewalk",
+              "building",
+              "wall",
+              "fence",
+              "pole",
+              "traffic light",
+              "traffic sign",
+              "vegetation",
+              "terrain",
+              "sky",
+              "person",
+              "rider",
+              "car",
+              "truck",
+              "bus",
+              "train",
+              "motorcycle",
+              "bicycle"
+            ],
+            "other_id": 19,
+            "skyclass": [
+              10,
+              10,
+              10
+            ]
+          },
+          "cpu": {
+            "shape": "HW"
+          },
+          "gpu": {
+            "shape": "1HW"
+          }
+        },
+        {
+          "type": "sky_mask",
+          "function": "sky_mask",
+          "hierarchical": false,
+          "dtype": "bool",
+          "access": "key",
+          "file_formats": [
+            ".png"
+          ],
+          "meta": {
+            "skyclass": [
+              10,
+              10,
+              10
             ]
           },
           "cpu": {

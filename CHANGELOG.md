@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Loader evidence refreshed from euler-loading with the `hypersim`, `urbansyn`
+  and `shift` modules (214 declarations, from 178). No new modality type: the
+  new functions emit rgb, depth, intrinsics, camera_extrinsics,
+  semantic_segmentation and sky_mask.
 - Modality inventory: euler-view's dataset types. A new alias source,
   `euler_view.dataset_type`, marks names from euler-view's catalog whose meaning
   the operator fixed. No loader emits them yet.
